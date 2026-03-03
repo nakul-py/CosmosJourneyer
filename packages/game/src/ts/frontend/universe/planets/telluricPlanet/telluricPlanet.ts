@@ -16,7 +16,6 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { type Camera } from "@babylonjs/core/Cameras/camera";
-import { type PointLight } from "@babylonjs/core/Lights/pointLight";
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
@@ -35,7 +34,6 @@ import { CloudsUniforms } from "@/frontend/postProcesses/clouds/cloudsUniforms";
 import { OceanUniforms } from "@/frontend/postProcesses/ocean/oceanUniforms";
 import { type RingsProceduralPatternLut } from "@/frontend/postProcesses/rings/ringsProceduralLut";
 import { RingsUniforms } from "@/frontend/postProcesses/rings/ringsUniform";
-import { type PlanetaryMassObjectBase } from "@/frontend/universe/architecture/planetaryMassObject";
 import { defaultTargetInfoCelestialBody, type TargetInfo } from "@/frontend/universe/architecture/targetable";
 import { AsteroidField } from "@/frontend/universe/asteroidFields/asteroidField";
 
@@ -44,11 +42,12 @@ import { type DeepReadonly } from "@/utils/types";
 
 import { CollisionMask, Settings } from "@/settings";
 
+import type { CelestialBodyBase } from "../../architecture/celestialBody";
 import { TelluricPlanetMaterial } from "./telluricPlanetMaterial";
 import { type ChunkForge } from "./terrain/chunks/chunkForge";
 import { ChunkTree } from "./terrain/chunks/chunkTree";
 
-export class TelluricPlanet implements PlanetaryMassObjectBase<"telluricPlanet" | "telluricSatellite">, Cullable {
+export class TelluricPlanet implements CelestialBodyBase<"telluricPlanet" | "telluricSatellite">, Cullable {
     readonly model: DeepReadonly<TelluricPlanetModel> | DeepReadonly<TelluricSatelliteModel>;
 
     readonly type: "telluricPlanet" | "telluricSatellite";
@@ -141,18 +140,23 @@ export class TelluricPlanet implements PlanetaryMassObjectBase<"telluricPlanet" 
 
         this.material = new TelluricPlanetMaterial(
             this.model,
-            assets.textures.terrains,
-            assets.textures.pools.telluricPlanetMaterialLut,
+            {
+                grass: assets.textures.terrains.grass,
+                rock: assets.textures.terrains.rock,
+                sand: assets.textures.terrains.sand,
+                snow: assets.textures.terrains.snow,
+                noise: assets.textures.noises.seamlessPerlin,
+            },
             scene,
         );
 
         this.sides = [
-            new ChunkTree("up", this.model, this.aggregate, this.material, scene),
-            new ChunkTree("down", this.model, this.aggregate, this.material, scene),
-            new ChunkTree("forward", this.model, this.aggregate, this.material, scene),
-            new ChunkTree("backward", this.model, this.aggregate, this.material, scene),
-            new ChunkTree("right", this.model, this.aggregate, this.material, scene),
-            new ChunkTree("left", this.model, this.aggregate, this.material, scene),
+            new ChunkTree("up", this.model, this.aggregate, this.material.get(), scene),
+            new ChunkTree("down", this.model, this.aggregate, this.material.get(), scene),
+            new ChunkTree("forward", this.model, this.aggregate, this.material.get(), scene),
+            new ChunkTree("backward", this.model, this.aggregate, this.material.get(), scene),
+            new ChunkTree("right", this.model, this.aggregate, this.material.get(), scene),
+            new ChunkTree("left", this.model, this.aggregate, this.material.get(), scene),
         ];
 
         this.targetInfo = defaultTargetInfoCelestialBody(this.getBoundingRadius());
@@ -179,10 +183,6 @@ export class TelluricPlanet implements PlanetaryMassObjectBase<"telluricPlanet" 
      */
     public updateLOD(observerPosition: Vector3, chunkForge: ChunkForge): void {
         for (const side of this.sides) side.update(observerPosition, chunkForge);
-    }
-
-    public updateMaterial(stellarObjects: ReadonlyArray<PointLight>): void {
-        this.material.update(this.getTransform().getWorldMatrix(), stellarObjects);
     }
 
     public getRadius(): number {

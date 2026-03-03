@@ -162,7 +162,6 @@ export async function createTelluricPlanetScene(
         chunkForge.update(assets);
 
         planet.computeCulling(camera);
-        planet.updateMaterial([light]);
     });
 
     await new Promise<void>((resolve) => {

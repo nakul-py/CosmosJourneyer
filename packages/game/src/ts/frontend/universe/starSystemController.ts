@@ -34,7 +34,6 @@ import {
     setRotation,
 } from "@/frontend/universe/architecture/orbitalObjectUtils";
 import { BlackHole } from "@/frontend/universe/stellarObjects/blackHole/blackHole";
-import { Star } from "@/frontend/universe/stellarObjects/star/star";
 import { SystemTarget } from "@/frontend/universe/systemTarget";
 
 import { lightYearsToMeters } from "@/utils/physics/unitConversions";
@@ -52,6 +51,7 @@ import {
     type StellarObject,
 } from "./architecture/orbitalObject";
 import { GravitySystem } from "./gravitySystem";
+import type { GasPlanet } from "./planets/gasPlanet/gasPlanet";
 import { TelluricPlanet } from "./planets/telluricPlanet/telluricPlanet";
 import { type ChunkForge } from "./planets/telluricPlanet/terrain/chunks/chunkForge";
 import { StarFieldBox } from "./starFieldBox";
@@ -236,6 +236,10 @@ export class StarSystemController {
 
     public getTelluricPlanets(): ReadonlyArray<TelluricPlanet> {
         return this.getPlanets().filter((planet) => planet instanceof TelluricPlanet);
+    }
+
+    public getGasPlanets(): ReadonlyArray<GasPlanet> {
+        return this.getPlanets().filter((planet) => planet.type === "gasPlanet");
     }
 
     /**
@@ -452,18 +456,16 @@ export class StarSystemController {
      */
     private updateShaders(deltaSeconds: number) {
         const stellarObjects = this.getStellarObjects();
-        const planetaryMassObjects = this.getPlanetaryMassObjects();
-
-        for (const planet of planetaryMassObjects) {
+        for (const planet of this.getGasPlanets()) {
             planet.updateMaterial(
                 stellarObjects.map((object) => object.getLight()),
                 deltaSeconds,
             );
         }
 
-        for (const stellarObject of stellarObjects) {
-            //FIXME: this needs to be refactored to be future proof when adding new stellar objects
-            if (stellarObject instanceof Star) stellarObject.updateMaterial(deltaSeconds);
+        const stars = stellarObjects.filter((object) => object.type === "star");
+        for (const star of stars) {
+            star.updateMaterial(deltaSeconds);
         }
     }
 

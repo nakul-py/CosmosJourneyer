@@ -36,7 +36,6 @@ import { getOrbitalObjectTypeToI18nString } from "@/frontend/helpers/orbitalObje
 import { AtmosphereUniforms } from "@/frontend/postProcesses/atmosphere/atmosphereUniforms";
 import { type RingsProceduralPatternLut } from "@/frontend/postProcesses/rings/ringsProceduralLut";
 import { RingsUniforms } from "@/frontend/postProcesses/rings/ringsUniform";
-import { type PlanetaryMassObjectBase } from "@/frontend/universe/architecture/planetaryMassObject";
 import { defaultTargetInfoCelestialBody, type TargetInfo } from "@/frontend/universe/architecture/targetable";
 import { AsteroidField } from "@/frontend/universe/asteroidFields/asteroidField";
 
@@ -45,10 +44,11 @@ import { type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
+import type { CelestialBodyBase } from "../../architecture/celestialBody";
 import { GasPlanetProceduralMaterial } from "./gasPlanetProceduralMaterial";
 import { createGasPlanetTextureMaterial } from "./gasPlanetTextureMaterial";
 
-export class GasPlanet implements PlanetaryMassObjectBase<"gasPlanet">, Cullable {
+export class GasPlanet implements CelestialBodyBase<"gasPlanet">, Cullable {
     readonly model: DeepReadonly<GasPlanetModel>;
 
     readonly type = "gasPlanet";
