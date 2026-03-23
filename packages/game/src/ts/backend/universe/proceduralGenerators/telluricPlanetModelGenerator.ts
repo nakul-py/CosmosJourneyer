@@ -29,7 +29,7 @@ import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
 import { EarthMass, EarthSeaLevelPressure } from "@/utils/physics/constants";
-import { computeEffectiveTemperature, hasLiquidWater } from "@/utils/physics/physics";
+import { computeEffectiveTemperature, getOceanDepth, hasLiquidWater } from "@/utils/physics/physics";
 import { degreesToRadians } from "@/utils/physics/unitConversions";
 import type { DeepPartial, DeepReadonly } from "@/utils/types";
 
@@ -111,39 +111,48 @@ export function generateTelluricPlanetModel(
 
     const axialTilt = normalRandom(0, 0.2, rng, GenerationSteps.AXIAL_TILT);
     const siderealDaySeconds = (60 * 60 * 24) / 10;
-    const waterAmount = Math.max(normalRandom(1.0, 0.3, rng, GenerationSteps.WATER_AMOUNT), 0);
-
+    const waterAmount = clamp(normalRandom(0.02, 0.01, rng, GenerationSteps.WATER_AMOUNT), 0, 0.2);
     const canHaveLiquidWater = hasLiquidWater(pressure, temperatureRange.min, temperatureRange.max);
+
+    let oceanCoverage = clamp(normalRandom(0.8, 0.1, rng, GenerationSteps.TERRAIN), 0, 0.95);
+    if (pressure === 0) {
+        oceanCoverage = 0.0;
+    }
 
     const ocean: OceanModel | null = canHaveLiquidWater
         ? {
-              depth: (Settings.OCEAN_DEPTH * waterAmount * pressure) / EarthSeaLevelPressure,
+              depth: getOceanDepth(radius, mass, waterAmount, oceanCoverage),
           }
         : null;
 
+    if (ocean === null) {
+        oceanCoverage /= 1.3;
+    }
+
+    const averageTemperature = (temperatureRange.min + temperatureRange.max) / 2;
     const clouds: CloudsModel | null =
         ocean !== null
-            ? newCloudsModel(radius + ocean.depth, Settings.CLOUD_LAYER_HEIGHT, waterAmount, pressure)
+            ? newCloudsModel(
+                  radius + ocean.depth,
+                  Settings.CLOUD_LAYER_HEIGHT,
+                  oceanCoverage,
+                  averageTemperature,
+                  pressure,
+              )
             : null;
 
     const terrainSettings = {
         continents_frequency: radius / Settings.EARTH_RADIUS,
-        continents_fragmentation: clamp(normalRandom(0.8, 0.1, rng, GenerationSteps.TERRAIN), 0, 0.95),
+        continents_fragmentation: oceanCoverage,
 
         bumps_frequency: (30 * radius) / Settings.EARTH_RADIUS,
 
         max_bump_height: 1.5e3,
         max_mountain_height: 10e3,
-        continent_base_height: (ocean?.depth ?? 0) * 1.9,
+        continent_base_height: ocean !== null ? ocean.depth : 0,
 
         mountains_frequency: (60 * radius) / 1000e3,
     };
-    if (pressure === 0) {
-        terrainSettings.continents_fragmentation = 0;
-    }
-    if (ocean === null) {
-        terrainSettings.continents_fragmentation /= 1.3;
-    }
 
     const rings: RingsModel | null = uniformRandBool(0.6, rng, GenerationSteps.RINGS)
         ? newSeededRingsModel(radius, rng)

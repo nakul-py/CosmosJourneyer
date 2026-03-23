@@ -47,11 +47,11 @@ pub fn make_terrain_function(settings: TerrainSettings) -> Box<TerrainFunction> 
             let mut continent_mask =
                 continents(unit_sample_point, seed, &mut continent_mask_gradient);
 
-            elevation += continent_mask * settings.continent_base_height;
-            *out_gradient += &continent_mask_gradient * settings.continent_base_height;
-
             // Mountain Generation
             continent_mask = smoothstep(0.3, 0.5, continent_mask, &mut continent_mask_gradient);
+
+            elevation += continent_mask * settings.continent_base_height;
+            *out_gradient += &continent_mask_gradient * settings.continent_base_height;
 
             let mut mountain_gradient = Vector3::zero();
             let mut mountain_elevation = mountains(unit_sample_point, seed, &mut mountain_gradient);

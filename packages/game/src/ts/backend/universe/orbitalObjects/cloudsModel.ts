@@ -16,7 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import type { RGBColor } from "@/utils/colors";
-import { EarthSeaLevelPressure } from "@/utils/physics/constants";
+import { getWaterSaturationPressure } from "@/utils/physics/physics";
 
 export type CloudsModel = {
     layerRadius: number;
@@ -34,17 +34,23 @@ export type CloudsModel = {
 export function newCloudsModel(
     planetRadius: number,
     cloudLayerHeight: number,
-    waterAmount: number,
+    oceanCoverage: number,
+    averageTemperature: number,
     pressure: number,
 ): CloudsModel {
+    const waterSaturationPressure = getWaterSaturationPressure(averageTemperature);
+    const calibrationCoefficient = 30;
+    const maxCoverage = 0.8;
+    const coverage =
+        maxCoverage * (1.0 - Math.exp((-calibrationCoefficient * oceanCoverage * waterSaturationPressure) / pressure));
     return {
         layerRadius: planetRadius + cloudLayerHeight,
         smoothness: 0.7,
         specularPower: 2,
         frequency: 4,
         detailFrequency: 12,
-        coverage: 0.75 * Math.exp((-waterAmount * pressure) / EarthSeaLevelPressure),
-        sharpness: 2.5,
+        coverage,
+        sharpness: 1,
         color: { r: 0.8, g: 0.8, b: 0.8 },
         worleySpeed: 0.0005,
         detailSpeed: 0.003,

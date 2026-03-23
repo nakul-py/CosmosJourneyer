@@ -162,7 +162,13 @@ export function generateStarSystemModel(
             const satelliteName = `${planet.name}${Alphabet[j]}`;
             const satelliteSeed = centeredRand(planetRng, GenerationSteps.MOONS + j) * Settings.SEED_HALF_RANGE;
             const satelliteId = createOrbitalObjectId([planet.id], "telluricSatellite", j);
-            const satelliteModel = generateTelluricSatelliteModel(satelliteId, satelliteSeed, satelliteName, [planet]);
+            const satelliteModel = generateTelluricSatelliteModel(
+                satelliteId,
+                satelliteSeed,
+                satelliteName,
+                [planet],
+                stellarObjects,
+            );
             satellites.push(satelliteModel);
         }
     });

@@ -55,8 +55,6 @@ uniform float time;
 
 #include "./utils/rayIntersectSphere.glsl";
 
-#include "./utils/smoothSharpener.glsl";
-
 #include "./utils/rotateAround.glsl";
 
 #include "./utils/computeSpecularHighlight.glsl";
@@ -64,6 +62,14 @@ uniform float time;
 #include "./utils/removeAxialTilt.glsl";
 
 #include "./utils/toUV.glsl";
+
+float skewCentered(float x, float k) {
+    if (x < 0.5) {
+        return 0.5 * pow(2.0 * x, k);
+    }
+    return 1.0 - 0.5 * pow(2.0 * (1.0 - x), k);
+}
+
 
 float cloudDensityAtPoint(vec3 samplePoint) {
     vec3 rotationAxisPlanetSpace = vec3(0.0, 1.0, 0.0);
@@ -84,13 +90,12 @@ float cloudDensityAtPoint(vec3 samplePoint) {
     float density = textureLod(clouds_lut, uvWorley, log2(max(dfWorley.x, dfWorley.y) * 1024.0)).r;
     density *= textureLod(clouds_lut, uvDetail, log2(max(dfDetail.x, dfDetail.y) * 1024.0)).g;
 
-    float cloudThickness = 2.0;//TODO: make this a uniform
+    // move back average to 0.5
+    density = sqrt(density);
 
-    density = saturate(density * cloudThickness);
-
-    density = smoothstep(clouds_coverage, 1.0, density);
-
-    density = smoothSharpener(density, clouds_sharpness);
+    float clouds_threshold = 1.0 - skewCentered(clouds_coverage, 0.2); 
+    float range = pow(0.15, clouds_sharpness);
+    density = smoothstep(clouds_threshold - range / 2.0, clouds_threshold + range / 2.0, density);
 
     return density;
 }

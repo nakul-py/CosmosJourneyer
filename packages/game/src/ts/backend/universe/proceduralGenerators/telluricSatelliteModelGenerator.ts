@@ -15,11 +15,11 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { normalRandom, randRangeInt } from "extended-random";
+import { normalRandom } from "extended-random";
 
 import { type AtmosphereModel } from "@/backend/universe/orbitalObjects/atmosphereModel";
 import { newCloudsModel, type CloudsModel } from "@/backend/universe/orbitalObjects/cloudsModel";
-import { type PlanetModel } from "@/backend/universe/orbitalObjects/index";
+import { type PlanetModel, type StellarObjectModel } from "@/backend/universe/orbitalObjects/index";
 import { type OceanModel } from "@/backend/universe/orbitalObjects/oceanModel";
 import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
 import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
@@ -29,16 +29,20 @@ import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
 import { EarthMass, EarthSeaLevelPressure, MoonMass } from "@/utils/physics/constants";
 import { getOrbitalPeriod } from "@/utils/physics/orbit";
-import { hasLiquidWater } from "@/utils/physics/physics";
-import { celsiusToKelvin, degreesToRadians } from "@/utils/physics/unitConversions";
+import { computeEffectiveTemperature, getOceanDepth, hasLiquidWater } from "@/utils/physics/physics";
+import { degreesToRadians } from "@/utils/physics/unitConversions";
+import type { DeepReadonly, NonEmptyArray } from "@/utils/types";
 
 import { Settings } from "@/settings";
+
+import { getTemperatureRange } from "./temperatureRange";
 
 export function generateTelluricSatelliteModel(
     id: string,
     seed: number,
     name: string,
-    parentBodies: PlanetModel[],
+    parentBodies: DeepReadonly<NonEmptyArray<PlanetModel>>,
+    stellarObjects: DeepReadonly<Array<StellarObjectModel>>,
 ): TelluricSatelliteModel {
     const rng = getRngFromSeed(seed);
 
@@ -72,14 +76,34 @@ export function generateTelluricSatelliteModel(
         pressure = 0;
     }
 
-    //TODO: use distance to star to determine min temperature when using 1:1 scale
-    const minTemperature = Math.max(0, normalRandom(celsiusToKelvin(-20), 30, rng, 80));
-    // when pressure is close to 1, the max temperature is close to the min temperature (the atmosphere does thermal regulation)
-    const maxTemperature =
-        minTemperature + Math.exp(-pressure / EarthSeaLevelPressure) * randRangeInt(30, 200, rng, 81);
+    const stellarParents: Array<{ stellarObject: DeepReadonly<StellarObjectModel>; distance: number }> = [];
+    for (const stellarObject of stellarObjects) {
+        let averageSemiMajorAxis = 0;
+        let count = 0;
+        for (const parent of parentBodies) {
+            if (parent.orbit.parentIds.includes(stellarObject.id)) {
+                averageSemiMajorAxis += parent.orbit.semiMajorAxis;
+                count++;
+            }
+        }
+        if (count > 0) {
+            stellarParents.push({ stellarObject, distance: averageSemiMajorAxis / count });
+        }
+    }
+
+    const effectiveTemperature = computeEffectiveTemperature(
+        stellarParents.map(({ stellarObject, distance }) => ({
+            temperature: stellarObject.blackBodyTemperature,
+            radius: stellarObject.radius,
+            distance: distance,
+        })),
+        0.3,
+    );
+
+    const temperatureRange = getTemperatureRange(effectiveTemperature, 40, pressure);
 
     const axialTilt = 0;
-    const waterAmount = Math.max(normalRandom(1.0, 0.3, rng, GenerationSteps.WATER_AMOUNT), 0);
+    const waterAmount = clamp(normalRandom(0.5, 0.1, rng, GenerationSteps.WATER_AMOUNT), 0, 1);
 
     const atmosphere: AtmosphereModel | null =
         pressure > 0
@@ -89,13 +113,22 @@ export function generateTelluricSatelliteModel(
               }
             : null;
 
-    const canHaveLiquidWater = hasLiquidWater(pressure, minTemperature, maxTemperature);
+    const canHaveLiquidWater = hasLiquidWater(pressure, temperatureRange.min, temperatureRange.max);
+
+    let oceanCoverage = clamp(normalRandom(0.8, 0.1, rng, GenerationSteps.TERRAIN), 0, 0.95);
+    if (pressure === 0) {
+        oceanCoverage = 0.0;
+    }
 
     const ocean: OceanModel | null = canHaveLiquidWater
         ? {
-              depth: (Settings.OCEAN_DEPTH * waterAmount * pressure) / EarthSeaLevelPressure,
+              depth: getOceanDepth(radius, mass, waterAmount, oceanCoverage),
           }
         : null;
+
+    if (ocean === null) {
+        oceanCoverage /= 1.3;
+    }
 
     const parentMaxRadius = parentBodies.reduce((max, body) => Math.max(max, body.radius), 0);
 
@@ -132,21 +165,26 @@ export function generateTelluricSatelliteModel(
 
     const siderealDaySeconds = getOrbitalPeriod(orbit.semiMajorAxis, parentMassSum);
 
+    const averageTemperature = (temperatureRange.min + temperatureRange.max) / 2;
     const clouds: CloudsModel | null =
         ocean !== null
-            ? newCloudsModel(radius + ocean.depth, Settings.CLOUD_LAYER_HEIGHT, waterAmount, pressure)
+            ? newCloudsModel(
+                  radius + ocean.depth,
+                  Settings.CLOUD_LAYER_HEIGHT,
+                  oceanCoverage,
+                  averageTemperature,
+                  pressure,
+              )
             : null;
 
     const terrainSettings = {
         continents_frequency: radius / Settings.EARTH_RADIUS,
-        continents_fragmentation:
-            pressure > 0 ? clamp(normalRandom(0.65, 0.03, rng, GenerationSteps.TERRAIN), 0, 0.95) : 0,
-
+        continents_fragmentation: oceanCoverage,
         bumps_frequency: (30 * radius) / Settings.EARTH_RADIUS,
 
         max_bump_height: 1.5e3,
         max_mountain_height: 10e3,
-        continent_base_height: 5e3 + 1.9 * (ocean?.depth ?? 0),
+        continent_base_height: 5e3 + (ocean?.depth ?? 0),
 
         mountains_frequency: (60 * radius) / 1000e3,
     };
@@ -166,10 +204,7 @@ export function generateTelluricSatelliteModel(
         },
         orbit: orbit,
         terrainSettings: terrainSettings,
-        temperature: {
-            min: minTemperature,
-            max: maxTemperature,
-        },
+        temperature: temperatureRange,
         atmosphere: atmosphere,
         ocean: ocean,
         clouds: clouds,
