@@ -7,7 +7,7 @@ test("The telluric planet playground renders correctly for Earth-Like worlds", a
         shotName: "earth-like-baseline",
         scene: "telluricPlanet",
         flagToWait: "frozen",
-        urlParams: { seed: "6", freeze: 1 },
+        urlParams: { seed: "261", freeze: 1 },
     });
 });
 

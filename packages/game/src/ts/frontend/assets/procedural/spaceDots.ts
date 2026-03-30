@@ -22,8 +22,9 @@ import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
 
-import { lerpSmooth } from "@/frontend/helpers/animations/interpolations";
 import type { Transformable } from "@/frontend/universe/architecture/transformable";
+
+import { lerpSmooth } from "@/utils/math";
 
 import { SpaceDotsMaterial, type SpaceDotsMaterialOptions } from "./spaceDotsMaterial";
 

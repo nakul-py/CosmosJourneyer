@@ -22,10 +22,10 @@ import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
 
+import { lerpSmooth } from "@/utils/math";
 import { EarthG } from "@/utils/physics/constants";
 
 import type { Controls } from "../controls";
-import { lerpSmooth } from "../helpers/animations/interpolations";
 import { quickAnimation } from "../helpers/animations/quickAnimation";
 import { toggleDoor } from "./door";
 import { type Vehicle } from "./vehicle";

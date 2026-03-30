@@ -22,8 +22,9 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
 
-import { lerpSmooth } from "@/frontend/helpers/animations/interpolations";
 import { pitch, roll, translate, yaw } from "@/frontend/helpers/transform";
+
+import { lerpSmooth } from "@/utils/math";
 
 import { Settings } from "@/settings";
 
