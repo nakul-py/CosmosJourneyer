@@ -19,10 +19,9 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PhysicsConstraintAxis } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import type { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 
-import { clamp } from "@/utils/math";
+import { clamp, lerp, lerpSmooth } from "@/utils/math";
 import { degreesToRadians, kmhToMetersPerSecond } from "@/utils/physics/unitConversions";
 
-import { lerp, lerpSmooth } from "../helpers/animations/interpolations";
 import type { Transformable } from "../universe/architecture/transformable";
 import type { Door } from "./door";
 import type { Wheel } from "./wheel";

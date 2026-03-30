@@ -39,27 +39,3 @@ export function slerpSmoothToRef(
 ) {
     return Quaternion.SlerpToRef(a, b, 2 ** (-deltaSeconds / halfLifeSeconds), ref);
 }
-
-/**
- * Frame-rate independent lerp based on Freya Holmer's tweet.
- * @param a The start value
- * @param b The target value
- * @param halfLifeSeconds The half-life of the lerp (in seconds)
- * @param deltaSeconds The time delta (in seconds)
- * @returns The interpolated value
- * @see https://x.com/FreyaHolmer/status/1757836988495847568
- */
-export function lerpSmooth(a: number, b: number, halfLifeSeconds: number, deltaSeconds: number) {
-    return b + (a - b) * 2 ** (-deltaSeconds / halfLifeSeconds);
-}
-
-/**
- * Linear interpolation for numbers.
- * @param a The start value
- * @param b The target value
- * @param t The interpolation factor (0 to 1)
- * @returns The interpolated value
- */
-export function lerp(a: number, b: number, t: number): number {
-    return a + (b - a) * t;
-}

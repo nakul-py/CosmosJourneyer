@@ -50,9 +50,8 @@ import {
     vertexAttribute,
 } from "babylonjs-shading-language";
 
-import { lerp } from "@/frontend/helpers/animations/interpolations";
-
 import { addN, sampleDisk } from "@/utils/bslExtensions";
+import { lerp } from "@/utils/math";
 
 export type SpaceDotsMaterialOptions = Partial<{
     instanceCount: number;

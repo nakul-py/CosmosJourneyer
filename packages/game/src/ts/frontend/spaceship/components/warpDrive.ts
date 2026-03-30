@@ -17,9 +17,7 @@
 
 import { getWarpDriveSpec, type SerializedWarpDrive } from "@/backend/spaceship/serializedComponents/warpDrive";
 
-import { lerpSmooth } from "@/frontend/helpers/animations/interpolations";
-
-import { clamp, remap } from "@/utils/math";
+import { clamp, lerpSmooth, remap } from "@/utils/math";
 import { assertUnreachable } from "@/utils/types";
 
 type WarpDriveState = "disabled" | "enabled" | "disengaging";
