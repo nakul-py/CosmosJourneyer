@@ -36,7 +36,7 @@
         "build:channel-packer": "pnpm --filter @cosmos-journeyer/channel-packer build",
         "build:game": "pnpm --filter @cosmos-journeyer/game build",
         "build:website": "pnpm --filter @cosmos-journeyer/website build",
-        "build:prod": "tsx ./scripts/build-prod.ts",
+        "build:prod": "node ./scripts/build-prod.ts",
         "serve:prod": "http-server dist -p 8080",
         "dev:channel-packer": "pnpm --filter @cosmos-journeyer/channel-packer dev",
         "dev:game": "pnpm --filter @cosmos-journeyer/game serve",
@@ -61,7 +61,6 @@
         "husky": "^9.1.7",
         "lint-staged": "^16.2.7",
         "oxfmt": "catalog:",
-        "tsx": "^4.21.0",
         "typescript": "catalog:",
         "typescript-eslint": "catalog:"
     },
