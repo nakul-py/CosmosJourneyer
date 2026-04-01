@@ -84,6 +84,6 @@
         "typedoc-github-theme": "catalog:",
         "typedoc-plugin-missing-exports": "catalog:",
         "typescript": "catalog:",
-        "vitest": "^4.1.2"
+        "vitest": "catalog:"
     }
 }
