@@ -1,6 +1,6 @@
 import eslint from "@eslint/js";
 import nextPlugin from "@next/eslint-plugin-next";
-import importPlugin from "eslint-plugin-import";
+import { importX } from "eslint-plugin-import-x";
 import { defineConfig, globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 
@@ -55,7 +55,7 @@ const nextCoreWebVitals = {
 const typeScriptWorkspaceRules = {
     files: ["packages/**/*.{ts,tsx,js,jsx}"],
     settings: {
-        "import/resolver": {
+        "import-x/resolver": {
             typescript: {
                 project: projectConfigs,
                 alwaysTryTypes: true,
@@ -68,7 +68,7 @@ const typeScriptWorkspaceRules = {
         sourceType: "module",
     },
     rules: {
-        "import/no-cycle": "error",
+        "import-x/no-cycle": "error",
 
         "@typescript-eslint/switch-exhaustiveness-check": "error",
         "@typescript-eslint/no-inferrable-types": "error",
@@ -155,6 +155,7 @@ export default defineConfig([
         "tsconfig.json",
         "packages/game/dist",
         "packages/channel-packer/dist",
+        "packages/babylonjs-shading-language/doc",
         "packages/game/doc",
         "packages/game/src/asset",
         "coverage",
@@ -166,8 +167,8 @@ export default defineConfig([
     ]),
     eslint.configs.recommended,
     ...strictTypeChecked,
-    importPlugin.flatConfigs.recommended,
-    importPlugin.flatConfigs.typescript,
+    importX.flatConfigs.recommended,
+    importX.flatConfigs.typescript,
     nextCoreWebVitals,
     typeScriptWorkspaceRules,
 ]);

@@ -101,19 +101,7 @@ const resetCameraInteraction = new PressInteraction(
     }),
 );
 
-export const SpaceShipControlsInputs = new InputMap<{
-    landing: PressInteraction;
-    emitLandingRequest: PressInteraction;
-    upDown: Action;
-    throttle: Action;
-    rollPitch: Action<[number, number]>;
-    toggleWarpDrive: PressInteraction;
-    ignorePointer: Action;
-    throttleToZero: PressInteraction;
-    previousMission: PressInteraction;
-    nextMission: PressInteraction;
-    resetCamera: PressInteraction;
-}>("SpaceShipInputs", {
+export const SpaceShipControlsInputs = new InputMap("SpaceShipInputs", {
     landing: landingInteraction,
     emitLandingRequest: emitLandingRequest,
     upDown: upDownAction,
