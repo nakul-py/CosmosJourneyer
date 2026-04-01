@@ -54,7 +54,7 @@ export function generateTelluricPlanetModel(
 
     const orbitRadiuses: Array<number> = [];
     for (const parent of parentBodies) {
-        const orbitRadius = getTelluricPlanetOrbitRadius(parent.blackBodyTemperature, parent.radius, parent.type, () =>
+        const orbitRadius = getTelluricPlanetOrbitRadius(parent.blackBodyTemperature, parent.radius, () =>
             rng(GenerationSteps.ORBIT + orbitRadiuses.length),
         );
         orbitRadiuses.push(orbitRadius);

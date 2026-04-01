@@ -165,7 +165,31 @@ export function getApparentGravityOnSpaceTether(period: number, mass: number, di
  */
 export function getWaterIceFrostLine(stellarTemperature: number, stellarRadius: number): number {
     const iceSublimationTemperature = 170;
-    return 0.5 * stellarRadius * (stellarTemperature / iceSublimationTemperature) ** 2;
+    return getTemperatureLine(stellarTemperature, stellarRadius, iceSublimationTemperature);
+}
+
+/**
+ * @param stellarTemperature The temperature of the star in Kelvin
+ * @param stellarRadius The radius of the star in meters
+ * @returns An estimation of the distance inside which silicate rock sublimates under stellar radiation, in meters
+ */
+export function getSilicateRockSublimationLine(stellarTemperature: number, stellarRadius: number): number {
+    const rockSublimationTemperature = 1500;
+    return getTemperatureLine(stellarTemperature, stellarRadius, rockSublimationTemperature);
+}
+
+/**
+ * @param stellarTemperature The temperature of the star in Kelvin
+ * @param stellarRadius The radius of the star in meters
+ * @param targetTemperature The target temperature in Kelvin
+ * @returns The distance from the star at which the target temperature is reached, in meters
+ */
+export function getTemperatureLine(
+    stellarTemperature: number,
+    stellarRadius: number,
+    targetTemperature: number,
+): number {
+    return 0.5 * stellarRadius * (stellarTemperature / targetTemperature) ** 2;
 }
 
 /**

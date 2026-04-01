@@ -15,34 +15,26 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { SolarRadius } from "@/utils/physics/constants";
-import { getWaterIceFrostLine } from "@/utils/physics/physics";
-
-import type { StellarObjectModel } from "../orbitalObjects";
+import { getSilicateRockSublimationLine, getWaterIceFrostLine } from "@/utils/physics/physics";
 
 /**
  * Uses stellar luminosity to determine a plausible semi-major axis range for a Telluric planet then samples it
  * @param stellarTemperature Temperature of the parent star in K
  * @param stellarRadius Radius of the parent star in meters
- * @param stellarType Type of the parent stellar object
  * @param rng A random number generator function returning a uniform float in [0, 1)
  * @returns Semi-major axis of the telluric planet orbit in meters
  */
 export function getTelluricPlanetOrbitRadius(
     stellarTemperature: number,
     stellarRadius: number,
-    stellarType: StellarObjectModel["type"],
     rng: () => number,
 ): number {
-    // Avoid orbits too close to the star
-    const stellarBound = (3 + 2 * rng()) * stellarRadius;
-    const neutronStarExclusionBound = stellarType === "neutronStar" ? SolarRadius * 10 : stellarRadius * 1.5;
-    const lowerBound = Math.max(stellarBound, neutronStarExclusionBound);
+    // Telluric worlds cannot exist where silicate rocks sublimate
+    const lowerBound = getSilicateRockSublimationLine(stellarTemperature, stellarRadius);
 
-    let upperBound = getWaterIceFrostLine(stellarTemperature, stellarRadius);
-    if (upperBound <= lowerBound) {
-        upperBound = lowerBound * 1.5;
-    }
+    // Telluric worlds are unlikely to form beyond the water ice frost line
+    // Beyond the frost line => more solid material (ice is stable) => bigger planets => trap large quantities of gas => gas giants
+    const upperBound = getWaterIceFrostLine(stellarTemperature, stellarRadius);
 
     // Log-uniform sample in [aMin, aMax] (from empirical Kepler data as found in https://www.pnas.org/doi/10.1073/pnas.1319909110)
     const uniformRandom = rng();
