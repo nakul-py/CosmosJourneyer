@@ -15,8 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { SolarLuminosity } from "@/utils/physics/constants";
-import { getBlackBodyLuminosity } from "@/utils/physics/thermodynamics";
+import { getWaterIceFrostLine } from "@/utils/physics/physics";
 import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
 
 /**
@@ -27,11 +26,7 @@ import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
  * @returns Semi-major axis in meters
  */
 export function getGasPlanetOrbitRadius(stellarTemperature: number, stellarRadius: number, rng: () => number): number {
-    const stellarLuminosity = getBlackBodyLuminosity(stellarTemperature, stellarRadius);
-    const relativeLuminosity = stellarLuminosity / SolarLuminosity;
-
-    // Empirical Solar System-calibrated snow line heuristic
-    const snowLine = astronomicalUnitToMeters(2.7) * Math.sqrt(relativeLuminosity);
+    const snowLine = getWaterIceFrostLine(stellarTemperature, stellarRadius);
 
     // Hot Jupiter modeling: around 1% chance (see https://academic.oup.com/mnras/article/516/1/75/6654884)
     const pHotJupiter = 0.01;
