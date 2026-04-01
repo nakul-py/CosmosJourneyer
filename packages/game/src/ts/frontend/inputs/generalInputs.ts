@@ -38,12 +38,7 @@ const videoCaptureAction = new Action({
 
 const videoCaptureInteraction = new PressInteraction(videoCaptureAction);
 
-export const GeneralInputs = new InputMap<{
-    togglePause: PressInteraction;
-    toggleStarMap: PressInteraction;
-    screenshot: PressInteraction;
-    videoCapture: PressInteraction;
-}>("GeneralInputs", {
+export const GeneralInputs = new InputMap("GeneralInputs", {
     togglePause: togglePauseInteraction,
     toggleStarMap: toggleStarMapInteraction,
     screenshot: screenshotInteraction,

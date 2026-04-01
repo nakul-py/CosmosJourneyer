@@ -18,10 +18,7 @@ const prevPanel = new PressInteraction(
     }),
 );
 
-export const TutorialControlsInputs = new InputMap<{
-    nextPanel: PressInteraction;
-    prevPanel: PressInteraction;
-}>("TutorialControls", {
+export const TutorialControlsInputs = new InputMap("TutorialControls", {
     nextPanel,
     prevPanel,
 });

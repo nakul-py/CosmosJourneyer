@@ -63,15 +63,7 @@ const toggleCameraInteraction = new PressInteraction(
     }),
 );
 
-export const CharacterInputs = new InputMap<{
-    move: Action<[number, number]>;
-    jump: PressInteraction;
-    dance: PressInteraction;
-    sitOnGround: PressInteraction;
-    run: Action;
-    toggleCamera: PressInteraction;
-    swimVertical: Action;
-}>("CharacterInputs", {
+export const CharacterInputs = new InputMap("CharacterInputs", {
     move: moveAction,
     jump: jumpInteraction,
     dance: danceInteraction,

@@ -58,14 +58,7 @@ const resetCameraAction = new Action({
     bindings: [keyboard.getControl("Numpad0")],
 });
 
-export const VehicleInputs = new InputMap<{
-    accelerate: Action;
-    steer: Action;
-    brake: Action;
-    toggleCamera: PressInteraction;
-    toggleDoors: PressInteraction;
-    resetCamera: PressInteraction;
-}>("VehicleInputs", {
+export const VehicleInputs = new InputMap("VehicleInputs", {
     accelerate: accelerateAction,
     steer: steerAction,
     brake: brakeAction,

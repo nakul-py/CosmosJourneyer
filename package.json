@@ -56,7 +56,7 @@
         "@next/eslint-plugin-next": "catalog:",
         "eslint": "catalog:",
         "eslint-import-resolver-typescript": "catalog:",
-        "eslint-plugin-import": "catalog:",
+        "eslint-plugin-import-x": "catalog:",
         "http-server": "catalog:",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.7",

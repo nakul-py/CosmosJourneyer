@@ -48,15 +48,7 @@ const printDebugInfoInteraction = new PressInteraction(
     }),
 );
 
-export const StarSystemInputs = new InputMap<{
-    setTarget: PressInteraction;
-    toggleSpaceShipCharacter: PressInteraction;
-    jumpToSystem: PressInteraction;
-    toggleUi: PressInteraction;
-    toggleOrbitsAndAxis: PressInteraction;
-    cycleViews: PressInteraction;
-    printDebugInfo: PressInteraction;
-}>("StarSystemInputs", {
+export const StarSystemInputs = new InputMap("StarSystemInputs", {
     setTarget: setTargetInteraction,
     toggleSpaceShipCharacter: toggleSpaceShipCharacterInteraction,
     jumpToSystem: jumpToSystemInteraction,

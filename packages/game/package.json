@@ -35,13 +35,11 @@
         "format:check": "oxfmt . --check",
         "format": "oxfmt . --write",
         "test:unit": "vitest run",
-        "test:coverage": "vitest run --coverage",
         "test:e2e": "pnpm build && playwright test",
         "test:e2e:update": "pnpm build && playwright test --update-snapshots",
         "doc": "typedoc --options typedoc.json",
         "serve:doc": "http-server doc -p 8081",
         "lint": "eslint .",
-        "lint:fast": "eslint . --rule \"import/no-cycle: 0\" --rule \"import/namespace: 0\" --cache",
         "typecheck:watch": "tsc --noEmit --watch",
         "typecheck": "tsc --noEmit",
         "tauri": "tauri"
@@ -60,7 +58,7 @@
         "earcut": "^3.0.2",
         "extended-random": "^1.2.2",
         "fast-simplex-noise": "^4.0.0",
-        "i18next": "^25.8.0",
+        "i18next": "^26.0.3",
         "qrcode": "^1.5.4",
         "squirrel-noise": "^1.0.0",
         "terrain-generation": "workspace:^",
@@ -76,7 +74,6 @@
         "@types/qrcode": "^1.5.6",
         "@types/webpack": "^5.28.5",
         "@types/webpack-env": "^1.18.8",
-        "@vitest/coverage-v8": "^4.0.17",
         "eslint": "catalog:",
         "http-server": "catalog:",
         "jsdom": "^27.4.0",
@@ -87,7 +84,6 @@
         "typedoc-github-theme": "catalog:",
         "typedoc-plugin-missing-exports": "catalog:",
         "typescript": "catalog:",
-        "vite-tsconfig-paths": "^6.0.4",
-        "vitest": "^4.0.17"
+        "vitest": "^4.1.2"
     }
 }
