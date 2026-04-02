@@ -12,6 +12,7 @@ use terrain_generation::landscape::uber_noise_layer::uber_noise_layer;
 use std::f32::consts::PI;
 
 #[test]
+#[ignore = "manual visualization test that opens a window"]
 pub fn test_uber_noise() {
     let (width, height): (u32, u32) = (500, 500);
 

@@ -75,7 +75,7 @@ pnpm --filter terrain-generation build:dev
 # Rust formatting, linting, and tests
 pnpm --filter terrain-generation format
 pnpm --filter terrain-generation lint
-pnpm --filter terrain-generation test
+pnpm --filter terrain-generation test:unit
 ```
 
 The scripts check whether the required Rust tooling is available and skip the step with a friendly message if it is
