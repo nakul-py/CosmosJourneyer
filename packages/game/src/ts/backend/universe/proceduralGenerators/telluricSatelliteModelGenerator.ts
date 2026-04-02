@@ -115,7 +115,7 @@ export function generateTelluricSatelliteModel(
 
     const canHaveLiquidWater = hasLiquidWater(pressure, temperatureRange.min, temperatureRange.max);
 
-    let oceanCoverage = clamp(normalRandom(0.8, 0.1, rng, GenerationSteps.TERRAIN), 0, 0.95);
+    let oceanCoverage = clamp(normalRandom(0.8, 0.1, rng, GenerationSteps.TERRAIN), 0.1, 0.95);
     if (pressure === 0) {
         oceanCoverage = 0.0;
     }
