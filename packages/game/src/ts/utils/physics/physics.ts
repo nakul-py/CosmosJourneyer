@@ -37,6 +37,18 @@ export function waterBoilingTemperature(pressure: number): number {
     return 1.0 / (1.0 / T1 + Math.log(P1 / P2) * (R / DH));
 }
 
+/**
+ * Returns the saturation pressure of water vapor at a given temperature using the Clausius-Clapeyron relation.
+ * @param temperature The temperature in Kelvin
+ * @returns The saturation pressure in pascal
+ */
+export function getWaterSaturationPressure(temperature: number): number {
+    const latentHeatOfVaporization = 2_260_000; // J/kg
+    const waterVaporSpecificGasConstant = 461.5; // J/(kg·K)
+    const calibrationPressure = 37_960_000_000; // Pa
+    return calibrationPressure * Math.exp(-latentHeatOfVaporization / (waterVaporSpecificGasConstant * temperature));
+}
+
 export type EffectiveTemperatureStar = {
     temperature: number;
     radius: number;
@@ -153,5 +165,48 @@ export function getApparentGravityOnSpaceTether(period: number, mass: number, di
  */
 export function getWaterIceFrostLine(stellarTemperature: number, stellarRadius: number): number {
     const iceSublimationTemperature = 170;
-    return 0.5 * stellarRadius * (stellarTemperature / iceSublimationTemperature) ** 2;
+    return getTemperatureLine(stellarTemperature, stellarRadius, iceSublimationTemperature);
+}
+
+/**
+ * @param stellarTemperature The temperature of the star in Kelvin
+ * @param stellarRadius The radius of the star in meters
+ * @returns An estimation of the distance inside which silicate rock sublimates under stellar radiation, in meters
+ */
+export function getSilicateRockSublimationLine(stellarTemperature: number, stellarRadius: number): number {
+    const rockSublimationTemperature = 1500;
+    return getTemperatureLine(stellarTemperature, stellarRadius, rockSublimationTemperature);
+}
+
+/**
+ * @param stellarTemperature The temperature of the star in Kelvin
+ * @param stellarRadius The radius of the star in meters
+ * @param targetTemperature The target temperature in Kelvin
+ * @returns The distance from the star at which the target temperature is reached, in meters
+ */
+export function getTemperatureLine(
+    stellarTemperature: number,
+    stellarRadius: number,
+    targetTemperature: number,
+): number {
+    return 0.5 * stellarRadius * (stellarTemperature / targetTemperature) ** 2;
+}
+
+/**
+ * Estimates ocean depth from a planet's water inventory and ocean coverage.
+ * @param planetRadius The planet radius in meters
+ * @param planetMass The planet mass in kilograms
+ * @param surfaceLiquidWaterMassRatio The fraction of planet mass made of surface liquid water
+ * @param oceanCoverage The fraction of the surface covered by oceans, between 0 and 1
+ */
+export function getOceanDepth(
+    planetRadius: number,
+    planetMass: number,
+    surfaceLiquidWaterMassRatio: number,
+    oceanCoverage: number,
+): number {
+    const liquidWaterDensity = 1000; // kg/m³
+    const oceanMass = surfaceLiquidWaterMassRatio * planetMass;
+    const oceanVolume = oceanMass / liquidWaterDensity;
+    return Math.cbrt(planetRadius ** 3 + (3 * oceanVolume) / (4 * Math.PI * oceanCoverage)) - planetRadius;
 }

@@ -186,10 +186,9 @@ export class ChunkTree implements Cullable {
 
         const totalRadius =
             this.planetModel.radius +
-            (this.planetModel.terrainSettings.max_mountain_height +
-                this.planetModel.terrainSettings.continent_base_height +
-                this.planetModel.terrainSettings.max_bump_height) *
-                0.5;
+            0.5 * this.planetModel.terrainSettings.max_mountain_height +
+            this.planetModel.terrainSettings.continent_base_height +
+            0.5 * this.planetModel.terrainSettings.max_bump_height;
 
         const observerRelativePosition = observerPositionW.subtract(this.parent.getAbsolutePosition());
         const observerDistanceToCenter = observerRelativePosition.length();

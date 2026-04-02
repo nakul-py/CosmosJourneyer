@@ -25,6 +25,9 @@ fn build_border_loops(nb_vertices_per_row: usize) -> [Vec<usize>; 4] {
         left.push(get_grid_index(i, 0, nb_vertices_per_row));
     }
 
+    bottom.reverse();
+    left.reverse();
+
     [top, right, bottom, left]
 }
 
@@ -36,48 +39,22 @@ fn get_vertex(positions: &[f32], index: usize) -> Vector3 {
     )
 }
 
-fn triangle_normal(positions: &[f32], index1: usize, index2: usize, index3: usize) -> Vector3 {
-    let p1 = get_vertex(positions, index1);
-    let p2 = get_vertex(positions, index2);
-    let p3 = get_vertex(positions, index3);
-
-    Vector3::cross(&(&p2 - &p1), &(&p3 - &p1))
-}
-
 fn append_quad(
     indices: &mut [u16],
     next_index_offset: &mut usize,
-    positions: &[f32],
     top_a: usize,
     top_b: usize,
     bottom_a: usize,
     bottom_b: usize,
 ) {
-    let first_triangle_normal = triangle_normal(positions, top_a, bottom_a, top_b);
-    let outward_reference = get_vertex(positions, top_a)
-        + get_vertex(positions, top_b)
-        + get_vertex(positions, bottom_a)
-        + get_vertex(positions, bottom_b);
-
-    let quad_indices = if Vector3::dot(&first_triangle_normal, &outward_reference) > 0.0 {
-        [
-            top_a as u16,
-            top_b as u16,
-            bottom_a as u16,
-            top_b as u16,
-            bottom_b as u16,
-            bottom_a as u16,
-        ]
-    } else {
-        [
-            top_a as u16,
-            bottom_a as u16,
-            top_b as u16,
-            top_b as u16,
-            bottom_a as u16,
-            bottom_b as u16,
-        ]
-    };
+    let quad_indices = [
+        top_a as u16,
+        top_b as u16,
+        bottom_a as u16,
+        top_b as u16,
+        bottom_b as u16,
+        bottom_a as u16,
+    ];
 
     indices[*next_index_offset..*next_index_offset + quad_indices.len()]
         .copy_from_slice(&quad_indices);
@@ -135,7 +112,6 @@ pub fn append_chunk_skirt(
             append_quad(
                 indices,
                 &mut next_index_offset,
-                positions,
                 border_loop[i],
                 border_loop[i + 1],
                 skirt_loop[i],

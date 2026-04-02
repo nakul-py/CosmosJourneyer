@@ -10,6 +10,7 @@ mod common;
 use common::*;
 
 #[test]
+#[ignore = "manual visualization test that opens a window"]
 fn see_terrain_function() {
     let terrain = make_terrain_function(SETTINGS);
 
