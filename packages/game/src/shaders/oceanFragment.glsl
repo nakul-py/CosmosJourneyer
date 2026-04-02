@@ -100,7 +100,7 @@ void main() {
         float opticalDepth01 = 1.0 - exp(-distanceThroughOcean * ocean_depthModifier);
         float alpha = exp(-distanceThroughOcean * ocean_alphaModifier);
 
-        vec3 deepColor = vec3(0.0, 22.0, 82.0)/255.0;
+        vec3 deepColor = vec3(4.0, 32.0, 72.0)/255.0;
         vec3 shallowColor = vec3(32.0, 193.0, 180.0)/255.0;
         vec3 oceanColor = mix(shallowColor, deepColor, opticalDepth01);
 
