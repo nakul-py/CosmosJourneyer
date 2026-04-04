@@ -189,18 +189,11 @@ export class TelluricPlanetMaterial {
         const finalNormalW = transformDirection(world, finalNormal);
 
         const view = uniformView();
-        const pbrShading = pbr(
-            finalSamples.metallic,
-            finalSamples.roughness,
-            normalW,
-            view,
-            cameraPosition,
-            positionW,
-            {
-                albedoRgb: finalSamples.albedo,
-                perturbedNormal: finalNormalW,
-            },
-        );
+        const pbrShading = pbr(f(0), finalSamples.roughness, normalW, view, cameraPosition, positionW, {
+            albedoRgb: finalSamples.albedo,
+            perturbedNormal: finalNormalW,
+            ambientOcclusion: finalSamples.ambientOcclusion,
+        });
 
         const fragOutput = outputFragColor(pbrShading.lighting);
 

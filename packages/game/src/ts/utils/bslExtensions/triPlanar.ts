@@ -42,9 +42,9 @@ import { addN, unpackNormal } from "./utils";
 
 export type TriPlanarMaterialSamples = {
     albedo: NodeMaterialConnectionPoint;
-    metallic: NodeMaterialConnectionPoint;
     roughness: NodeMaterialConnectionPoint;
     normal: NodeMaterialConnectionPoint;
+    ambientOcclusion: NodeMaterialConnectionPoint;
 };
 
 export function triPlanarMaterial(
@@ -60,10 +60,10 @@ export function triPlanarMaterial(
     const { rgb: albedoY, a: roughnessY } = textureSample(albedoRoughnessTexture, uvY, { convertToLinearSpace: true });
     const { rgb: albedoZ, a: roughnessZ } = textureSample(albedoRoughnessTexture, uvZ, { convertToLinearSpace: true });
 
-    const normalMetallicTexture = uniformTexture2d(textures.normalMetallic).source;
-    const { rgb: normalX01, a: metallicX } = textureSample(normalMetallicTexture, uvX);
-    const { rgb: normalY01, a: metallicY } = textureSample(normalMetallicTexture, uvY);
-    const { rgb: normalZ01, a: metallicZ } = textureSample(normalMetallicTexture, uvZ);
+    const normalAmbientOcclusionTexture = uniformTexture2d(textures.normalAmbientOcclusion).source;
+    const { rgb: normalX01, a: ambientOcclusionX } = textureSample(normalAmbientOcclusionTexture, uvX);
+    const { rgb: normalY01, a: ambientOcclusionY } = textureSample(normalAmbientOcclusionTexture, uvY);
+    const { rgb: normalZ01, a: ambientOcclusionZ } = textureSample(normalAmbientOcclusionTexture, uvZ);
 
     const invertY = options?.invertNormalY ?? false;
     const normalStrength = options?.normalStrength ?? f(1);
@@ -81,14 +81,14 @@ export function triPlanarMaterial(
     const blend = getTriPlanarBlending(surfaceNormal, 4.0);
     const albedo = blend(albedoX, albedoY, albedoZ);
     const roughness = blend(roughnessX, roughnessY, roughnessZ);
-    const metallic = blend(metallicX, metallicY, metallicZ);
+    const ambientOcclusion = blend(ambientOcclusionX, ambientOcclusionY, ambientOcclusionZ);
     const normal = normalize(blend(finalNormalX, finalNormalY, finalNormalZ));
 
     return {
         albedo,
         roughness,
-        metallic,
         normal,
+        ambientOcclusion,
     };
 }
 
@@ -163,7 +163,7 @@ export function mixTriPlanarSamples(
     return {
         albedo: mix(samplesA.albedo, samplesB.albedo, blendFactor),
         roughness: mix(samplesA.roughness, samplesB.roughness, blendFactor),
-        metallic: mix(samplesA.metallic, samplesB.metallic, blendFactor),
         normal: normalize(mix(samplesA.normal, samplesB.normal, blendFactor)),
+        ambientOcclusion: mix(samplesA.ambientOcclusion, samplesB.ambientOcclusion, blendFactor),
     };
 }

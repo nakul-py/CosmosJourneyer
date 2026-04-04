@@ -22,16 +22,16 @@ import { type ILoadingProgressMonitor } from "../loadingProgressMonitor";
 import { loadTextureAsync } from "./utils";
 
 import grassAlbedoRoughnessMap from "@assets/grassMaterial/wispy-grass-meadow_albedo_roughness.webp";
-import grassNormalMetallicMap from "@assets/grassMaterial/wispy-grass-meadow_normal_metallic.webp";
+import grassNormalAmbientOcclusionMap from "@assets/grassMaterial/wispy-grass-meadow_normal_ambient_occlusion.webp";
 import snowAlbedoRoughnessMap from "@assets/iceMaterial/ice_field_albedo_roughness.webp";
-import snowNormalMetallicMap from "@assets/iceMaterial/ice_field_normal_metallic.webp";
+import snowNormalAmbientOcclusionMap from "@assets/iceMaterial/ice_field_normal_ambient_occlusion.webp";
 import rockAlbedoRoughnessMap from "@assets/rockMaterial/layered-planetary_albedo_roughness.webp";
-import rockNormalMetallicMap from "@assets/rockMaterial/layered-planetary_normal_metallic.webp";
+import rockNormalAmbientOcclusionMap from "@assets/rockMaterial/layered-planetary_normal_ambient_occlusion.webp";
 import sandAlbedoRoughnessMap from "@assets/sandMaterial/wavy-sand_albedo_roughness.webp";
-import sandNormalMetallicMap from "@assets/sandMaterial/wavy-sand_normal_metallic.webp";
+import sandNormalAmbientOcclusionMap from "@assets/sandMaterial/wavy-sand_normal_ambient_occlusion.webp";
 
 export type TerrainTextures = {
-    normalMetallic: Texture;
+    normalAmbientOcclusion: Texture;
     albedoRoughness: Texture;
 };
 
@@ -46,9 +46,9 @@ export async function loadTerrainTextures(
     scene: Scene,
     progressMonitor: ILoadingProgressMonitor | null,
 ): Promise<AllTerrainTextures> {
-    const rockNormalMetallicPromise = loadTextureAsync(
-        "RockNormalMetallicMap",
-        rockNormalMetallicMap,
+    const rockNormalAmbientOcclusionPromise = loadTextureAsync(
+        "RockNormalAmbientOcclusionMap",
+        rockNormalAmbientOcclusionMap,
         scene,
         progressMonitor,
     );
@@ -59,9 +59,9 @@ export async function loadTerrainTextures(
         progressMonitor,
     );
 
-    const grassNormalMetallicPromise = loadTextureAsync(
-        "GrassNormalMetallicMap",
-        grassNormalMetallicMap,
+    const grassNormalAmbientOcclusionPromise = loadTextureAsync(
+        "GrassNormalAmbientOcclusionMap",
+        grassNormalAmbientOcclusionMap,
         scene,
         progressMonitor,
     );
@@ -72,9 +72,9 @@ export async function loadTerrainTextures(
         progressMonitor,
     );
 
-    const snowNormalMetallicPromise = loadTextureAsync(
-        "SnowNormalMetallicMap",
-        snowNormalMetallicMap,
+    const snowNormalAmbientOcclusionPromise = loadTextureAsync(
+        "SnowNormalAmbientOcclusionMap",
+        snowNormalAmbientOcclusionMap,
         scene,
         progressMonitor,
     );
@@ -85,9 +85,9 @@ export async function loadTerrainTextures(
         progressMonitor,
     );
 
-    const sandNormalMetallicPromise = loadTextureAsync(
-        "SandNormalMetallicMap",
-        sandNormalMetallicMap,
+    const sandNormalAmbientOcclusionPromise = loadTextureAsync(
+        "SandNormalAmbientOcclusionMap",
+        sandNormalAmbientOcclusionMap,
         scene,
         progressMonitor,
     );
@@ -100,19 +100,19 @@ export async function loadTerrainTextures(
 
     return {
         rock: {
-            normalMetallic: await rockNormalMetallicPromise,
+            normalAmbientOcclusion: await rockNormalAmbientOcclusionPromise,
             albedoRoughness: await rockAlbedoRoughnessPromise,
         },
         grass: {
-            normalMetallic: await grassNormalMetallicPromise,
+            normalAmbientOcclusion: await grassNormalAmbientOcclusionPromise,
             albedoRoughness: await grassAlbedoRoughnessPromise,
         },
         snow: {
-            normalMetallic: await snowNormalMetallicPromise,
+            normalAmbientOcclusion: await snowNormalAmbientOcclusionPromise,
             albedoRoughness: await snowAlbedoRoughnessPromise,
         },
         sand: {
-            normalMetallic: await sandNormalMetallicPromise,
+            normalAmbientOcclusion: await sandNormalAmbientOcclusionPromise,
             albedoRoughness: await sandAlbedoRoughnessPromise,
         },
     };
