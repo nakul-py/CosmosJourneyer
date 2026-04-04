@@ -22,8 +22,8 @@ import {
     type StarSystemCoordinates,
     universeObjectIdEquals,
     type UniverseObjectId,
+    getObjectModelById,
 } from "@cosmos-journeyer/universe-model";
-import { getObjectModelById } from "@cosmos-journeyer/universe-model";
 
 import {
     AsteroidFieldMissionState,

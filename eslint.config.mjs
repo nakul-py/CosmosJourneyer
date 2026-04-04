@@ -71,6 +71,7 @@ const typeScriptWorkspaceRules = {
     },
     rules: {
         "import-x/no-cycle": "error",
+        "import-x/no-duplicates": ["error", { "prefer-inline": true }],
 
         "@typescript-eslint/switch-exhaustiveness-check": "error",
         "@typescript-eslint/no-inferrable-types": "error",

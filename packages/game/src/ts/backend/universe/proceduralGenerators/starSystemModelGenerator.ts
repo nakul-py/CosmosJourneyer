@@ -24,8 +24,8 @@ import {
     type StellarObjectModel,
     type TelluricSatelliteModel,
     type StarSystemModel,
+    createOrbitalObjectId,
 } from "@cosmos-journeyer/universe-model";
-import { createOrbitalObjectId } from "@cosmos-journeyer/universe-model";
 import { centeredRand, randRangeInt, uniformRandBool } from "extended-random";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";

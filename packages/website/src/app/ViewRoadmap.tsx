@@ -17,8 +17,7 @@
 
 "use client";
 
-import { useRef } from "react";
-import type { FC } from "react";
+import { useRef, type FC } from "react";
 
 import { RoadmapItems } from "@/utils/constants";
 
