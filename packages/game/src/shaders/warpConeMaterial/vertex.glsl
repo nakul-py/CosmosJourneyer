@@ -12,6 +12,8 @@ uniform sampler2D warpNoise;
 varying vec3 vPosition;
 varying vec2 vUV;
 
+const float NOISE_LONGITUDINAL_SCALE = 1.0 / 3.0;
+
 float perlin(vec2 uv, int nbOctaves) {
     float value = 0.0;
     float frequency = 1.0;
@@ -30,7 +32,8 @@ float perlin(vec2 uv, int nbOctaves) {
 
 void main() {
 
-    float noise = perlin(uv + vec2(0.0, 0.1 * time), 4);
+    vec2 noiseUv = vec2(uv.x, (uv.y + 0.1 * time) * NOISE_LONGITUDINAL_SCALE);
+    float noise = perlin(noiseUv, 4);
 
     vec3 shiftedPosition = position + vec3(noise * 30.0, 0.0, 0.0);
 

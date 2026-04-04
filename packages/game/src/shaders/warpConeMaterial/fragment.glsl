@@ -9,6 +9,8 @@ uniform sampler2D warpNoise;
 
 #include "../utils/smoothSharpener.glsl";
 
+const float NOISE_LONGITUDINAL_SCALE = 1.0 / 3.0;
+
 float perlin(vec2 uv, int nbOctaves) {
     float value = 0.0;
     float frequency = 1.0;
@@ -26,11 +28,11 @@ float perlin(vec2 uv, int nbOctaves) {
 }
 
 void main() {
-    vec2 samplePoint = 3.0 * vUV + vec2(0.0, time * 1.2);
+    vec2 samplePoint = vec2(3.0 * vUV.x, (3.0 * vUV.y + time * 1.2) * NOISE_LONGITUDINAL_SCALE);
     vec2 densitySamplePoint = samplePoint / 3.0;
     densitySamplePoint.y /= 2.0;
 
-    vec2 samplePoint2 = 4.0 * vUV.yx + vec2(time * 1.5, 0.0);
+    vec2 samplePoint2 = vec2((4.0 * vUV.y + time * 1.5) * NOISE_LONGITUDINAL_SCALE, 4.0 * vUV.x);
     vec2 densitySamplePoint2 = samplePoint2 / 4.0;
     densitySamplePoint2.x /= 2.0;
 
