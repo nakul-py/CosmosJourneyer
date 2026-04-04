@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { Light } from "@babylonjs/core";
+import type { Light } from "@babylonjs/core/Lights/light";
 import { type Material } from "@babylonjs/core/Materials/material";
 import { Axis, Space } from "@babylonjs/core/Maths/math.axis";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";

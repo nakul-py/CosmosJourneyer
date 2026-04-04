@@ -178,23 +178,26 @@ export class MainMenu {
 
         this.starSystemView.setUIEnabled(false);
 
-        const coordinates: StarSystemCoordinates = {
-            localX: 0.49137314641446483,
-            localY: 0.48043087077347135,
-            localZ: 0.38353311777279386,
-            starSectorX: 0,
-            starSectorY: 0,
-            starSectorZ: 0,
+        const mainMenuStartingPlanet = {
+            systemCoordinates: {
+                starSectorX: -1,
+                starSectorY: 3,
+                starSectorZ: -2,
+                localX: -0.04744866888385668,
+                localY: -0.16910514825447703,
+                localZ: -0.11438665660768127,
+            } satisfies StarSystemCoordinates,
+            planetId: "[[]->star0]->telluricPlanet1",
         };
 
-        const system = universeBackend.getSystemModelFromCoordinates(coordinates);
+        const system = universeBackend.getSystemModelFromCoordinates(mainMenuStartingPlanet.systemCoordinates);
         if (system === null) {
-            throw new Error("Cannot find system");
+            throw new Error(`Cannot find main menu system ${JSON.stringify(mainMenuStartingPlanet.systemCoordinates)}`);
         }
 
-        const object = system.planets.at(1);
+        const object = system.planets.find((planet) => planet.id === mainMenuStartingPlanet.planetId);
         if (object === undefined) {
-            throw new Error("Cannot find planet with index 2");
+            throw new Error(`Cannot find main menu planet ${mainMenuStartingPlanet.planetId} in ${system.name}`);
         }
 
         this.universeObjectId = getUniverseObjectId(object, system);
