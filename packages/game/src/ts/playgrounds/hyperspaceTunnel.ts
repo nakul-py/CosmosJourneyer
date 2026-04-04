@@ -23,7 +23,7 @@ import { Scene } from "@babylonjs/core/scene";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { HyperSpaceTunnel } from "@/frontend/assets/procedural/hyperSpaceTunnel";
-import { loadTextures } from "@/frontend/assets/textures";
+import { loadNoiseTextures } from "@/frontend/assets/textures/noises";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
 
 export async function createHyperspaceTunnelDemo(
@@ -40,12 +40,12 @@ export async function createHyperspaceTunnelDemo(
 
     scene.enableDepthRenderer(camera, false, true);
 
-    const textures = await loadTextures(scene, progressMonitor);
+    const textures = await loadNoiseTextures(scene, progressMonitor);
 
     const directionalLight = new DirectionalLight("sun", new Vector3(1, -1, 0), scene);
     directionalLight.intensity = 0.7;
 
-    const hyperSpaceTunnel = new HyperSpaceTunnel(Axis.Z, scene, textures.noises);
+    const hyperSpaceTunnel = new HyperSpaceTunnel(Axis.Z, scene, textures);
 
     scene.onBeforeRenderObservable.add(() => {
         defaultControls.update(engine.getDeltaTime() / 1000);
