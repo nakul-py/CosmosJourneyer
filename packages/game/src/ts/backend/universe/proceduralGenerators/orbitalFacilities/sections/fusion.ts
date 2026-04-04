@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { FusionSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/fusion";
+import type { FusionSectionModel } from "@cosmos-journeyer/universe-model";
 
 export function generateFusionSectionModel(netPowerOutput: number): FusionSectionModel {
     return {

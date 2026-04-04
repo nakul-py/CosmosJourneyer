@@ -29,9 +29,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
 import { degreesToRadians, EarthG, getRotationPeriodForArtificialGravity } from "@cosmos-journeyer/physics";
-
-import { type OrbitalFacilityModel } from "@/backend/universe/orbitalObjects/index";
-import type { LandingBayModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/landingBay";
+import { type OrbitalFacilityModel, type LandingBayModel } from "@cosmos-journeyer/universe-model";
 
 import { createRing } from "@/frontend/assets/procedural/helpers/ringBuilder";
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";

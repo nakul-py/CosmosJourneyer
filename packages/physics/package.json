@@ -15,7 +15,6 @@
         ".": "./src/index.ts"
     },
     "scripts": {
-        "build": "tsc --noEmit",
         "test:unit": "vitest run",
         "typecheck": "tsc --noEmit",
         "lint": "eslint .",

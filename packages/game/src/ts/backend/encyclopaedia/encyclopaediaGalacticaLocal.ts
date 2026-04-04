@@ -1,8 +1,11 @@
-import { type GasPlanetModel } from "@/backend/universe/orbitalObjects/gasPlanetModel";
-import { type TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
+import {
+    type GasPlanetModel,
+    type TelluricPlanetModel,
+    type TelluricSatelliteModel,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
+
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { assertUnreachable, err, ok, type DeepReadonly, type Result } from "@/utils/types";
 

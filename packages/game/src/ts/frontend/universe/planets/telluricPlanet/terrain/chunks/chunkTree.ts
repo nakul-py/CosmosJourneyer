@@ -21,10 +21,11 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { type TransformNode } from "@babylonjs/core/Meshes";
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
-import { type TerrainSettings } from "@/backend/universe/orbitalObjects/terrainSettings";
+import {
+    type TelluricPlanetModel,
+    type TelluricSatelliteModel,
+    type TerrainSettings,
+} from "@cosmos-journeyer/universe-model";
 
 import { type Cullable } from "@/frontend/helpers/cullable";
 import { getRotationQuaternion } from "@/frontend/helpers/transform";

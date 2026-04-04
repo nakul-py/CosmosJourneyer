@@ -1,4 +1,4 @@
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
+import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";
 

@@ -16,8 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { getStellarTypeFromTemperature } from "@cosmos-journeyer/physics";
-
-import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
+import { type OrbitalObjectModel } from "@cosmos-journeyer/universe-model";
 
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 

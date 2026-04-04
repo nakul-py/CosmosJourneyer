@@ -15,10 +15,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { type StarSystemCoordinates, type UniverseObjectId } from "@cosmos-journeyer/universe-model";
+
 import { MissionType, type MissionSerialized } from "@/backend/missions/missionSerialized";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 

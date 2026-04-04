@@ -2,7 +2,7 @@
 
 If you are willing to contribute, this document will give you a good idea of where everything is and how it is organized.
 
-Most gameplay TypeScript modules live under `packages/game/src`. Shared pure physics utilities now live in the workspace package `packages/physics` (see the root README for an overview).
+Most gameplay TypeScript modules live under `packages/game/src`. Shared pure physics utilities now live in the workspace package `packages/physics`, and shared star-system data models now live in `packages/universe-model` (see the root README for an overview).
 
 ## General architecture
 

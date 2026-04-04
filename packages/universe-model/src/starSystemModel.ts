@@ -15,10 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-
-import { type DeepReadonly, type NonEmptyArray } from "@/utils/types";
-
+import { type DeepReadonly, type NonEmptyArray } from "./common";
 import {
     type AnomalyModel,
     type OrbitalFacilityModel,
@@ -28,6 +25,7 @@ import {
 } from "./orbitalObjects/index";
 import { type OrbitalObjectId } from "./orbitalObjects/orbitalObjectId";
 import { type TelluricSatelliteModel } from "./orbitalObjects/telluricSatelliteModel";
+import { type StarSystemCoordinates } from "./starSystemCoordinates";
 
 /**
  * Data model for a star system. It holds all the information necessary to generate and render a star system.

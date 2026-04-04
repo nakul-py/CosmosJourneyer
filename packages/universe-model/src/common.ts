@@ -15,10 +15,18 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { RGBColor } from "@/utils/colors";
-
-import { type CelestialBodyModelBase } from "../orbitalObjectModelBase";
-
-export type MengerSpongeModel = CelestialBodyModelBase<"mengerSponge"> & {
-    readonly color: RGBColor;
+export type DeepReadonly<T> = {
+    readonly [K in keyof T]: DeepReadonly<T[K]>;
 };
+
+export type NonEmptyArray<T> = [T, ...T[]];
+
+export type RGBColor = {
+    r: number;
+    g: number;
+    b: number;
+};
+
+export type Faction = "feynman_interstellar" | "church_of_awakening" | "human_commonwealth" | "satori_concord";
+
+export type CropType = "potato" | "yam" | "sweet_potato" | "rice" | "peanut" | "wheat" | "lentil" | "cassava";

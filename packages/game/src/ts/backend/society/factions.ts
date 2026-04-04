@@ -1,11 +1,9 @@
+import type { Faction, StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
 import { uniformRandBool } from "extended-random";
 
 import { assertUnreachable } from "@/utils/types";
 
-import type { StarSystemCoordinates } from "../universe/starSystemCoordinates";
 import { getPowerPlayData } from "./powerplay";
-
-export type Faction = "feynman_interstellar" | "church_of_awakening" | "human_commonwealth" | "satori_concord";
 
 export function factionToString(faction: Faction): string {
     switch (faction) {

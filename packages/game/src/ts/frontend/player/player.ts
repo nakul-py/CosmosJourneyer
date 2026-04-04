@@ -16,6 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Observable } from "@babylonjs/core/Misc/observable";
+import { type StarSystemCoordinates, type UniverseObjectId } from "@cosmos-journeyer/universe-model";
 
 import { type SpaceDiscoveryData } from "@/backend/encyclopaedia/encyclopaediaGalactica";
 import { type CompletedTutorials, type Itinerary, type SerializedPlayer } from "@/backend/player/serializedPlayer";
@@ -25,9 +26,7 @@ import {
     SerializedSpaceshipSchema,
     type SerializedSpaceship,
 } from "@/backend/spaceship/serializedSpaceship";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { Mission } from "@/frontend/missions/mission";
 import { type Spaceship } from "@/frontend/spaceship/spaceship";

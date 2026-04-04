@@ -16,9 +16,9 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
+import { type OrbitalFacilityModel } from "@cosmos-journeyer/universe-model";
 import { uniformRandBool } from "extended-random";
 
-import { type OrbitalFacilityModel } from "@/backend/universe/orbitalObjects/index";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";

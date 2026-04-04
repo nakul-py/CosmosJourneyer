@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { type OrbitalObjectType } from "@/backend/universe/orbitalObjects/index";
+import { type OrbitalObjectType } from "@cosmos-journeyer/universe-model";
 
 import { type CanHaveRings } from "./canHaveRings";
 import { type OrbitalObjectBase } from "./orbitalObjectBase";

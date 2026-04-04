@@ -9,6 +9,7 @@ const projectConfigs = [
     "./packages/channel-packer/tsconfig.json",
     "./packages/game/tsconfig.json",
     "./packages/physics/tsconfig.json",
+    "./packages/universe-model/tsconfig.json",
     "./packages/website/tsconfig.json",
 ];
 const tsParserOptions = {

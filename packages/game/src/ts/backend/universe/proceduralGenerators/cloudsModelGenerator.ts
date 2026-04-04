@@ -16,23 +16,9 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { getWaterSaturationPressure } from "@cosmos-journeyer/physics";
+import { type CloudsModel } from "@cosmos-journeyer/universe-model";
 
-import type { RGBColor } from "@/utils/colors";
-
-export type CloudsModel = {
-    layerRadius: number;
-    smoothness: number;
-    specularPower: number;
-    frequency: number;
-    detailFrequency: number;
-    coverage: number;
-    sharpness: number;
-    color: RGBColor;
-    worleySpeed: number;
-    detailSpeed: number;
-};
-
-export function newCloudsModel(
+export function generateCloudsModel(
     planetRadius: number,
     cloudLayerHeight: number,
     oceanCoverage: number,
@@ -44,6 +30,7 @@ export function newCloudsModel(
     const maxCoverage = 0.8;
     const coverage =
         maxCoverage * (1.0 - Math.exp((-calibrationCoefficient * oceanCoverage * waterSaturationPressure) / pressure));
+
     return {
         layerRadius: planetRadius + cloudLayerHeight,
         smoothness: 0.7,

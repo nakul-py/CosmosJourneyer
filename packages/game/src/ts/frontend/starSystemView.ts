@@ -27,13 +27,17 @@ import { type PhysicsEngineV2 } from "@babylonjs/core/Physics/v2";
 import { AxisComposite } from "@brianchirls/game-input/browser";
 import type DPadComposite from "@brianchirls/game-input/controls/DPadComposite";
 import { metersToLightYears } from "@cosmos-journeyer/physics";
+import {
+    starSystemCoordinatesEquals,
+    type StarSystemCoordinates,
+    type StarSystemModel,
+    getUniverseObjectId,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
 
 import { type EncyclopaediaGalacticaManager } from "@/backend/encyclopaedia/encyclopaediaGalacticaManager";
 import { ItinerarySchema } from "@/backend/player/serializedPlayer";
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { getUniverseObjectId, type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { AudioMasks } from "@/frontend/audio/audioMasks";

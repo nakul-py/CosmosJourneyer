@@ -15,9 +15,8 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import type { SolarSectionModel } from "@cosmos-journeyer/universe-model";
 import { randRangeInt } from "extended-random";
-
-import type { SolarSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/solar";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { wheelOfFortune } from "@/utils/random";

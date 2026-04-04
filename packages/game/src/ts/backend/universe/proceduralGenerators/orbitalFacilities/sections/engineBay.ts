@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { EngineBayModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/engineBay";
+import type { EngineBayModel } from "@cosmos-journeyer/universe-model";
 
 export function generateEngineBayModel(): EngineBayModel {
     return {

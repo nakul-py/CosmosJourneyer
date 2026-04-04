@@ -18,14 +18,18 @@
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PhysicsRaycastResult } from "@babylonjs/core/Physics/physicsRaycastResult";
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
+import {
+    starSystemCoordinatesEquals,
+    type StarSystemCoordinates,
+    universeObjectIdEquals,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
 
 import {
     LandMissionState,
     type MissionTerminatorLandingNodeSerialized,
 } from "@/backend/missions/missionTerminatorLandingNodeSerialized";
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { universeObjectIdEquals, type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { wrapVector3 } from "@/frontend/helpers/algebra";
 

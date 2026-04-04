@@ -17,10 +17,10 @@
 
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { StarSystemCoordinatesSchema } from "@cosmos-journeyer/universe-model";
 
 import { EncyclopaediaGalacticaLocal } from "@/backend/encyclopaedia/encyclopaediaGalacticaLocal";
 import { getLoneStarSystem } from "@/backend/universe/customSystems/loneStar";
-import { StarSystemCoordinatesSchema } from "@/backend/universe/starSystemCoordinates";
 import { UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";

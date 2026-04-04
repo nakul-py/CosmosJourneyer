@@ -26,8 +26,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { PhysicsShapeSphere } from "@babylonjs/core/Physics/v2/physicsShape";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type GasPlanetModel } from "@/backend/universe/orbitalObjects/gasPlanetModel";
+import { type GasPlanetModel } from "@cosmos-journeyer/universe-model";
 
 import { type Textures } from "@/frontend/assets/textures";
 import { type Cullable } from "@/frontend/helpers/cullable";

@@ -2,9 +2,7 @@ import { Vector3, type Matrix } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
-
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
+import { type StarSystemCoordinates, type StarSystemModel } from "@cosmos-journeyer/universe-model";
 
 import { ObjectTargetCursorType, type Targetable } from "@/frontend/universe/architecture/targetable";
 

@@ -21,11 +21,15 @@ import {
     km2ToM2,
     kwhPerYearToWatts,
 } from "@cosmos-journeyer/physics";
+import {
+    type PlanetModel,
+    type Orbit,
+    type SpaceElevatorModel,
+    type ElevatorSectionModel,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 
 import { getFactionFromCoordinates } from "@/backend/society/factions";
-import { type PlanetModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { type SpaceElevatorModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/spaceElevatorModel";
 
 import { CropTypes, getEdibleEnergyPerAreaPerDay, type CropType } from "@/utils/agriculture";
 import { getDistancesToStellarObjects } from "@/utils/distanceToStellarObject";
@@ -37,8 +41,6 @@ import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
-import type { ElevatorSectionModel } from "../../orbitalObjects/orbitalFacilities/sections";
-import type { StarSystemModel } from "../../starSystemModel";
 import { generateFusionSectionModel } from "./sections/fusion";
 import { generateCylinderHabitatModel } from "./sections/habitats/cylinder";
 import { generateHelixHabitatModel } from "./sections/habitats/helix";

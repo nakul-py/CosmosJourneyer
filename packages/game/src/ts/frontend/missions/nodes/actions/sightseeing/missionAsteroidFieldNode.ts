@@ -17,15 +17,19 @@
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
+import {
+    starSystemCoordinatesEquals,
+    type StarSystemCoordinates,
+    universeObjectIdEquals,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
+import { getObjectModelById } from "@cosmos-journeyer/universe-model";
 
 import {
     AsteroidFieldMissionState,
     type MissionAsteroidFieldNodeSerialized,
 } from "@/backend/missions/missionAsteroidFieldNodeSerialized";
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { getObjectModelById } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { universeObjectIdEquals, type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { wrapVector3 } from "@/frontend/helpers/algebra";
 

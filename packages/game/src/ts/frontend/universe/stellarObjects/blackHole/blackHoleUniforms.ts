@@ -19,8 +19,7 @@ import { type Effect } from "@babylonjs/core/Materials/effect";
 import { type CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture";
 import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { getKerrMetricA } from "@cosmos-journeyer/physics";
-
-import { type BlackHoleModel } from "@/backend/universe/orbitalObjects/stellarObjects/blackHoleModel";
+import { type BlackHoleModel } from "@cosmos-journeyer/universe-model";
 
 import { type DeepReadonly } from "@/utils/types";
 

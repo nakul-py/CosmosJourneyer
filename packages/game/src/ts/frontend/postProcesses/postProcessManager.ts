@@ -30,12 +30,13 @@ import { type PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { PostProcessRenderEffect } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderEffect";
 import { PostProcessRenderPipeline } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderPipeline";
 import { type PostProcessRenderPipelineManager } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderPipelineManager";
-
-import { type JuliaSetModel } from "@/backend/universe/orbitalObjects/anomalies/juliaSetModel";
-import { type MandelboxModel } from "@/backend/universe/orbitalObjects/anomalies/mandelboxModel";
-import { type MandelbulbModel } from "@/backend/universe/orbitalObjects/anomalies/mandelbulbModel";
-import { type MengerSpongeModel } from "@/backend/universe/orbitalObjects/anomalies/mengerSpongeModel";
-import { type SierpinskiPyramidModel } from "@/backend/universe/orbitalObjects/anomalies/sierpinskiPyramidModel";
+import {
+    type JuliaSetModel,
+    type MandelboxModel,
+    type MandelbulbModel,
+    type MengerSpongeModel,
+    type SierpinskiPyramidModel,
+} from "@cosmos-journeyer/universe-model";
 
 import { type Textures } from "@/frontend/assets/textures";
 import { type UberScene } from "@/frontend/helpers/uberScene";

@@ -16,9 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { astronomicalUnitToMeters, EarthMass } from "@cosmos-journeyer/physics";
-
-import { type DarkKnightModel } from "@/backend/universe/orbitalObjects/anomalies/darkKnightModel";
-import { type OrbitalObjectId } from "@/backend/universe/orbitalObjects/orbitalObjectId";
+import { type DarkKnightModel, type OrbitalObjectId } from "@cosmos-journeyer/universe-model";
 
 export function generateDarkKnightModel(parentIds: ReadonlyArray<OrbitalObjectId>): DarkKnightModel {
     return {

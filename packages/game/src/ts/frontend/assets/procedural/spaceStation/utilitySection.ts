@@ -29,8 +29,7 @@ import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { PhysicsBody } from "@babylonjs/core/Physics/v2/physicsBody";
 import { PhysicsShapeSphere, type PhysicsShape } from "@babylonjs/core/Physics/v2/physicsShape";
 import { type Scene } from "@babylonjs/core/scene";
-
-import type { UtilitySectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/utility";
+import type { UtilitySectionModel } from "@cosmos-journeyer/universe-model";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import type { StationSection } from "@/frontend/universe/orbitalFacility/stationSection";

@@ -22,9 +22,7 @@ import { Axis, Space } from "@babylonjs/core/Maths/math.axis";
 import { Quaternion, type Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
-
-import type { StationSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections";
-import { type SpaceStationModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/spacestationModel";
+import type { SpaceStationModel, StationSectionModel } from "@cosmos-journeyer/universe-model";
 
 import { EngineBay } from "@/frontend/assets/procedural/spaceStation/engineBay";
 import { CylinderHabitat } from "@/frontend/assets/procedural/spaceStation/habitats/cylinder/cylinderHabitat";

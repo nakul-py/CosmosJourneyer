@@ -16,17 +16,15 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { SolarRadius, type StellarType } from "@cosmos-journeyer/physics";
+import { type OrbitalObjectModel, type Orbit, type StarModel } from "@cosmos-journeyer/universe-model";
 import { randRange, randRangeInt, uniformRandBool } from "extended-random";
-
-import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { newSeededRingsModel } from "@/backend/universe/orbitalObjects/ringsModel";
-import { type StarModel } from "@/backend/universe/orbitalObjects/stellarObjects/starModel";
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { wheelOfFortune } from "@/utils/random";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
+
+import { generateSeededRingsModel } from "../ringsModelGenerator";
 
 export function generateStarModel(
     id: string,
@@ -64,7 +62,7 @@ export function generateStarModel(
     };
 
     const rings = uniformRandBool(RING_PROPORTION, rng, GenerationSteps.RINGS)
-        ? newSeededRingsModel(radius, rng)
+        ? generateSeededRingsModel(radius, rng)
         : null;
 
     return {

@@ -29,8 +29,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
 import { EarthG, getRotationPeriodForArtificialGravity } from "@cosmos-journeyer/physics";
-
-import type { HelixHabitatModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/habitats/helix";
+import type { HelixHabitatModel } from "@cosmos-journeyer/universe-model";
 
 import { createHelix } from "@/frontend/assets/procedural/helpers/helixBuilder";
 import { type Textures } from "@/frontend/assets/textures";
