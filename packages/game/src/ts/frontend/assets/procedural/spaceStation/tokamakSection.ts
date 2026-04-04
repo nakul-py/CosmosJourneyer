@@ -25,6 +25,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
+import { getRadiatorAreaForHeat } from "@cosmos-journeyer/physics";
 
 import type { FusionSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/fusion";
 
@@ -32,7 +33,6 @@ import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { createEnvironmentAggregate } from "@/frontend/helpers/havok";
 import type { StationSection } from "@/frontend/universe/orbitalFacility/stationSection";
 
-import { getRadiatorAreaForHeat } from "@/utils/physics/thermodynamics";
 import { getRgbFromTemperature } from "@/utils/specrend";
 
 import { createRing } from "../helpers/ringBuilder";

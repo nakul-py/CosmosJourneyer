@@ -20,10 +20,10 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PhysicsRaycastResult } from "@babylonjs/core/Physics/physicsRaycastResult";
 import { type PhysicsEngineV2 } from "@babylonjs/core/Physics/v2";
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
+import { EarthG } from "@cosmos-journeyer/physics";
 
 import { type ILandingPad } from "@/frontend/universe/orbitalFacility/landingPadManager";
 
-import { EarthG } from "@/utils/physics/constants";
 import { assertUnreachable } from "@/utils/types";
 
 import { CollisionMask } from "@/settings";

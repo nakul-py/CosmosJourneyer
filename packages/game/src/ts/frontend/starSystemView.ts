@@ -26,6 +26,7 @@ import { PhysicsRaycastResult } from "@babylonjs/core/Physics/physicsRaycastResu
 import { type PhysicsEngineV2 } from "@babylonjs/core/Physics/v2";
 import { AxisComposite } from "@brianchirls/game-input/browser";
 import type DPadComposite from "@brianchirls/game-input/controls/DPadComposite";
+import { metersToLightYears } from "@cosmos-journeyer/physics";
 
 import { type EncyclopaediaGalacticaManager } from "@/backend/encyclopaedia/encyclopaediaGalacticaManager";
 import { ItinerarySchema } from "@/backend/player/serializedPlayer";
@@ -73,7 +74,6 @@ import { SystemTarget } from "@/frontend/universe/systemTarget";
 import { type View } from "@/frontend/view";
 
 import { getGlobalKeyboardLayoutMap } from "@/utils/keyboardAPI";
-import { metersToLightYears } from "@/utils/physics/unitConversions";
 import { type DeepReadonly } from "@/utils/types";
 
 import i18n from "@/i18n";

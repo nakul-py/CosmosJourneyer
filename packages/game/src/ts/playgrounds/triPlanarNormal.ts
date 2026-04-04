@@ -26,6 +26,7 @@ import {
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { AdvancedDynamicTexture, Control, Rectangle, Slider, StackPanel, TextBlock } from "@babylonjs/gui";
+import { degreesToRadians } from "@cosmos-journeyer/physics";
 import {
     f,
     normalize,
@@ -47,7 +48,6 @@ import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressM
 import { loadTextureAsync } from "@/frontend/assets/textures/utils";
 
 import { getTriPlanarBlending, getTriPlanarUVs, unpackNormal, whiteoutBlend } from "@/utils/bslExtensions";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 
 import normalMapPath from "@assets/testNormal.webp";
 

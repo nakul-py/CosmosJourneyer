@@ -15,9 +15,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { getStellarTypeFromTemperature } from "@cosmos-journeyer/physics";
+
 import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
 
-import { getStellarTypeFromTemperature } from "@/utils/physics/stellarTypes";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
 import i18n from "@/i18n";

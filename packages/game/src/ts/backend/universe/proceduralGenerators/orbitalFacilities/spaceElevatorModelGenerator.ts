@@ -15,6 +15,13 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import {
+    getOrbitRadiusFromPeriod,
+    getSphereIrradianceAtDistance,
+    km2ToM2,
+    kwhPerYearToWatts,
+} from "@cosmos-journeyer/physics";
+
 import { getFactionFromCoordinates } from "@/backend/society/factions";
 import { type PlanetModel } from "@/backend/universe/orbitalObjects/index";
 import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
@@ -23,9 +30,6 @@ import { type SpaceElevatorModel } from "@/backend/universe/orbitalObjects/orbit
 import { CropTypes, getEdibleEnergyPerAreaPerDay, type CropType } from "@/utils/agriculture";
 import { getDistancesToStellarObjects } from "@/utils/distanceToStellarObject";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
-import { getOrbitRadiusFromPeriod } from "@/utils/physics/orbit";
-import { getSphereIrradianceAtDistance } from "@/utils/physics/thermodynamics";
-import { km2ToM2, kwhPerYearToWatts } from "@/utils/physics/unitConversions";
 import { randomPieChart, wheelOfFortune } from "@/utils/random";
 import { getSolarPanelSurfaceFromEnergyRequirement } from "@/utils/solarPanels";
 import { generateSpaceElevatorName } from "@/utils/strings/spaceStationNameGenerator";

@@ -4,6 +4,7 @@
         "paths": {
             "@/*": ["./src/ts/*"],
             "@assets/*": ["./src/asset/*"],
+            "@cosmos-journeyer/physics": ["../physics/src/index.ts"],
             "@shaders/*": ["./src/shaders/*"],
             "@styles/*": ["./src/styles/*"]
         },

@@ -21,9 +21,9 @@ import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
+import { EarthG } from "@cosmos-journeyer/physics";
 
 import { lerpSmooth } from "@/utils/math";
-import { EarthG } from "@/utils/physics/constants";
 
 import type { Controls } from "../controls";
 import { quickAnimation } from "../helpers/animations/quickAnimation";

@@ -19,6 +19,7 @@ import { CreateSphere, DirectionalLight, GlowLayer, Matrix, PBRMaterial } from "
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
+import { astronomicalUnitToMeters } from "@cosmos-journeyer/physics";
 
 import { getSunModel } from "@/backend/universe/customSystems/sol/sun";
 import { generateSpaceElevatorModel } from "@/backend/universe/proceduralGenerators/orbitalFacilities/spaceElevatorModelGenerator";
@@ -32,8 +33,6 @@ import { lookAt } from "@/frontend/helpers/transform";
 import { setOrbitalPosition, setRotation } from "@/frontend/universe/architecture/orbitalObjectUtils";
 import { CustomOrbitalObject } from "@/frontend/universe/customOrbitalObject";
 import { SpaceElevator } from "@/frontend/universe/orbitalFacility/spaceElevator";
-
-import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
 
 import { Settings } from "@/settings";
 

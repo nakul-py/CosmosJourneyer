@@ -15,8 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { getWaterIceFrostLine } from "@/utils/physics/physics";
-import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
+import { astronomicalUnitToMeters, getWaterIceFrostLine } from "@cosmos-journeyer/physics";
 
 /**
  * Samples a plausible semi-major axis for a gas giant given the properties of its parent star.

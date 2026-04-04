@@ -21,8 +21,7 @@ import { Quaternion } from "@babylonjs/core/Maths/math.vector";
 import { type AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
-
-import { degreesToRadians } from "@/utils/physics/unitConversions";
+import { degreesToRadians } from "@cosmos-journeyer/physics";
 
 import type { Transformable } from "../universe/architecture/transformable";
 import { ThrusterExhaust } from "./thrusterExhaust";

@@ -17,6 +17,7 @@
 
 import { Matrix } from "@babylonjs/core/Maths/math";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { lightYearsToMeters } from "@cosmos-journeyer/physics";
 
 import { type OrbitalObjectId } from "@/backend/universe/orbitalObjects/orbitalObjectId";
 import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
@@ -36,7 +37,6 @@ import {
 import { BlackHole } from "@/frontend/universe/stellarObjects/blackHole/blackHole";
 import { SystemTarget } from "@/frontend/universe/systemTarget";
 
-import { lightYearsToMeters } from "@/utils/physics/unitConversions";
 import { type DeepReadonly, type NonEmptyArray } from "@/utils/types";
 
 import { Settings } from "@/settings";

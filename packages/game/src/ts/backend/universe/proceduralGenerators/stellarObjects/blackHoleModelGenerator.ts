@@ -15,6 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { getMassFromSchwarzschildRadius } from "@cosmos-journeyer/physics";
 import { normalRandom } from "extended-random";
 
 import { type CelestialBodyModel } from "@/backend/universe/orbitalObjects/index";
@@ -23,7 +24,6 @@ import { type BlackHoleModel } from "@/backend/universe/orbitalObjects/stellarOb
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
-import { getMassFromSchwarzschildRadius } from "@/utils/physics/blackHole";
 import { type DeepReadonly } from "@/utils/types";
 
 export function generateBlackHoleModel(

@@ -15,13 +15,12 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { degreesToRadians, EarthSeaLevelPressure, JupiterMass } from "@cosmos-journeyer/physics";
 import { normalRandom, randRange, randRangeInt, uniformRandBool } from "extended-random";
 
 import { hsvToRgb } from "@/utils/colors";
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
-import { EarthSeaLevelPressure, JupiterMass } from "@/utils/physics/constants";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 import { type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";

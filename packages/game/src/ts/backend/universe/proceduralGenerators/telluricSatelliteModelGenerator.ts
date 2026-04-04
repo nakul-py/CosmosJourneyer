@@ -15,6 +15,16 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import {
+    computeEffectiveTemperature,
+    degreesToRadians,
+    EarthMass,
+    EarthSeaLevelPressure,
+    getOceanDepth,
+    getOrbitalPeriod,
+    hasLiquidWater,
+    MoonMass,
+} from "@cosmos-journeyer/physics";
 import { normalRandom } from "extended-random";
 
 import { type AtmosphereModel } from "@/backend/universe/orbitalObjects/atmosphereModel";
@@ -27,10 +37,6 @@ import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/t
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
-import { EarthMass, EarthSeaLevelPressure, MoonMass } from "@/utils/physics/constants";
-import { getOrbitalPeriod } from "@/utils/physics/orbit";
-import { computeEffectiveTemperature, getOceanDepth, hasLiquidWater } from "@/utils/physics/physics";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 import type { DeepReadonly, NonEmptyArray } from "@/utils/types";
 
 import { Settings } from "@/settings";

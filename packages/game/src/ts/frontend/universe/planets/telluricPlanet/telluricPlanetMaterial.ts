@@ -20,6 +20,7 @@ import type { NodeMaterialConnectionPoint } from "@babylonjs/core/Materials/Node
 import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Vector3, Vector4 } from "@babylonjs/core/Maths/math.vector";
 import type { Scene } from "@babylonjs/core/scene";
+import { celsiusToKelvin } from "@cosmos-journeyer/physics";
 import {
     abs,
     add,
@@ -64,7 +65,6 @@ import {
     type TriPlanarMaterialSamples,
 } from "@/utils/bslExtensions";
 import { lerp } from "@/utils/math";
-import { celsiusToKelvin } from "@/utils/physics/unitConversions";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
 type WorldType =

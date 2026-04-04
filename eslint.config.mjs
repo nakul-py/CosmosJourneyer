@@ -8,6 +8,7 @@ const projectConfigs = [
     "./packages/babylonjs-shading-language/tsconfig.json",
     "./packages/channel-packer/tsconfig.json",
     "./packages/game/tsconfig.json",
+    "./packages/physics/tsconfig.json",
     "./packages/website/tsconfig.json",
 ];
 const tsParserOptions = {

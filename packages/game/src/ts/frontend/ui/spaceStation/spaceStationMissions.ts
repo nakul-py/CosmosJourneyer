@@ -15,6 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { lightYearsToMeters } from "@cosmos-journeyer/physics";
 import { uniformRandBool } from "extended-random";
 
 import { type OrbitalFacilityModel } from "@/backend/universe/orbitalObjects/index";
@@ -26,7 +27,6 @@ import { generateSightseeingMissions } from "@/frontend/missions/generateSightSe
 import { type Player } from "@/frontend/player/player";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
-import { lightYearsToMeters } from "@/utils/physics/unitConversions";
 import { parseDistance } from "@/utils/strings/parseToStrings";
 import { type DeepReadonly } from "@/utils/types";
 

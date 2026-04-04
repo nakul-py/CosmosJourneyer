@@ -19,6 +19,7 @@ import { DirectionalLight, GlowLayer } from "@babylonjs/core";
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
+import { astronomicalUnitToMeters } from "@cosmos-journeyer/physics";
 
 import { getSunModel } from "@/backend/universe/customSystems/sol/sun";
 import { generateSpaceStationModel } from "@/backend/universe/proceduralGenerators/orbitalFacilities/spaceStationModelGenerator";
@@ -29,8 +30,6 @@ import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
 import { lookAt } from "@/frontend/helpers/transform";
 import { SpaceStation } from "@/frontend/universe/orbitalFacility/spaceStation";
-
-import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
 
 import { Settings } from "@/settings";
 

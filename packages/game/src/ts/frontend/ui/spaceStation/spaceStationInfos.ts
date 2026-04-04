@@ -15,13 +15,14 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { getOrbitalPeriod } from "@cosmos-journeyer/physics";
+
 import { factionToString } from "@/backend/society/factions";
 import { type OrbitalFacilityModel, type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
 
 import { makeD3PieChart } from "@/frontend/helpers/d3PieChart";
 
 import { cropTypeToString, type CropType } from "@/utils/agriculture";
-import { getOrbitalPeriod } from "@/utils/physics/orbit";
 import { type DeepReadonly } from "@/utils/types";
 
 export function generateInfoHTML(

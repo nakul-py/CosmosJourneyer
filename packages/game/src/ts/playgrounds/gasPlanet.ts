@@ -16,6 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { PointLight, Scene, Vector3, type AbstractEngine } from "@babylonjs/core";
+import { SolarTemperature } from "@cosmos-journeyer/physics";
 
 import { generateGasPlanetModel } from "@/backend/universe/proceduralGenerators/gasPlanetModelGenerator";
 
@@ -29,7 +30,6 @@ import { RingsProceduralPatternLut } from "@/frontend/postProcesses/rings/ringsP
 import { ShadowPostProcess } from "@/frontend/postProcesses/shadowPostProcess";
 import { GasPlanet } from "@/frontend/universe/planets/gasPlanet/gasPlanet";
 
-import { SolarTemperature } from "@/utils/physics/constants";
 import { getRgbFromTemperature } from "@/utils/specrend";
 
 import { Settings } from "@/settings";

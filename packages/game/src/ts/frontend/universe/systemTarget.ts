@@ -1,13 +1,13 @@
 import { Vector3, type Matrix } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
+import { lightYearsToMeters } from "@cosmos-journeyer/physics";
 
 import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 
 import { ObjectTargetCursorType, type Targetable } from "@/frontend/universe/architecture/targetable";
 
-import { lightYearsToMeters } from "@/utils/physics/unitConversions";
 import { type DeepReadonly } from "@/utils/types";
 
 import i18n from "@/i18n";

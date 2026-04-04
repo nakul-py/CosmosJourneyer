@@ -15,7 +15,6 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { DeepReadonly } from "../types";
 import { C, G, SolarMass, SolarRadius } from "./constants";
 import { celsiusToKelvin } from "./unitConversions";
 
@@ -50,9 +49,9 @@ export function getWaterSaturationPressure(temperature: number): number {
 }
 
 export type EffectiveTemperatureStar = {
-    temperature: number;
-    radius: number;
-    distance: number;
+    readonly temperature: number;
+    readonly radius: number;
+    readonly distance: number;
 };
 
 /**
@@ -61,10 +60,7 @@ export type EffectiveTemperatureStar = {
  * @param planetAlbedo The albedo of the planet (0 = black, 1 = white)
  * @returns The effective temperature of the planet in Kelvin
  */
-export function computeEffectiveTemperature(
-    stars: DeepReadonly<Array<EffectiveTemperatureStar>>,
-    planetAlbedo: number,
-) {
+export function computeEffectiveTemperature(stars: ReadonlyArray<EffectiveTemperatureStar>, planetAlbedo: number) {
     let totalFlux = 0;
     for (const { temperature, radius, distance } of stars) {
         totalFlux += (temperature ** 4 * radius ** 2) / distance ** 2;
