@@ -16,11 +16,8 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { getMassFromSchwarzschildRadius } from "@cosmos-journeyer/physics";
+import { type CelestialBodyModel, type Orbit, type BlackHoleModel } from "@cosmos-journeyer/universe-model";
 import { normalRandom } from "extended-random";
-
-import { type CelestialBodyModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { type BlackHoleModel } from "@/backend/universe/orbitalObjects/stellarObjects/blackHoleModel";
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";

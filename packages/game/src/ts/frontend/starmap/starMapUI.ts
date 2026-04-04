@@ -19,10 +19,13 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Observable } from "@babylonjs/core/Misc/observable";
 import { type Scene } from "@babylonjs/core/scene";
+import {
+    starSystemCoordinatesEquals,
+    type StarSystemCoordinates,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 
 import { factionToString } from "@/backend/society/factions";
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";

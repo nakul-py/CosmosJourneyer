@@ -17,8 +17,7 @@
 
 import { z } from "zod";
 
-import { type DeepReadonly } from "@/utils/types";
-
+import { type DeepReadonly } from "./common";
 import { type OrbitalObjectModel } from "./orbitalObjects/index";
 import { orbitalObjectIdEquals, OrbitalObjectIdSchema } from "./orbitalObjects/orbitalObjectId";
 import { starSystemCoordinatesEquals, StarSystemCoordinatesSchema } from "./starSystemCoordinates";

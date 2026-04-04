@@ -1,4 +1,4 @@
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
+import { type UniverseObjectId } from "@cosmos-journeyer/universe-model";
 
 import { ok, type Result } from "@/utils/types";
 

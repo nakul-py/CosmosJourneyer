@@ -15,11 +15,16 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import {
+    starSystemCoordinatesEquals,
+    type StarSystemCoordinates,
+    type UniverseObjectId,
+    type OrbitalObjectModel,
+    getObjectModelById,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 import { centeredRand } from "extended-random";
 import { makeNoise3D } from "fast-simplex-noise/lib/3d";
-
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { hashVec3 } from "@/utils/hash";
@@ -27,9 +32,7 @@ import { type DeepReadonly, type Vector3Like } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
-import { type OrbitalObjectModel } from "./orbitalObjects/index";
 import { generateStarSystemModel } from "./proceduralGenerators/starSystemModelGenerator";
-import { getObjectModelById, type StarSystemModel } from "./starSystemModel";
 
 /**
  * The UniverseBackend defines the content of the universe.

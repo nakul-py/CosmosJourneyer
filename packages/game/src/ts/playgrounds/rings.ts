@@ -18,8 +18,7 @@
 import { MeshBuilder, PointLight, Vector3 } from "@babylonjs/core";
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Scene } from "@babylonjs/core/scene";
-
-import { type RingsModel } from "@/backend/universe/orbitalObjects/ringsModel";
+import { type RingsModel } from "@cosmos-journeyer/universe-model";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";

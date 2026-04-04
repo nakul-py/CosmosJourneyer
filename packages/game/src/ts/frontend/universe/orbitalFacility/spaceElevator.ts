@@ -24,9 +24,7 @@ import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Mesh } from "@babylonjs/core/Meshes/mesh";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { type Scene } from "@babylonjs/core/scene";
-
-import type { ElevatorSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections";
-import { type SpaceElevatorModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/spaceElevatorModel";
+import type { ElevatorSectionModel, SpaceElevatorModel } from "@cosmos-journeyer/universe-model";
 
 import { SpaceElevatorClimber } from "@/frontend/assets/procedural/spaceStation/climber/spaceElevatorClimber";
 import { CylinderHabitat } from "@/frontend/assets/procedural/spaceStation/habitats/cylinder/cylinderHabitat";

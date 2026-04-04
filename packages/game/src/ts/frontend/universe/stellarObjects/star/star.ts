@@ -25,8 +25,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type StarModel } from "@/backend/universe/orbitalObjects/stellarObjects/starModel";
+import { type StarModel } from "@cosmos-journeyer/universe-model";
 
 import { type Textures } from "@/frontend/assets/textures";
 import { type Cullable } from "@/frontend/helpers/cullable";

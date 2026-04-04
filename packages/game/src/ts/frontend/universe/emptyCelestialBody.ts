@@ -18,8 +18,7 @@
 import { Quaternion } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type CelestialBodyModel, type OrbitalObjectType } from "@/backend/universe/orbitalObjects/index";
+import { type CelestialBodyModel, type OrbitalObjectType } from "@cosmos-journeyer/universe-model";
 
 import { getOrbitalObjectTypeToI18nString } from "@/frontend/helpers/orbitalObjectTypeToDisplay";
 

@@ -34,6 +34,7 @@ import type { PhysicsEngineV2 } from "@babylonjs/core/Physics/v2";
 import { HavokPlugin } from "@babylonjs/core/Physics/v2/Plugins/havokPlugin";
 import { Scene } from "@babylonjs/core/scene";
 import HavokPhysics from "@babylonjs/havok";
+import { type StarSystemCoordinates, getUniverseObjectId } from "@cosmos-journeyer/universe-model";
 
 import type { ICosmosJourneyerBackend } from "@/backend";
 import { CosmosJourneyerBackendLocal } from "@/backend/backendLocal";
@@ -43,8 +44,6 @@ import {
     type RelativeCoordinates,
     type UniverseCoordinates,
 } from "@/backend/save/universeCoordinates";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { getUniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { loadAssets, type Assets } from "@/frontend/assets/assets";
 import { AudioMasks } from "@/frontend/audio/audioMasks";

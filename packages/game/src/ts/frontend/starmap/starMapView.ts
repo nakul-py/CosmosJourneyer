@@ -29,10 +29,10 @@ import { GreasedLineTools } from "@babylonjs/core/Misc/greasedLineTools";
 import { Observable } from "@babylonjs/core/Misc/observable";
 import { DefaultRenderingPipeline } from "@babylonjs/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline";
 import { type Scene } from "@babylonjs/core/scene";
+import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
 
 import { type EncyclopaediaGalactica } from "@/backend/encyclopaedia/encyclopaediaGalactica";
 import { ItinerarySchema, type Itinerary } from "@/backend/player/serializedPlayer";
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";

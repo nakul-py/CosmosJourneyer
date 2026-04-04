@@ -15,8 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { type RGBColor } from "@/utils/colors";
-
+import { type RGBColor } from "../common";
 import { type AtmosphereModel } from "./atmosphereModel";
 import { type HasSeed } from "./hasSeed";
 import { type CelestialBodyModelBase } from "./orbitalObjectModelBase";

@@ -16,12 +16,16 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { degreesToRadians, getSphereIrradianceAtDistance, km2ToM2, kwhPerYearToWatts } from "@cosmos-journeyer/physics";
+import {
+    type CelestialBodyModel,
+    type Orbit,
+    type SpaceStationModel,
+    type StationSectionModel,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 import { normalRandom } from "extended-random";
 
 import { getFactionFromCoordinates } from "@/backend/society/factions";
-import { type CelestialBodyModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { type SpaceStationModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/spacestationModel";
 
 import { CropTypes, getEdibleEnergyPerAreaPerDay, type CropType } from "@/utils/agriculture";
 import { getDistancesToStellarObjects } from "@/utils/distanceToStellarObject";
@@ -35,8 +39,6 @@ import { assertUnreachable, type DeepPartial, type DeepReadonly } from "@/utils/
 
 import { Settings } from "@/settings";
 
-import type { StationSectionModel } from "../../orbitalObjects/orbitalFacilities/sections";
-import type { StarSystemModel } from "../../starSystemModel";
 import { generateEngineBayModel } from "./sections/engineBay";
 import { generateFusionSectionModel } from "./sections/fusion";
 import { generateCylinderHabitatModel } from "./sections/habitats/cylinder";

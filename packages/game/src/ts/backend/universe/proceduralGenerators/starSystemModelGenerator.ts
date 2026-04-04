@@ -15,9 +15,18 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import {
+    type StarSystemCoordinates,
+    type AnomalyModel,
+    type AnomalyType,
+    type OrbitalFacilityModel,
+    type PlanetModel,
+    type StellarObjectModel,
+    type TelluricSatelliteModel,
+    type StarSystemModel,
+    createOrbitalObjectId,
+} from "@cosmos-journeyer/universe-model";
 import { centeredRand, randRangeInt, uniformRandBool } from "extended-random";
-
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { wheelOfFortune } from "@/utils/random";
@@ -28,16 +37,6 @@ import { assertUnreachable, isNonEmptyArray } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
-import {
-    type AnomalyModel,
-    type AnomalyType,
-    type OrbitalFacilityModel,
-    type PlanetModel,
-    type StellarObjectModel,
-} from "../orbitalObjects/index";
-import { createOrbitalObjectId } from "../orbitalObjects/orbitalObjectId";
-import { type TelluricSatelliteModel } from "../orbitalObjects/telluricSatelliteModel";
-import { type StarSystemModel } from "../starSystemModel";
 import { generateJuliaSetModel } from "./anomalies/juliaSetModelGenerator";
 import { generateMandelboxModel } from "./anomalies/mandelboxModelGenerator";
 import { generateMandelbulbModel } from "./anomalies/mandelbulbModelGenerator";

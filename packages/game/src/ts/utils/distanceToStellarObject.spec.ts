@@ -16,9 +16,8 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { astronomicalUnitToMeters, EarthMass, SolarMass, SolarRadius } from "@cosmos-journeyer/physics";
+import { getObjectModelById, type StarSystemModel } from "@cosmos-journeyer/universe-model";
 import { describe, expect, it } from "vitest";
-
-import { getObjectModelById, type StarSystemModel } from "@/backend/universe/starSystemModel";
 
 import { type DeepReadonly } from "@/utils/types";
 

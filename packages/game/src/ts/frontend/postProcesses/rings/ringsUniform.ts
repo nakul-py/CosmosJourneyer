@@ -18,12 +18,7 @@
 import { type Effect } from "@babylonjs/core/Materials/effect";
 import { type Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { type Scene } from "@babylonjs/core/scene";
-
-import {
-    type ProceduralRingsModel,
-    type RingsModel,
-    type TexturedRingsModel,
-} from "@/backend/universe/orbitalObjects/ringsModel";
+import { type ProceduralRingsModel, type RingsModel, type TexturedRingsModel } from "@cosmos-journeyer/universe-model";
 
 import { createEmptyTexture } from "@/frontend/assets/procedural/proceduralTexture";
 import { type Textures } from "@/frontend/assets/textures";

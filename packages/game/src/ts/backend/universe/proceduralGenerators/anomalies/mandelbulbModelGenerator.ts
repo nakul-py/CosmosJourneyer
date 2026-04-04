@@ -16,11 +16,8 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { degreesToRadians } from "@cosmos-journeyer/physics";
+import { type MandelbulbModel, type OrbitalObjectModel, type Orbit } from "@cosmos-journeyer/universe-model";
 import { normalRandom, randRange } from "extended-random";
-
-import { type MandelbulbModel } from "@/backend/universe/orbitalObjects/anomalies/mandelbulbModel";
-import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
 
 import { hsvToRgb } from "@/utils/colors";
 import { GenerationSteps } from "@/utils/generationSteps";

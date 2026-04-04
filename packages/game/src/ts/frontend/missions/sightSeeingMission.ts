@@ -16,10 +16,10 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { type UniverseObjectId } from "@cosmos-journeyer/universe-model";
 
 import { MissionType } from "@/backend/missions/missionSerialized";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { wrapVector3 } from "@/frontend/helpers/algebra";
 

@@ -17,9 +17,9 @@
 
 import { Observable } from "@babylonjs/core/Misc/observable";
 import { getOrbitalPeriod } from "@cosmos-journeyer/physics";
+import { getObjectModelById } from "@cosmos-journeyer/universe-model";
 
 import { type EncyclopaediaGalactica, type SpaceDiscoveryData } from "@/backend/encyclopaedia/encyclopaediaGalactica";
-import { getObjectModelById } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";

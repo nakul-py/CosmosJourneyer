@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { LandingBayModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/landingBay";
+import type { LandingBayModel } from "@cosmos-journeyer/universe-model";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 

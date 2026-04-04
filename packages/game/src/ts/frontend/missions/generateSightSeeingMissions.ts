@@ -16,13 +16,16 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { type Vector3 } from "@babylonjs/core/Maths/math.vector";
+import {
+    type OrbitalFacilityModel,
+    type StarSystemModel,
+    getUniverseObjectId,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
 import { uniformRandBool } from "extended-random";
 
 import { MissionType } from "@/backend/missions/missionSerialized";
-import { type OrbitalFacilityModel } from "@/backend/universe/orbitalObjects/index";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { getUniverseObjectId, type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { getNeighborStarSystemCoordinates } from "@/frontend/helpers/getNeighborStarSystems";
 import { type Player } from "@/frontend/player/player";

@@ -16,6 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { degreesToRadians, EarthSeaLevelPressure, JupiterMass } from "@cosmos-journeyer/physics";
+import { type GasPlanetModel, type Orbit, type StellarObjectModel } from "@cosmos-journeyer/universe-model";
 import { normalRandom, randRange, randRangeInt, uniformRandBool } from "extended-random";
 
 import { hsvToRgb } from "@/utils/colors";
@@ -25,11 +26,8 @@ import { type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
-import { type GasPlanetModel } from "../orbitalObjects/gasPlanetModel";
-import { type StellarObjectModel } from "../orbitalObjects/index";
-import { type Orbit } from "../orbitalObjects/orbit";
-import { newSeededRingsModel } from "../orbitalObjects/ringsModel";
 import { getGasPlanetOrbitRadius } from "./gasPlanetOrbitGenerator";
+import { generateSeededRingsModel } from "./ringsModelGenerator";
 
 export function generateGasPlanetModel(
     id: string,
@@ -81,7 +79,7 @@ export function generateGasPlanetModel(
     const axialTilt = normalRandom(0, 0.4, rng, GenerationSteps.AXIAL_TILT);
     const siderealDaySeconds = (24 * 60 * 60) / 10;
 
-    const rings = uniformRandBool(0.8, rng, GenerationSteps.RINGS) ? newSeededRingsModel(radius, rng) : null;
+    const rings = uniformRandBool(0.8, rng, GenerationSteps.RINGS) ? generateSeededRingsModel(radius, rng) : null;
 
     // color palette
     const hue1 = normalRandom(240, 30, rng, 70);

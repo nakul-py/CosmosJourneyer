@@ -17,13 +17,16 @@
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Observable } from "@babylonjs/core/Misc/observable";
+import {
+    type StarSystemCoordinates,
+    type StarSystemModel,
+    getUniverseObjectId,
+    type UniverseObjectId,
+} from "@cosmos-journeyer/universe-model";
 
 import { type ISaveBackend } from "@/backend/save/saveBackend";
 import { getLatestSaveFromBackend } from "@/backend/save/saveHelpers";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
-import { getUniverseObjectId, type UniverseObjectId } from "@/backend/universe/universeObjectId";
 
 import { type ISoundPlayer } from "@/frontend/audio/soundPlayer";
 import { type DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";

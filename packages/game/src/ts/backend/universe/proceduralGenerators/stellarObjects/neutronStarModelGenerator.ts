@@ -15,16 +15,14 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { type OrbitalObjectModel, type Orbit, type NeutronStarModel } from "@cosmos-journeyer/universe-model";
 import { normalRandom, randRange, randRangeInt, uniformRandBool } from "extended-random";
-
-import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { newSeededRingsModel } from "@/backend/universe/orbitalObjects/ringsModel";
-import { type NeutronStarModel } from "@/backend/universe/orbitalObjects/stellarObjects/neutronStarModel";
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
+
+import { generateSeededRingsModel } from "../ringsModelGenerator";
 
 /**
  * Creates a new pseudo-random neutron star model
@@ -72,7 +70,9 @@ export function generateNeutronStarModel(
 
     const ringProportion = 0.02;
 
-    const rings = uniformRandBool(ringProportion, rng, GenerationSteps.RINGS) ? newSeededRingsModel(radius, rng) : null;
+    const rings = uniformRandBool(ringProportion, rng, GenerationSteps.RINGS)
+        ? generateSeededRingsModel(radius, rng)
+        : null;
 
     return {
         type: "neutronStar",

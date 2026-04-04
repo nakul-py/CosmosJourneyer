@@ -17,10 +17,13 @@
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type AnomalyModel, type PlanetModel, type StellarObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
+import {
+    type AnomalyModel,
+    type PlanetModel,
+    type StellarObjectModel,
+    type TelluricSatelliteModel,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { GasPlanet } from "@/frontend/universe/planets/gasPlanet/gasPlanet";

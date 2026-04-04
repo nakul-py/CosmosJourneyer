@@ -16,9 +16,9 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { getOrbitalPeriod } from "@cosmos-journeyer/physics";
+import { type OrbitalFacilityModel, type OrbitalObjectModel } from "@cosmos-journeyer/universe-model";
 
 import { factionToString } from "@/backend/society/factions";
-import { type OrbitalFacilityModel, type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
 
 import { makeD3PieChart } from "@/frontend/helpers/d3PieChart";
 

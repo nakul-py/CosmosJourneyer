@@ -9,6 +9,7 @@ const projectConfigs = [
     "./packages/channel-packer/tsconfig.json",
     "./packages/game/tsconfig.json",
     "./packages/physics/tsconfig.json",
+    "./packages/universe-model/tsconfig.json",
     "./packages/website/tsconfig.json",
 ];
 const tsParserOptions = {
@@ -70,6 +71,7 @@ const typeScriptWorkspaceRules = {
     },
     rules: {
         "import-x/no-cycle": "error",
+        "import-x/no-duplicates": ["error", { "prefer-inline": true }],
 
         "@typescript-eslint/switch-exhaustiveness-check": "error",
         "@typescript-eslint/no-inferrable-types": "error",

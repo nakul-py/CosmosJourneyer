@@ -17,9 +17,10 @@
 
 import "@styles/index.css";
 
+import { type StarSystemModel } from "@cosmos-journeyer/universe-model";
+
 import { generateBlackHoleModel } from "@/backend/universe/proceduralGenerators/stellarObjects/blackHoleModelGenerator";
 import { generateTelluricPlanetModel } from "@/backend/universe/proceduralGenerators/telluricPlanetModelGenerator";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 
 import { positionNearObjectBrightSide } from "@/frontend/helpers/positionNearObject";
 

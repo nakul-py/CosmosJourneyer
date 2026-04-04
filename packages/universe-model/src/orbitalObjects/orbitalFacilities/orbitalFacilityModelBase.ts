@@ -15,12 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { type Faction } from "@/backend/society/factions";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-
-import { type CropType } from "@/utils/agriculture";
-
 import { type OrbitalObjectType } from "..";
+import { type CropType, type Faction } from "../../common";
+import { type StarSystemCoordinates } from "../../starSystemCoordinates";
 import { type OrbitalObjectModelBase } from "../orbitalObjectModelBase";
 
 export type OrbitalFacilityModelBase<T extends OrbitalObjectType> = OrbitalObjectModelBase<T> & {

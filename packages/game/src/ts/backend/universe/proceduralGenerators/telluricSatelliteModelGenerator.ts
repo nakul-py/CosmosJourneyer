@@ -25,14 +25,16 @@ import {
     hasLiquidWater,
     MoonMass,
 } from "@cosmos-journeyer/physics";
+import {
+    type AtmosphereModel,
+    type CloudsModel,
+    type PlanetModel,
+    type StellarObjectModel,
+    type OceanModel,
+    type Orbit,
+    type TelluricSatelliteModel,
+} from "@cosmos-journeyer/universe-model";
 import { normalRandom } from "extended-random";
-
-import { type AtmosphereModel } from "@/backend/universe/orbitalObjects/atmosphereModel";
-import { newCloudsModel, type CloudsModel } from "@/backend/universe/orbitalObjects/cloudsModel";
-import { type PlanetModel, type StellarObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type OceanModel } from "@/backend/universe/orbitalObjects/oceanModel";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
@@ -41,6 +43,7 @@ import type { DeepReadonly, NonEmptyArray } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
+import { generateCloudsModel } from "./cloudsModelGenerator";
 import { getTemperatureRange } from "./temperatureRange";
 
 export function generateTelluricSatelliteModel(
@@ -174,7 +177,7 @@ export function generateTelluricSatelliteModel(
     const averageTemperature = (temperatureRange.min + temperatureRange.max) / 2;
     const clouds: CloudsModel | null =
         ocean !== null
-            ? newCloudsModel(
+            ? generateCloudsModel(
                   radius + ocean.depth,
                   Settings.CLOUD_LAYER_HEIGHT,
                   oceanCoverage,

@@ -16,11 +16,12 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { astronomicalUnitToMeters, barToPascal, celsiusToKelvin, degreesToRadians } from "@cosmos-journeyer/physics";
-
-import { type GasPlanetModel } from "@/backend/universe/orbitalObjects/gasPlanetModel";
-import { type TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
+import {
+    type GasPlanetModel,
+    type TelluricPlanetModel,
+    type TelluricSatelliteModel,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 
 import { getJupiterModel } from "./jupiter";
 import { getSaturnModel } from "./saturn";

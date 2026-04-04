@@ -18,8 +18,7 @@
 import { Effect } from "@babylonjs/core/Materials/effect";
 import { ProceduralTexture } from "@babylonjs/core/Materials/Textures/Procedurals/proceduralTexture";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type CloudsModel } from "@/backend/universe/orbitalObjects/cloudsModel";
+import { type CloudsModel } from "@cosmos-journeyer/universe-model";
 
 import { type DeepReadonly } from "@/utils/types";
 

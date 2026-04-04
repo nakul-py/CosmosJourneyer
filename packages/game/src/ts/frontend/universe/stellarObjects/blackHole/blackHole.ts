@@ -21,8 +21,7 @@ import { type CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type BlackHoleModel } from "@/backend/universe/orbitalObjects/stellarObjects/blackHoleModel";
+import { type BlackHoleModel } from "@cosmos-journeyer/universe-model";
 
 import { getOrbitalObjectTypeToI18nString } from "@/frontend/helpers/orbitalObjectTypeToDisplay";
 import { type StellarObjectBase } from "@/frontend/universe/architecture/stellarObject";

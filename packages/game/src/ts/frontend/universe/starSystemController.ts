@@ -18,10 +18,12 @@
 import { Matrix } from "@babylonjs/core/Maths/math";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
+import {
+    type OrbitalObjectId,
+    type StarSystemCoordinates,
+    type StarSystemModel,
+} from "@cosmos-journeyer/universe-model";
 
-import { type OrbitalObjectId } from "@/backend/universe/orbitalObjects/orbitalObjectId";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";

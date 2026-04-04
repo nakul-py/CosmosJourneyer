@@ -15,8 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { type StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
+
 import { type MissionOrNodeSerialized } from "@/backend/missions/missionNodeSerialized";
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import { type UniverseBackend } from "@/backend/universe/universeBackend";
 
 import i18n from "@/i18n";

@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { UtilitySectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/utility";
+import type { UtilitySectionModel } from "@cosmos-journeyer/universe-model";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 

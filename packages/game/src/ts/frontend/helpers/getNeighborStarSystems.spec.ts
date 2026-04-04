@@ -16,10 +16,10 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { starSystemCoordinatesEquals } from "@cosmos-journeyer/universe-model";
 import { expect, test } from "vitest";
 
 import { getLoneStarSystem } from "@/backend/universe/customSystems/loneStar";
-import { starSystemCoordinatesEquals } from "@/backend/universe/starSystemCoordinates";
 import { UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { getNeighborStarSystemCoordinates } from "./getNeighborStarSystems";

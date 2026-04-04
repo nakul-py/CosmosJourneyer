@@ -23,8 +23,7 @@ import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type CelestialBodyModel } from "@/backend/universe/orbitalObjects/index";
+import { type CelestialBodyModel } from "@cosmos-journeyer/universe-model";
 
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";

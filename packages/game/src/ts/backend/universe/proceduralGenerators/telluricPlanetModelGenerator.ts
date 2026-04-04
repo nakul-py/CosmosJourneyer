@@ -23,15 +23,16 @@ import {
     getOceanDepth,
     hasLiquidWater,
 } from "@cosmos-journeyer/physics";
+import {
+    type AtmosphereModel,
+    type CloudsModel,
+    type OceanModel,
+    type Orbit,
+    type RingsModel,
+    type StellarObjectModel,
+    type TelluricPlanetModel,
+} from "@cosmos-journeyer/universe-model";
 import { normalRandom, uniformRandBool } from "extended-random";
-
-import { type AtmosphereModel } from "@/backend/universe/orbitalObjects/atmosphereModel";
-import { newCloudsModel, type CloudsModel } from "@/backend/universe/orbitalObjects/cloudsModel";
-import { type StellarObjectModel } from "@/backend/universe/orbitalObjects/index";
-import { type OceanModel } from "@/backend/universe/orbitalObjects/oceanModel";
-import { type Orbit } from "@/backend/universe/orbitalObjects/orbit";
-import { newSeededRingsModel, type RingsModel } from "@/backend/universe/orbitalObjects/ringsModel";
-import { type TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
@@ -40,6 +41,8 @@ import type { DeepPartial, DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
+import { generateCloudsModel } from "./cloudsModelGenerator";
+import { generateSeededRingsModel } from "./ringsModelGenerator";
 import { getTelluricPlanetOrbitRadius } from "./telluricPlanetOrbitGenerator";
 import { getTemperatureRange } from "./temperatureRange";
 
@@ -137,7 +140,7 @@ export function generateTelluricPlanetModel(
     const averageTemperature = (temperatureRange.min + temperatureRange.max) / 2;
     const clouds: CloudsModel | null =
         ocean !== null
-            ? newCloudsModel(
+            ? generateCloudsModel(
                   radius + ocean.depth,
                   Settings.CLOUD_LAYER_HEIGHT,
                   oceanCoverage,
@@ -160,7 +163,7 @@ export function generateTelluricPlanetModel(
     };
 
     const rings: RingsModel | null = uniformRandBool(0.6, rng, GenerationSteps.RINGS)
-        ? newSeededRingsModel(radius, rng)
+        ? generateSeededRingsModel(radius, rng)
         : null;
 
     return {

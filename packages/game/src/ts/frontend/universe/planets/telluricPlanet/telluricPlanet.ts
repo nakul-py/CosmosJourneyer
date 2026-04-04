@@ -21,9 +21,7 @@ import { TransformNode } from "@babylonjs/core/Meshes";
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { PhysicsShapeSphere } from "@babylonjs/core/Physics/v2/physicsShape";
 import { type Scene } from "@babylonjs/core/scene";
-
-import { type TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
-import { type TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
+import { type TelluricPlanetModel, type TelluricSatelliteModel } from "@cosmos-journeyer/universe-model";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { type Cullable } from "@/frontend/helpers/cullable";

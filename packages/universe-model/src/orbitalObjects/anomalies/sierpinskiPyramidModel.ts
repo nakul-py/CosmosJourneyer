@@ -15,23 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { RGBColor } from "@/utils/colors";
-
+import type { RGBColor } from "../../common";
 import { type CelestialBodyModelBase } from "../orbitalObjectModelBase";
 
-export type MandelboxModel = CelestialBodyModelBase<"mandelbox"> & {
-    /**
-     * The albedo color of the mandelbox
-     */
-    readonly color: RGBColor;
-
-    /**
-     * distance estimator parameter (range is [0-1])
-     */
-    readonly mr2: number;
-
-    /**
-     * distance estimator parameter (range is [1.0, 1.5])
-     */
-    readonly spread: number;
+export type SierpinskiPyramidModel = CelestialBodyModelBase<"sierpinskiPyramid"> & {
+    readonly accentColor: RGBColor;
 };

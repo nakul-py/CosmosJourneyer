@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import type { CylinderHabitatModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/habitats/cylinder";
+import type { CylinderHabitatModel } from "@cosmos-journeyer/universe-model";
 
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 

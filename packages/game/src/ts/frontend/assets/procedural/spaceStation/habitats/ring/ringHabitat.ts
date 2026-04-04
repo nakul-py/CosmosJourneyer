@@ -27,8 +27,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
 import { EarthG, getRotationPeriodForArtificialGravity } from "@cosmos-journeyer/physics";
-
-import type { RingHabitatModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/habitats/ring";
+import type { RingHabitatModel } from "@cosmos-journeyer/universe-model";
 
 import { createRing } from "@/frontend/assets/procedural/helpers/ringBuilder";
 import { type Textures } from "@/frontend/assets/textures";

@@ -26,8 +26,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
 import { getRadiatorAreaForHeat } from "@cosmos-journeyer/physics";
-
-import type { FusionSectionModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/fusion";
+import type { FusionSectionModel } from "@cosmos-journeyer/universe-model";
 
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { createEnvironmentAggregate } from "@/frontend/helpers/havok";

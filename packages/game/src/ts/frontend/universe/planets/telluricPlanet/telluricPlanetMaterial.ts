@@ -21,6 +21,7 @@ import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Vector3, Vector4 } from "@babylonjs/core/Maths/math.vector";
 import type { Scene } from "@babylonjs/core/scene";
 import { celsiusToKelvin } from "@cosmos-journeyer/physics";
+import type { TelluricPlanetModel, TelluricSatelliteModel } from "@cosmos-journeyer/universe-model";
 import {
     abs,
     add,
@@ -52,9 +53,6 @@ import {
     vec,
     vertexAttribute,
 } from "babylonjs-shading-language";
-
-import type { TelluricPlanetModel } from "@/backend/universe/orbitalObjects/telluricPlanetModel";
-import type { TelluricSatelliteModel } from "@/backend/universe/orbitalObjects/telluricSatelliteModel";
 
 import type { TerrainTextures } from "@/frontend/assets/textures/terrains";
 

@@ -1,10 +1,10 @@
+import { StarSystemCoordinatesSchema } from "@cosmos-journeyer/universe-model";
 import { z } from "zod";
 
 import { SpaceDiscoveryDataSchema } from "@/backend/encyclopaedia/encyclopaediaGalactica";
 import { MissionSerializedSchema } from "@/backend/missions/missionSerialized";
 import { SerializedComponentSchema } from "@/backend/spaceship/serializedComponents/component";
 import { getDefaultSerializedSpaceship, SerializedSpaceshipSchema } from "@/backend/spaceship/serializedSpaceship";
-import { StarSystemCoordinatesSchema } from "@/backend/universe/starSystemCoordinates";
 
 export const CompletedTutorialsSchema = z.object({
     flightCompleted: z.boolean().default(false),

@@ -29,8 +29,8 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { Observable } from "@babylonjs/core/Misc/observable";
 import type { Scene } from "@babylonjs/core/scene";
+import { type StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
 
-import { type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
 import type { UniverseBackend } from "@/backend/universe/universeBackend";
 
 import { getRgbFromTemperature } from "@/utils/specrend";

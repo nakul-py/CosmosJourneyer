@@ -1,4 +1,4 @@
-import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@/backend/universe/starSystemCoordinates";
+import { starSystemCoordinatesEquals, type StarSystemCoordinates } from "@cosmos-journeyer/universe-model";
 
 const SystemIconMask = {
     BOOKMARK: 0b01,
