@@ -15,9 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { type StarSystemModel } from "@/backend/universe/starSystemModel";
+import { SolarMass, SolarRadius } from "@cosmos-journeyer/physics";
 
-import { SolarMass, SolarRadius } from "@/utils/physics/constants";
+import { type StarSystemModel } from "@/backend/universe/starSystemModel";
 
 import { generateSpaceStationModel } from "../proceduralGenerators/orbitalFacilities/spaceStationModelGenerator";
 

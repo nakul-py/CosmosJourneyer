@@ -15,7 +15,8 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { perHaToPerM2 } from "./physics/unitConversions";
+import { perHaToPerM2 } from "@cosmos-journeyer/physics";
+
 import { assertUnreachable } from "./types";
 
 export const CropType = {

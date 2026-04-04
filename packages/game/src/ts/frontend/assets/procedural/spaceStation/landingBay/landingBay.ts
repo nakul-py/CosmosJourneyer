@@ -28,6 +28,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import { type PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
+import { degreesToRadians, EarthG, getRotationPeriodForArtificialGravity } from "@cosmos-journeyer/physics";
 
 import { type OrbitalFacilityModel } from "@/backend/universe/orbitalObjects/index";
 import type { LandingBayModel } from "@/backend/universe/orbitalObjects/orbitalFacilities/sections/landingBay";
@@ -38,9 +39,6 @@ import { createEnvironmentAggregate } from "@/frontend/helpers/havok";
 import { createCircleInstanceBuffer } from "@/frontend/helpers/instancing";
 import { LandingPadSize, LandingPadStatus } from "@/frontend/universe/orbitalFacility/landingPadManager";
 
-import { EarthG } from "@/utils/physics/constants";
-import { getRotationPeriodForArtificialGravity } from "@/utils/physics/physics";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
 import { ProceduralSpotLightInstances, type ProceduralSpotLightInstanceData } from "../../spotLight";

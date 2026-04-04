@@ -15,11 +15,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { astronomicalUnitToMeters, EarthMass } from "@cosmos-journeyer/physics";
+
 import { type DarkKnightModel } from "@/backend/universe/orbitalObjects/anomalies/darkKnightModel";
 import { type OrbitalObjectId } from "@/backend/universe/orbitalObjects/orbitalObjectId";
-
-import { EarthMass } from "@/utils/physics/constants";
-import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
 
 export function generateDarkKnightModel(parentIds: ReadonlyArray<OrbitalObjectId>): DarkKnightModel {
     return {

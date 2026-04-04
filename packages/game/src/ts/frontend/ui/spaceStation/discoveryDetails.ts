@@ -16,6 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Observable } from "@babylonjs/core/Misc/observable";
+import { getOrbitalPeriod } from "@cosmos-journeyer/physics";
 
 import { type EncyclopaediaGalactica, type SpaceDiscoveryData } from "@/backend/encyclopaedia/encyclopaediaGalactica";
 import { getObjectModelById } from "@/backend/universe/starSystemModel";
@@ -26,7 +27,6 @@ import { getOrbitalObjectTypeToI18nString } from "@/frontend/helpers/orbitalObje
 import { type Player } from "@/frontend/player/player";
 import { alertModal } from "@/frontend/ui/dialogModal";
 
-import { getOrbitalPeriod } from "@/utils/physics/orbit";
 import { parseDistance, parseSecondsPrecise } from "@/utils/strings/parseToStrings";
 
 import i18n from "@/i18n";

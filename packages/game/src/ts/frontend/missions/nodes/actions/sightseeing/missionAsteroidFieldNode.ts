@@ -16,6 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { lightYearsToMeters } from "@cosmos-journeyer/physics";
 
 import {
     AsteroidFieldMissionState,
@@ -29,7 +30,6 @@ import { universeObjectIdEquals, type UniverseObjectId } from "@/backend/univers
 import { wrapVector3 } from "@/frontend/helpers/algebra";
 
 import { clamp } from "@/utils/math";
-import { lightYearsToMeters } from "@/utils/physics/unitConversions";
 import { parseDistance } from "@/utils/strings/parseToStrings";
 import { assertUnreachable } from "@/utils/types";
 

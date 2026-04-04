@@ -18,9 +18,9 @@
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PhysicsConstraintAxis } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import type { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
+import { degreesToRadians, kmhToMetersPerSecond } from "@cosmos-journeyer/physics";
 
 import { clamp, lerp, lerpSmooth } from "@/utils/math";
-import { degreesToRadians, kmhToMetersPerSecond } from "@/utils/physics/unitConversions";
 
 import type { Transformable } from "../universe/architecture/transformable";
 import type { Door } from "./door";

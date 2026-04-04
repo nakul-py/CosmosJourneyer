@@ -15,9 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { getSphereIrradianceAtDistance } from "@cosmos-journeyer/physics";
 import { describe, expect, it } from "vitest";
 
-import { getSphereIrradianceAtDistance } from "./physics/thermodynamics";
 import { getSolarPanelSurfaceFromEnergyRequirement } from "./solarPanels";
 
 describe("solarPanelSurfaceCalculation", () => {

@@ -15,10 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import i18n from "@/i18n";
+import { C, lightYearsToMeters, metersToLightSeconds, metersToLightYears } from "@cosmos-journeyer/physics";
 
-import { C } from "../physics/constants";
-import { lightYearsToMeters, metersToLightSeconds, metersToLightYears } from "../physics/unitConversions";
+import i18n from "@/i18n";
 
 export function parseSpeed(speed: number): string {
     if (speed < 1_000) {

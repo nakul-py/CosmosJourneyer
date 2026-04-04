@@ -131,6 +131,6 @@ describe("getErgosphereRadius", () => {
     it("throws when the solution is overextreme", () => {
         const rotationPeriod = rotationPeriodFromSpin(sagittariusAMass, sagittariusASpin) / 100;
 
-        expect(() => getErgosphereRadius(sagittariusAMass, rotationPeriod, Math.PI / 3)).toThrowError();
+        expect(() => getErgosphereRadius(sagittariusAMass, rotationPeriod, Math.PI / 3)).toThrow();
     });
 });

@@ -175,8 +175,11 @@ Cosmos Journeyer is built using the following technologies:
 
 This project uses a pnpm workspace. Packages live under `packages/` and share tooling defined at the repository root.
 
-- `packages/game` – main Babylon.js game sources, assets, build config, and tests
-- `packages/website` – Next.js website sources and build config
+- `packages/game`: main Babylon.js game sources, assets, build config, and tests
+- `packages/physics`: shared source-only physics formulas, constants, and unit conversions
+- `packages/babylonjs-shader-language`: shared source-only wrapper for BabylonJS Node Materials, to be used in the game and in the shader playgrounds
+- `packages/channel-packer`: web-only tool to pack the game channels into a single file for easier distribution
+- `packages/website`: Next.js website sources and build config
 
 ### Development
 

@@ -28,6 +28,7 @@ import {
 } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugin";
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { type Scene } from "@babylonjs/core/scene";
+import { C } from "@cosmos-journeyer/physics";
 
 import { type SerializedComponent } from "@/backend/spaceship/serializedComponents/component";
 import {
@@ -48,7 +49,6 @@ import { type Transformable } from "@/frontend/universe/architecture/transformab
 import { distanceToAsteroidField } from "@/frontend/universe/asteroidFields/helpers/distance";
 import { type ILandingPad } from "@/frontend/universe/orbitalFacility/landingPadManager";
 
-import { C } from "@/utils/physics/constants/fundamental";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
 import i18n from "@/i18n";

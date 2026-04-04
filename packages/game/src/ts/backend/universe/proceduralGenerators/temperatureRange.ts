@@ -15,8 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { EarthSeaLevelPressure } from "@cosmos-journeyer/physics";
+
 import { clamp, lerp } from "@/utils/math";
-import { EarthSeaLevelPressure } from "@/utils/physics/constants";
 
 export function getTemperatureRange(
     effectiveTemperature: number,

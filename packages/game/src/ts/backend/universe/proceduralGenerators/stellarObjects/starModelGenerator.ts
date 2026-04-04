@@ -15,6 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { SolarRadius, type StellarType } from "@cosmos-journeyer/physics";
 import { randRange, randRangeInt, uniformRandBool } from "extended-random";
 
 import { type OrbitalObjectModel } from "@/backend/universe/orbitalObjects/index";
@@ -24,8 +25,6 @@ import { type StarModel } from "@/backend/universe/orbitalObjects/stellarObjects
 
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
-import { SolarRadius } from "@/utils/physics/constants";
-import type { StellarType } from "@/utils/physics/stellarTypes";
 import { wheelOfFortune } from "@/utils/random";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 

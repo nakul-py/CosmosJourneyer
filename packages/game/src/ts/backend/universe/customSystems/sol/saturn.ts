@@ -15,11 +15,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { degreesToRadians, EarthSeaLevelPressure } from "@cosmos-journeyer/physics";
+
 import { type GasPlanetModel } from "@/backend/universe/orbitalObjects/gasPlanetModel";
 import { type OrbitalObjectId } from "@/backend/universe/orbitalObjects/orbitalObjectId";
-
-import { EarthSeaLevelPressure } from "@/utils/physics/constants";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 
 export function getSaturnModel(parentIds: ReadonlyArray<OrbitalObjectId>): GasPlanetModel {
     return {

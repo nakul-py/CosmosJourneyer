@@ -15,6 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { degreesToRadians, getSphereIrradianceAtDistance, km2ToM2, kwhPerYearToWatts } from "@cosmos-journeyer/physics";
 import { normalRandom } from "extended-random";
 
 import { getFactionFromCoordinates } from "@/backend/society/factions";
@@ -27,8 +28,6 @@ import { getDistancesToStellarObjects } from "@/utils/distanceToStellarObject";
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
-import { getSphereIrradianceAtDistance } from "@/utils/physics/thermodynamics";
-import { degreesToRadians, km2ToM2, kwhPerYearToWatts } from "@/utils/physics/unitConversions";
 import { randomPieChart, wheelOfFortune } from "@/utils/random";
 import { getSolarPanelSurfaceFromEnergyRequirement } from "@/utils/solarPanels";
 import { generateSpaceStationName } from "@/utils/strings/spaceStationNameGenerator";

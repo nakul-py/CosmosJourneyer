@@ -15,12 +15,11 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { astronomicalUnitToMeters, EarthMass, SolarMass, SolarRadius } from "@cosmos-journeyer/physics";
 import { describe, expect, it } from "vitest";
 
 import { getObjectModelById, type StarSystemModel } from "@/backend/universe/starSystemModel";
 
-import { EarthMass, SolarMass, SolarRadius } from "@/utils/physics/constants";
-import { astronomicalUnitToMeters } from "@/utils/physics/unitConversions";
 import { type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";

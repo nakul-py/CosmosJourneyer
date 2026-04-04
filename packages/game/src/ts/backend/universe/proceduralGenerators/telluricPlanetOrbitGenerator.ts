@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { getSilicateRockSublimationLine, getWaterIceFrostLine } from "@/utils/physics/physics";
+import { getSilicateRockSublimationLine, getWaterIceFrostLine } from "@cosmos-journeyer/physics";
 
 /**
  * Uses stellar luminosity to determine a plausible semi-major axis range for a Telluric planet then samples it

@@ -15,8 +15,9 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { getWaterSaturationPressure } from "@cosmos-journeyer/physics";
+
 import type { RGBColor } from "@/utils/colors";
-import { getWaterSaturationPressure } from "@/utils/physics/physics";
 
 export type CloudsModel = {
     layerRadius: number;

@@ -15,6 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import { degreesToRadians } from "@cosmos-journeyer/physics";
 import { normalRandom, randRange } from "extended-random";
 
 import { type SierpinskiPyramidModel } from "@/backend/universe/orbitalObjects/anomalies/sierpinskiPyramidModel";
@@ -25,7 +26,6 @@ import { hsvToRgb } from "@/utils/colors";
 import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { clamp } from "@/utils/math";
-import { degreesToRadians } from "@/utils/physics/unitConversions";
 
 export function generateSierpinskiPyramidModel(
     id: string,
