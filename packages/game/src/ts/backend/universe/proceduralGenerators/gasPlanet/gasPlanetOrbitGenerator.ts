@@ -17,6 +17,11 @@
 
 import { astronomicalUnitToMeters, getWaterIceFrostLine } from "@cosmos-journeyer/physics";
 
+const GenerationSteps = {
+    HOT_JUPITER_CHECK: 2564,
+    ORBIT_RADIUS: 865,
+} as const;
+
 /**
  * Samples a plausible semi-major axis for a gas giant given the properties of its parent star.
  * @param stellarTemperature Temperature of the parent star in K
@@ -24,12 +29,16 @@ import { astronomicalUnitToMeters, getWaterIceFrostLine } from "@cosmos-journeye
  * @param rng A random number generator function returning a uniform float in [0, 1)
  * @returns Semi-major axis in meters
  */
-export function getGasPlanetOrbitRadius(stellarTemperature: number, stellarRadius: number, rng: () => number): number {
+export function getGasPlanetOrbitRadius(
+    stellarTemperature: number,
+    stellarRadius: number,
+    rng: (step: number) => number,
+): number {
     const snowLine = getWaterIceFrostLine(stellarTemperature, stellarRadius);
 
     // Hot Jupiter modeling: around 1% chance (see https://academic.oup.com/mnras/article/516/1/75/6654884)
     const pHotJupiter = 0.01;
-    if (rng() < pHotJupiter) {
+    if (rng(GenerationSteps.HOT_JUPITER_CHECK) < pHotJupiter) {
         // Keep clear of the star and also well interior to the snow line
         const aMin = Math.max(10 * stellarRadius, astronomicalUnitToMeters(0.02));
         const aMax = Math.min(astronomicalUnitToMeters(0.1), snowLine * 0.5);
@@ -37,12 +46,12 @@ export function getGasPlanetOrbitRadius(stellarTemperature: number, stellarRadiu
         const upper = Math.max(aMax, aMin * 1.5);
 
         // Log-uniform inside this narrow inner region
-        const u = rng();
+        const u = rng(GenerationSteps.ORBIT_RADIUS);
         return aMin * Math.exp(Math.log(upper / aMin) * u);
     }
 
-    const innerFactor = 1.3 + 0.9 * rng();
-    const outerFactor = 1.0 + 2.0 * rng();
+    const innerFactor = 1.3;
+    const outerFactor = 3.0;
 
     const aMin = Math.max(snowLine * innerFactor, 10 * stellarRadius);
     let aMax = snowLine * outerFactor;
@@ -50,7 +59,7 @@ export function getGasPlanetOrbitRadius(stellarTemperature: number, stellarRadiu
         aMax = aMin * 1.5;
     }
 
-    const u = rng();
+    const u = rng(GenerationSteps.ORBIT_RADIUS);
     const sqrtMin = Math.sqrt(aMin);
     const sqrtMax = Math.sqrt(aMax);
     const sqrtA = sqrtMin + (sqrtMax - sqrtMin) * u;
