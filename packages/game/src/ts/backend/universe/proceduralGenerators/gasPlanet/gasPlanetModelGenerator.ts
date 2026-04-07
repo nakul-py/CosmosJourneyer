@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { degreesToRadians, EarthSeaLevelPressure, JupiterMass } from "@cosmos-journeyer/physics";
+import { degreesToRadians, EarthSeaLevelPressure, JupiterMass, JupiterRadius } from "@cosmos-journeyer/physics";
 import { type GasPlanetModel, type Orbit, type StellarObjectModel } from "@cosmos-journeyer/universe-model";
 import { normalRandom, randRange, randRangeInt, uniformRandBool } from "extended-random";
 
@@ -26,8 +26,8 @@ import { type DeepReadonly } from "@/utils/types";
 
 import { Settings } from "@/settings";
 
+import { generateSeededRingsModel } from "../ringsModelGenerator";
 import { getGasPlanetOrbitRadius } from "./gasPlanetOrbitGenerator";
-import { generateSeededRingsModel } from "./ringsModelGenerator";
 
 export function generateGasPlanetModel(
     id: string,
@@ -75,8 +75,8 @@ export function generateGasPlanetModel(
         argumentOfPeriapsis: 0,
         initialMeanAnomaly: 0,
     };
-    const mass = JupiterMass * (radius / 69_911e3) ** 3;
-    const axialTilt = normalRandom(0, 0.4, rng, GenerationSteps.AXIAL_TILT);
+    const mass = JupiterMass * (radius / JupiterRadius) ** 3;
+    const axialTilt = normalRandom(0, degreesToRadians(25), rng, GenerationSteps.AXIAL_TILT);
     const siderealDaySeconds = (24 * 60 * 60) / 10;
 
     const rings = uniformRandBool(0.8, rng, GenerationSteps.RINGS) ? generateSeededRingsModel(radius, rng) : null;

@@ -42,7 +42,7 @@ import { generateMandelboxModel } from "./anomalies/mandelboxModelGenerator";
 import { generateMandelbulbModel } from "./anomalies/mandelbulbModelGenerator";
 import { generateMengerSpongeModel } from "./anomalies/mengerSpongeModelGenerator";
 import { generateSierpinskiPyramidModel } from "./anomalies/sierpinskiPyramidModelGenerator";
-import { generateGasPlanetModel } from "./gasPlanetModelGenerator";
+import { generateGasPlanetModel } from "./gasPlanet/gasPlanetModelGenerator";
 import { generateSpaceElevatorModel } from "./orbitalFacilities/spaceElevatorModelGenerator";
 import { generateSpaceStationModel } from "./orbitalFacilities/spaceStationModelGenerator";
 import { generateBlackHoleModel } from "./stellarObjects/blackHoleModelGenerator";
