@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { degreesToRadians, EarthSeaLevelPressure, JupiterMass, JupiterRadius } from "@cosmos-journeyer/physics";
+import { degreesToRadians, EarthSeaLevelPressure, getCoolGasGiantRadiusFromMass } from "@cosmos-journeyer/physics";
 import { type GasPlanetModel, type Orbit, type StellarObjectModel } from "@cosmos-journeyer/universe-model";
 import { normalRandom, randRange, randRangeInt, uniformRandBool } from "extended-random";
 
@@ -24,10 +24,8 @@ import { GenerationSteps } from "@/utils/generationSteps";
 import { getRngFromSeed } from "@/utils/getRngFromSeed";
 import { type DeepReadonly } from "@/utils/types";
 
-import { Settings } from "@/settings";
-
 import { generateSeededRingsModel } from "../ringsModelGenerator";
-import { getGasPlanetOrbitRadius } from "./gasPlanetOrbitGenerator";
+import { getGasPlanetOrbitRadius, sampleGasPlanetMass } from "./gasPlanetModelHelpers";
 
 export function generateGasPlanetModel(
     id: string,
@@ -37,7 +35,9 @@ export function generateGasPlanetModel(
 ): GasPlanetModel {
     const rng = getRngFromSeed(seed);
 
-    const radius = randRangeInt(Settings.EARTH_RADIUS * 4, Settings.EARTH_RADIUS * 20, rng, GenerationSteps.RADIUS);
+    const mass = sampleGasPlanetMass(rng);
+
+    const radius = getCoolGasGiantRadiusFromMass(mass);
 
     const orbitRadiuses: Array<number> = [];
     for (const parent of parentBodies) {
@@ -73,7 +73,7 @@ export function generateGasPlanetModel(
         argumentOfPeriapsis: 0,
         initialMeanAnomaly: 0,
     };
-    const mass = JupiterMass * (radius / JupiterRadius) ** 3;
+
     const axialTilt = normalRandom(0, degreesToRadians(25), rng, GenerationSteps.AXIAL_TILT);
     const siderealDaySeconds = (24 * 60 * 60) / 10;
 
