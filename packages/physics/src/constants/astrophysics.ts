@@ -37,6 +37,9 @@ export const MoonMass = 7.348e22;
  */
 export const JupiterMass = 1.898e27;
 
+/** The radius of Jupiter in meters. */
+export const JupiterRadius = 69_911e3;
+
 /**
  * The mass of the sun in kilograms.
  */
