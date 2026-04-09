@@ -32,8 +32,6 @@ import { GasPlanet } from "@/frontend/universe/planets/gasPlanet/gasPlanet";
 
 import { getRgbFromTemperature } from "@/utils/specrend";
 
-import { Settings } from "@/settings";
-
 import { ItemPool } from "../utils/itemPool";
 import { enablePhysics } from "./utils";
 
@@ -49,26 +47,6 @@ export async function createGasPlanetScene(
 
     await enablePhysics(scene);
 
-    const scalingFactor = Settings.EARTH_RADIUS * 10;
-
-    const controls = new DefaultControls(scene);
-
-    const camera = controls.getActiveCamera();
-    controls.speed = scalingFactor;
-    camera.maxZ *= scalingFactor;
-
-    controls.getTransform().setAbsolutePosition(new Vector3(0, 1, -2).scaleInPlace(scalingFactor));
-    lookAt(controls.getTransform(), Vector3.Zero(), scene.useRightHandedSystem);
-
-    // This attaches the camera to the canvas
-    camera.attachControl();
-
-    scene.enableDepthRenderer(null, false, true);
-
-    const light = new PointLight("light1", new Vector3(7, 5, -10).scaleInPlace(scalingFactor), scene);
-    const lightColor = getRgbFromTemperature(SolarTemperature);
-    light.diffuse.set(lightColor.r, lightColor.g, lightColor.b);
-
     const urlParams = new URLSearchParams(window.location.search);
     const seed = urlParams.get("seed");
 
@@ -82,6 +60,28 @@ export async function createGasPlanetScene(
     const ringsLutPool = new ItemPool<RingsProceduralPatternLut>(() => new RingsProceduralPatternLut(scene));
 
     const planet = new GasPlanet(gasPlanetModel, textures, ringsLutPool, scene);
+
+    const controls = new DefaultControls(scene);
+
+    const camera = controls.getActiveCamera();
+    controls.speed = gasPlanetModel.radius;
+    camera.maxZ = 1e10;
+
+    controls.getTransform().setAbsolutePosition(new Vector3(0, 1, -2).scaleInPlace(gasPlanetModel.radius * 2));
+    lookAt(controls.getTransform(), Vector3.Zero(), scene.useRightHandedSystem);
+
+    // This attaches the camera to the canvas
+    camera.attachControl();
+
+    scene.enableDepthRenderer(null, false, true);
+
+    const light = new PointLight(
+        "light1",
+        new Vector3(7, 5, -10).normalize().scaleInPlace(gasPlanetModel.radius * 100),
+        scene,
+    );
+    const lightColor = getRgbFromTemperature(SolarTemperature);
+    light.diffuse.set(lightColor.r, lightColor.g, lightColor.b);
 
     const shadow = new ShadowPostProcess(
         planet.getTransform(),
