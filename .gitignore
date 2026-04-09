@@ -21,5 +21,7 @@ packages/game/playwright-report
 .pnpm-store
 .next
 out
-.tsbuildinfo
+*.tsbuildinfo
 packages/website/next-env.d.ts
+packages/desktop-electron/dist
+packages/desktop-electron/release

@@ -24,7 +24,7 @@
     - [Setup](#setup)
     - [Building](#building)
         - [Web](#web)
-        - [Desktop (Tauri)](#desktop-tauri)
+        - [Desktop (Electron)](#desktop-electron)
     - [Testing](#testing)
     - [Formatting](#formatting)
     - [Linting](#linting)
@@ -153,7 +153,7 @@ Cosmos Journeyer is built using the following technologies:
 - [TypeScript](https://www.typescriptlang.org/) for the programming language
 - [Rspack](https://rspack.dev/) for bundling the application
 - [Pnpm](https://pnpm.io/) for the package manager
-- [Tauri](https://tauri.app/) for building the desktop application
+- [Electron](https://www.electronjs.org/) for building the desktop application
 - [Playwright](https://playwright.dev/) for end-to-end testing
 - [oxfmt](https://oxc.rs/docs/guide/usage/oxfmt) for code formatting
 - [Vitest](https://vitest.dev/) for unit testing
@@ -176,6 +176,7 @@ Cosmos Journeyer is built using the following technologies:
 This project uses a pnpm workspace. Packages live under `packages/` and share tooling defined at the repository root.
 
 - `packages/game`: main Babylon.js game sources, assets, build config, and tests
+- `packages/desktop-electron`: Electron desktop shell that packages the game for desktop distribution
 - `packages/physics`: shared source-only physics formulas, constants, and unit conversions
 - `packages/universe-model`: shared source-only star system and orbital object data models
 - `packages/babylonjs-shader-language`: shared source-only wrapper for BabylonJS Node Materials, to be used in the game and in the shader playgrounds
@@ -184,7 +185,7 @@ This project uses a pnpm workspace. Packages live under `packages/` and share to
 
 ### Development
 
-You can start the development server for the game with `pnpm dev:game` and for the website with `pnpm dev:website`.
+You can start the development server for the game with `pnpm dev:game`, for the desktop shell with `pnpm dev:desktop`, and for the website with `pnpm dev:website`.
 
 ### Building
 
@@ -192,17 +193,17 @@ You can start the development server for the game with `pnpm dev:game` and for t
 
 To build the web version of Cosmos Journeyer, run `pnpm build:game`. Everything will be built in `packages/game/dist`.
 
-#### Desktop (Tauri)
+#### Desktop (Electron)
 
-Cosmos Journeyer can be built as a desktop application using Tauri.
+Cosmos Journeyer can be built as a desktop application using Electron.
 
-For the game app, run `pnpm --filter @cosmos-journeyer/game tauri info` to find what dependencies your OS is missing.
+Run the desktop development shell with `pnpm dev:desktop`.
 
-Then you can build the game desktop application with `pnpm --filter @cosmos-journeyer/game tauri build` or run the dev version with `pnpm --filter @cosmos-journeyer/game tauri dev`.
+Then you can build the desktop application with `pnpm build:desktop` or create installable desktop packages with `pnpm package:desktop`.
 
 Channel Packer is web-only and can be started with `pnpm dev:channel-packer`.
 
-The build artifacts will appear in `packages/game/src-tauri/target/release/bundle/<platform>`.
+The packaged desktop artifacts will appear in `packages/desktop-electron/release`.
 
 ### Testing
 

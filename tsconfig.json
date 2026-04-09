@@ -6,6 +6,9 @@
             "path": "./packages/channel-packer/tsconfig.json"
         },
         {
+            "path": "./packages/desktop-electron/tsconfig.json"
+        },
+        {
             "path": "./packages/game/tsconfig.json"
         },
         {
