@@ -64,7 +64,7 @@
         "qrcode": "^1.5.4",
         "squirrel-noise": "^1.0.0",
         "terrain-generation": "workspace:^",
-        "zod": "^4.3.5"
+        "zod": "catalog:"
     },
     "devDependencies": {
         "@playwright/test": "^1.57.0",

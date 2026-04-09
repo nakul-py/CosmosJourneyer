@@ -23,7 +23,7 @@ import {
 } from "@cosmos-journeyer/physics";
 import { type StarSystemCoordinates, type StarSystemModel } from "@cosmos-journeyer/universe-model";
 
-import { generateGasPlanetModel } from "../proceduralGenerators/gasPlanetModelGenerator";
+import { generateGasPlanetModel } from "../proceduralGenerators/gasPlanet/gasPlanetModelGenerator";
 import { generateSpaceStationModel } from "../proceduralGenerators/orbitalFacilities/spaceStationModelGenerator";
 import { generateStarModel } from "../proceduralGenerators/stellarObjects/starModelGenerator";
 import { generateTelluricPlanetModel } from "../proceduralGenerators/telluricPlanetModelGenerator";

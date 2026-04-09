@@ -21,7 +21,7 @@
         "format:check": "oxfmt . --check"
     },
     "dependencies": {
-        "zod": "^4.3.5"
+        "zod": "catalog:"
     },
     "devDependencies": {
         "eslint": "catalog:",

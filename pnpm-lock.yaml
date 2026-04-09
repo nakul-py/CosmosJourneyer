@@ -45,6 +45,9 @@ catalogs:
     vitest:
       specifier: ^4.1.2
       version: 4.1.2
+    zod:
+      specifier: ^4.3.5
+      version: 4.3.5
 
 importers:
 
@@ -219,7 +222,7 @@ importers:
         specifier: workspace:^
         version: link:../terrain-generation
       zod:
-        specifier: ^4.3.5
+        specifier: 'catalog:'
         version: 4.3.5
     devDependencies:
       '@playwright/test':
@@ -300,7 +303,7 @@ importers:
   packages/universe-model:
     dependencies:
       zod:
-        specifier: ^4.3.5
+        specifier: 'catalog:'
         version: 4.3.5
     devDependencies:
       eslint:
