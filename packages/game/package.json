@@ -30,6 +30,7 @@
     "type": "module",
     "scripts": {
         "build": "rspack --mode=production --node-env=production --configLoader=native",
+        "build:watch": "rspack --watch --mode=development --configLoader=native",
         "serve": "rspack serve --configLoader=native",
         "serve:prod": "http-server dist -p 8080",
         "format:check": "oxfmt . --check",
@@ -41,8 +42,7 @@
         "serve:doc": "http-server doc -p 8081",
         "lint": "eslint .",
         "typecheck:watch": "tsc --noEmit --watch",
-        "typecheck": "tsc --noEmit",
-        "tauri": "tauri"
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@babylonjs/core": "^8.48.0",
@@ -70,7 +70,6 @@
         "@playwright/test": "^1.57.0",
         "@rspack/cli": "^1.6.8",
         "@rspack/core": "^1.6.8",
-        "@tauri-apps/cli": "^2.9.6",
         "@types/d3": "^7.4.3",
         "@types/earcut": "^3.0.0",
         "@types/qrcode": "^1.5.6",

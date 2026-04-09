@@ -7,6 +7,7 @@ import tseslint from "typescript-eslint";
 const projectConfigs = [
     "./packages/babylonjs-shading-language/tsconfig.json",
     "./packages/channel-packer/tsconfig.json",
+    "./packages/desktop-electron/tsconfig.json",
     "./packages/game/tsconfig.json",
     "./packages/physics/tsconfig.json",
     "./packages/universe-model/tsconfig.json",
@@ -153,9 +154,10 @@ const typeScriptWorkspaceRules = {
 export default defineConfig([
     globalIgnores([
         "packages/game/src/ts/utils/TWGSL/**",
-        "packages/game/src-tauri",
         "packages/game/rspack.config.js",
         "tsconfig.json",
+        "packages/desktop-electron/dist",
+        "packages/desktop-electron/release",
         "packages/game/dist",
         "packages/channel-packer/dist",
         "packages/babylonjs-shading-language/doc",

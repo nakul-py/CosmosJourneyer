@@ -1,0 +1,82 @@
+{
+    "name": "@cosmos-journeyer/desktop-electron",
+    "version": "1.11.0-dev",
+    "private": true,
+    "description": "Electron desktop shell for Cosmos Journeyer.",
+    "homepage": "https://cosmosjourneyer.com",
+    "bugs": {
+        "url": "https://github.com/BarthPaleologue/CosmosJourneyer/issues",
+        "email": "barth.paleologue@cosmosjourneyer.com"
+    },
+    "license": "AGPL-3.0-only",
+    "author": {
+        "name": "Barthélemy Paléologue",
+        "email": "barth.paleologue@cosmosjourneyer.com",
+        "url": "https://barth.paleologue.fr"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BarthPaleologue/CosmosJourneyer"
+    },
+    "type": "module",
+    "main": "dist/main.js",
+    "scripts": {
+        "build": "pnpm --filter @cosmos-journeyer/game build && pnpm run build:main && pnpm run sync:renderer",
+        "build:main": "tsc -p tsconfig.json",
+        "clean:renderer": "node ./scripts/clean-game-dist.mjs",
+        "sync:renderer": "node ./scripts/sync-game-dist.mjs",
+        "dev": "pnpm run clean:renderer && concurrently -k -s first \"pnpm --filter @cosmos-journeyer/game build:watch\" \"pnpm run dev:app\"",
+        "dev:app": "pnpm run build:main && node ./scripts/wait-for-renderer.mjs && cross-env ELECTRON_RUN_AS_NODE= COSMOS_DESKTOP_DEV=1 electron dist/main.js",
+        "package": "pnpm run build && electron-builder --publish never",
+        "format": "oxfmt . --write",
+        "format:check": "oxfmt . --check",
+        "lint": "eslint src",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/node": "^24.8.0",
+        "concurrently": "^9.2.1",
+        "cross-env": "^10.1.0",
+        "electron": "^38.3.0",
+        "electron-builder": "^26.0.12",
+        "eslint": "catalog:",
+        "oxfmt": "catalog:",
+        "typescript": "catalog:"
+    },
+    "build": {
+        "appId": "com.cosmosjourneyer",
+        "productName": "Cosmos Journeyer",
+        "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "dist/**/*.js",
+            "dist/**/*.js.map",
+            "dist/**/*.cjs",
+            "dist/**/*.cjs.map",
+            "dist/renderer/**/*"
+        ],
+        "mac": {
+            "category": "public.app-category.games",
+            "icon": "assets/icons/icon.icns",
+            "target": [
+                "dmg"
+            ]
+        },
+        "win": {
+            "icon": "assets/icons/icon.ico",
+            "target": [
+                "nsis"
+            ]
+        },
+        "linux": {
+            "category": "Game",
+            "icon": "assets/icons",
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        }
+    }
+}

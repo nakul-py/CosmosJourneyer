@@ -13,17 +13,21 @@ const __dirname = path.dirname(__filename);
 const isProduction = process.env["NODE_ENV"] === "production";
 
 const getLocalNetworkAddress = () => {
-    const networkInterfaces = os.networkInterfaces();
-    for (const networkInterface of Object.values(networkInterfaces)) {
-        if (!networkInterface) {
-            continue;
-        }
+    try {
+        const networkInterfaces = os.networkInterfaces();
+        for (const networkInterface of Object.values(networkInterfaces)) {
+            if (!networkInterface) {
+                continue;
+            }
 
-        for (const address of networkInterface) {
-            if (address.family === "IPv4" && !address.internal) {
-                return address.address;
+            for (const address of networkInterface) {
+                if (address.family === "IPv4" && !address.internal) {
+                    return address.address;
+                }
             }
         }
+    } catch {
+        return undefined;
     }
 
     return undefined;

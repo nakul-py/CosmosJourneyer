@@ -34,13 +34,16 @@
     "scripts": {
         "build": "pnpm -r build",
         "build:channel-packer": "pnpm --filter @cosmos-journeyer/channel-packer build",
+        "build:desktop": "pnpm --filter @cosmos-journeyer/desktop-electron build",
         "build:game": "pnpm --filter @cosmos-journeyer/game build",
         "build:website": "pnpm --filter @cosmos-journeyer/website build",
         "build:prod": "node ./scripts/build-prod.ts",
         "serve:prod": "http-server dist -p 8080",
         "dev:channel-packer": "pnpm --filter @cosmos-journeyer/channel-packer dev",
+        "dev:desktop": "pnpm --filter @cosmos-journeyer/desktop-electron dev",
         "dev:game": "pnpm --filter @cosmos-journeyer/game serve",
         "dev:website": "pnpm --filter @cosmos-journeyer/website dev",
+        "package:desktop": "pnpm --filter @cosmos-journeyer/desktop-electron package",
         "format": "pnpm -r format",
         "format:check": "pnpm -r format:check",
         "test:unit": "pnpm -r test:unit",
@@ -73,6 +76,8 @@
     "packageManager": "pnpm@10.18.0",
     "pnpm": {
         "onlyBuiltDependencies": [
+            "electron",
+            "electron-winstaller",
             "husky"
         ]
     }
