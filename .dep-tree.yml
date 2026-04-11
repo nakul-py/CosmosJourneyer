@@ -1,8 +1,0 @@
-exclude:
-    - "packages/game/src/ts/assets/**/*.ts"
-    - "packages/game/src/ts/utils/**/*.ts"
-    - "packages/game/src/ts/uberCore/**/*.ts"
-    - "packages/game/src/ts/inputs/**/*.ts"
-    - "packages/game/src/ts/architecture/**/*.ts"
-    - "packages/game/src/ts/settings.ts"
-    - "packages/game/src/ts/i18n.ts"
