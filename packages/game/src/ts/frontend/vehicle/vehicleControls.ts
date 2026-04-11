@@ -216,6 +216,9 @@ export class VehicleControls implements Controls {
             );
         }
 
+        this.thirdPersonTransform.computeWorldMatrix(true);
+        this.thirdPersonCamera.getViewMatrix(true);
+
         const steeringSpeed = VehicleInputs.map.steer.value * 1.8;
         vehicle.turn(steeringSpeed, deltaSeconds);
 
