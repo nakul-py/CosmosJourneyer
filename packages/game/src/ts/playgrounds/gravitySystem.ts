@@ -30,6 +30,7 @@ import {
 } from "@babylonjs/core";
 
 import type { ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { GravitySystem } from "@/frontend/universe/gravitySystem";
 
 import { enablePhysics, enableShadows } from "./utils";
@@ -107,7 +108,7 @@ export async function createGravitySystemScene(
     const camera = new ArcRotateCamera("Camera", Math.PI / 3, Math.PI / 3, sphere1Radius * 8, Vector3.Zero(), scene);
     camera.attachControl();
 
-    enableShadows(sun);
+    enableShadows(sun, new DepthRendererManager(scene));
 
     const gravitySystem = new GravitySystem(scene);
 

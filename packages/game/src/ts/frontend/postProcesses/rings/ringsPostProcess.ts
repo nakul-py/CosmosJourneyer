@@ -25,6 +25,7 @@ import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 import { type CelestialBodyModel } from "@cosmos-journeyer/universe-model";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -49,6 +50,7 @@ export class RingsPostProcess extends PostProcess {
         ringsUniforms: RingsUniforms,
         bodyModel: DeepReadonly<Pick<CelestialBodyModel, "radius" | "name">>,
         stellarObjects: ReadonlyArray<PointLight>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
     ) {
         const shaderName = "rings";
@@ -101,7 +103,7 @@ export class RingsPostProcess extends PostProcess {
             this.ringsUniforms.setUniforms(effect);
             this.ringsUniforms.setSamplers(effect);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 }

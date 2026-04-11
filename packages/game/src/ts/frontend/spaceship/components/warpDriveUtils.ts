@@ -32,6 +32,16 @@ export function canEngageWarpDrive(
         return false;
     }
 
+    const nbSecondsPrediction = 0.5;
+    const predictedPosition = shipPosition.add(shipTransform.forward.scale(currentVelocity * nbSecondsPrediction));
+    const predictedDistanceToObject = Vector3.Distance(
+        predictedPosition,
+        nearestOrbitalObject.getTransform().getAbsolutePosition(),
+    );
+    if (predictedDistanceToObject < emergencyStopDistance) {
+        return false;
+    }
+
     if (
         nearestOrbitalObject.type !== "gasPlanet" &&
         nearestOrbitalObject.type !== "telluricPlanet" &&
@@ -56,7 +66,6 @@ export function canEngageWarpDrive(
     const distanceAboveRings = relativePosition.y;
     const planarDistance = Math.sqrt(relativePosition.x * relativePosition.x + relativePosition.z * relativePosition.z);
 
-    const nbSecondsPrediction = 0.5;
     const nextRelativePosition = relativePosition.add(relativeForward.scale(currentVelocity * nbSecondsPrediction));
     const nextDistanceAboveRings = nextRelativePosition.y;
     const nextPlanarDistance = Math.sqrt(

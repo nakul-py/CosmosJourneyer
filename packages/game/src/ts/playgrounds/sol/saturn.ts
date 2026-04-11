@@ -22,6 +22,7 @@ import { getSaturnModel } from "@/backend/universe/customSystems/sol/saturn";
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { AtmosphericScatteringPostProcess } from "@/frontend/postProcesses/atmosphere/atmosphericScatteringPostProcess";
 import { RingsPostProcess } from "@/frontend/postProcesses/rings/ringsPostProcess";
@@ -62,7 +63,7 @@ export async function createSaturnScene(
     // This attaches the camera to the canvas
     camera.attachControl();
 
-    scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const sun = new TransformNode("sun", scene);
     sun.position = new Vector3(7, 5.5, -10).scaleInPlace(scalingFactor);
@@ -102,6 +103,7 @@ export async function createSaturnScene(
                 getLight: () => light,
             },
         ],
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(shadow);
@@ -111,12 +113,20 @@ export async function createSaturnScene(
         planet.getBoundingRadius(),
         planet.atmosphereUniforms,
         [light],
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(atmosphere);
 
     if (planet.ringsUniforms !== null) {
-        const rings = new RingsPostProcess(planet.getTransform(), planet.ringsUniforms, planet.model, [light], scene);
+        const rings = new RingsPostProcess(
+            planet.getTransform(),
+            planet.ringsUniforms,
+            planet.model,
+            [light],
+            depthRendererManager,
+            scene,
+        );
         camera.attachPostProcess(rings);
     }
 

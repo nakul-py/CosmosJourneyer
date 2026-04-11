@@ -34,6 +34,7 @@ import { loadHumanoidPrefabs } from "@/frontend/assets/objects/humanoids";
 import { CharacterControls } from "@/frontend/controls/characterControls/characterControls";
 import { CharacterInputs } from "@/frontend/controls/characterControls/characterControlsInputs";
 import { HumanoidAvatar } from "@/frontend/controls/characterControls/humanoidAvatar";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 
 import { CollisionMask } from "@/settings";
 
@@ -70,7 +71,7 @@ export async function CreateSwimmingScene(
     const characterControls = new CharacterControls(character, scene);
     characterControls.setThirdPersonCameraActive();
 
-    enableShadows(light);
+    enableShadows(light, new DepthRendererManager(scene));
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("firstPerson") !== null) {

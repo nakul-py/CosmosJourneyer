@@ -22,6 +22,7 @@ import { type RingsModel } from "@cosmos-journeyer/universe-model";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { RingsPostProcess } from "@/frontend/postProcesses/rings/ringsPostProcess";
 import { RingsProceduralPatternLut } from "@/frontend/postProcesses/rings/ringsProceduralLut";
@@ -52,7 +53,7 @@ export async function createRingsScene(
     // This attaches the camera to the canvas
     camera.attachControl();
 
-    scene.enableDepthRenderer();
+    const depthRendererManager = new DepthRendererManager(scene);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     const light = new PointLight("light1", new Vector3(-1, 0.5, -2).scaleInPlace(10 * scalingFactor), scene);
@@ -93,6 +94,7 @@ export async function createRingsScene(
         ringsUniforms,
         { name: "Sphere", radius: 1 * scalingFactor },
         [light],
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(rings);

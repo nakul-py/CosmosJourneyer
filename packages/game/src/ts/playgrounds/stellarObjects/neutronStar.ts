@@ -25,6 +25,7 @@ import { generateNeutronStarModel } from "@/backend/universe/proceduralGenerator
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadTextures } from "@/frontend/assets/textures";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { LensFlarePostProcess } from "@/frontend/postProcesses/lensFlarePostProcess";
 import { MatterJetPostProcess } from "@/frontend/postProcesses/matterJetPostProcess";
@@ -54,7 +55,7 @@ export async function createNeutronStarScene(
 
     scene.activeCamera = camera;
 
-    scene.enableDepthRenderer(camera, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const neutronStarModel = generateNeutronStarModel("neutronStar", 456, "Neutron Star Demo", []);
     const neutronStar = new NeutronStar(neutronStarModel, textures, scene);
@@ -67,6 +68,7 @@ export async function createNeutronStarScene(
         neutronStar.getTransform(),
         neutronStar.getRadius(),
         neutronStar.model.dipoleTilt,
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(matterJets);
@@ -75,6 +77,7 @@ export async function createNeutronStarScene(
         neutronStar.getTransform(),
         neutronStar.getRadius(),
         getRgbFromTemperature(neutronStarModel.blackBodyTemperature),
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(lensFlare);

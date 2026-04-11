@@ -1,6 +1,6 @@
 {
     "pilot": "Piloter",
-    "drive": "Conduire {vehicle}",
+    "drive": "Conduire {{vehicle}}",
     "open": "Ouvrir",
     "close": "Fermer"
 }

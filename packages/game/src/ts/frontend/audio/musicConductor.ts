@@ -132,8 +132,14 @@ export class MusicConductor {
 
         const shipControls = this.starSystemView.getSpaceshipControls();
         const spaceship = shipControls.getSpaceship();
-        const isOnFoot = this.starSystemView.scene.getActiveControls() === this.starSystemView.getCharacterControls();
-        const playerPosition = this.starSystemView.scene.getActiveControls().getTransform().getAbsolutePosition();
+        const isOnFoot = this.starSystemView.getActiveControls() === this.starSystemView.getCharacterControls();
+
+        const controls = this.starSystemView.getActiveControls();
+        if (controls === null) {
+            console.warn("no controls!");
+            return;
+        }
+        const playerPosition = controls.getTransform().getAbsolutePosition();
         const closestOrbitalObject = this.starSystemView.getStarSystem().getNearestOrbitalObject(playerPosition);
 
         const distanceToClosestObject = Vector3.Distance(

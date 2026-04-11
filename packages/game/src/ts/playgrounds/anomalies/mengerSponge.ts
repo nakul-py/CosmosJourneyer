@@ -20,6 +20,7 @@ import { ArcRotateCamera, Scene, Vector3, type AbstractEngine } from "@babylonjs
 import { generateMengerSpongeModel } from "@/backend/universe/proceduralGenerators/anomalies/mengerSpongeModelGenerator";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { MengerSpongePostProcess } from "@/frontend/postProcesses/anomalies/mengerSpongePostProcess";
 import { EmptyCelestialBody } from "@/frontend/universe/emptyCelestialBody";
 
@@ -38,7 +39,7 @@ export function createMengerSpongeScene(
     camera.wheelPrecision /= 1e3;
     camera.maxZ = 10e7;
 
-    const depthRenderer = scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const model = generateMengerSpongeModel(
         "mengerSponge",
@@ -49,7 +50,14 @@ export function createMengerSpongeScene(
 
     const anomaly = new EmptyCelestialBody(model, scene);
 
-    const pp = new MengerSpongePostProcess(anomaly.getTransform(), anomaly.getBoundingRadius(), model, scene, []);
+    const pp = new MengerSpongePostProcess(
+        anomaly.getTransform(),
+        anomaly.getBoundingRadius(),
+        model,
+        depthRendererManager,
+        scene,
+        [],
+    );
 
     scene.cameras.forEach((camera) => camera.attachPostProcess(pp));
     scene.onNewCameraAddedObservable.add((camera) => {
@@ -62,7 +70,7 @@ export function createMengerSpongeScene(
     });
 
     scene.onBeforeCameraRenderObservable.add((camera) => {
-        depthRenderer.getDepthMap().activeCamera = camera;
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return Promise.resolve(scene);

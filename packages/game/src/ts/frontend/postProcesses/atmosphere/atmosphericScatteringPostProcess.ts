@@ -24,6 +24,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -44,6 +45,7 @@ export class AtmosphericScatteringPostProcess extends PostProcess {
         planetBoundingRadius: number,
         atmosphereUniforms: AtmosphereUniforms,
         stellarObjects: ReadonlyArray<PointLight>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
     ) {
         const shaderName = "atmosphericScattering";
@@ -93,7 +95,7 @@ export class AtmosphericScatteringPostProcess extends PostProcess {
 
             atmosphereUniforms.setUniforms(effect);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 }

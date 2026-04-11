@@ -25,6 +25,7 @@ import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 import { type MengerSpongeModel } from "@cosmos-journeyer/universe-model";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -47,6 +48,7 @@ export class MengerSpongePostProcess extends PostProcess implements UpdatablePos
         transform: TransformNode,
         boundingRadius: number,
         model: DeepReadonly<MengerSpongeModel>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
@@ -108,7 +110,7 @@ export class MengerSpongePostProcess extends PostProcess implements UpdatablePos
                 (scene.getEngine().getRenderWidth() + scene.getEngine().getRenderHeight()) / 2,
             );
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 

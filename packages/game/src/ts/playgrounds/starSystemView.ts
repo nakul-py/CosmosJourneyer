@@ -16,7 +16,7 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
-import { type Scene } from "@babylonjs/core/scene";
+import { Scene } from "@babylonjs/core/scene";
 
 import { EncyclopaediaGalacticaManager } from "@/backend/encyclopaedia/encyclopaediaGalacticaManager";
 import { getAlphaTestisSystemModel } from "@/backend/universe/customSystems/alphaTestis";
@@ -27,7 +27,6 @@ import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { SoundPlayerMock } from "@/frontend/audio/soundPlayer";
 import { TtsMock } from "@/frontend/audio/tts";
 import { positionNearObjectBrightSide } from "@/frontend/helpers/positionNearObject";
-import { UberScene } from "@/frontend/helpers/uberScene";
 import { Player } from "@/frontend/player/player";
 import { StarSystemView } from "@/frontend/starSystemView";
 import { NotificationManagerMock, type INotificationManager } from "@/frontend/ui/notificationManager";
@@ -53,7 +52,7 @@ export async function createStarSystemViewScene(
     const ttsMock = new TtsMock();
     const notificationManager: INotificationManager = new NotificationManagerMock();
 
-    const scene = new UberScene(engine, { useFloatingOrigin: true });
+    const scene = new Scene(engine, { useFloatingOrigin: true });
     scene.useRightHandedSystem = true;
 
     const havokPlugin = await enablePhysics(scene);

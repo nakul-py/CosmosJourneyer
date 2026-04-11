@@ -25,6 +25,7 @@ import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 import { type MandelbulbModel } from "@cosmos-journeyer/universe-model";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -47,6 +48,7 @@ export class MandelbulbPostProcess extends PostProcess implements UpdatablePostP
         transform: TransformNode,
         boundingRadius: number,
         mandelbulbModel: DeepReadonly<MandelbulbModel>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
@@ -110,7 +112,7 @@ export class MandelbulbPostProcess extends PostProcess implements UpdatablePostP
                 (scene.getEngine().getRenderWidth() + scene.getEngine().getRenderHeight()) / 2,
             );
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 

@@ -27,6 +27,7 @@ import { generateMengerSpongeModel } from "@/backend/universe/proceduralGenerato
 import { generateSierpinskiPyramidModel } from "@/backend/universe/proceduralGenerators/anomalies/sierpinskiPyramidModelGenerator";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { JuliaSetPostProcess } from "@/frontend/postProcesses/anomalies/juliaSetPostProcess";
 import { MandelboxPostProcess } from "@/frontend/postProcesses/anomalies/mandelboxPostProcess";
 import { MandelbulbPostProcess } from "@/frontend/postProcesses/anomalies/mandelbulbPostProcess";
@@ -51,7 +52,7 @@ export async function createXrScene(
     camera.wheelPrecision *= 100;
     camera.minZ = 0.01;
 
-    const depthRenderer = scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     function createMandelbulb(): TransformNode {
         const mandelBulbModel = generateMandelbulbModel("mandelbulb", Math.random() * 100_000, "XR Anomaly", []);
@@ -62,6 +63,7 @@ export async function createXrScene(
             mandelbulb.getTransform(),
             mandelbulb.getBoundingRadius(),
             mandelBulbModel,
+            depthRendererManager,
             scene,
             [],
         );
@@ -80,6 +82,7 @@ export async function createXrScene(
             julia.getTransform(),
             julia.getBoundingRadius(),
             juliaModel.accentColor,
+            depthRendererManager,
             scene,
             [],
         );
@@ -98,6 +101,7 @@ export async function createXrScene(
             mandelbox.getTransform(),
             mandelbox.getBoundingRadius(),
             mandelboxModel,
+            depthRendererManager,
             scene,
             [],
         );
@@ -121,6 +125,7 @@ export async function createXrScene(
             sierpinskiPyramid.getTransform(),
             sierpinskiPyramid.getBoundingRadius(),
             sierpinskiPyramidModel,
+            depthRendererManager,
             scene,
             [],
         );
@@ -139,6 +144,7 @@ export async function createXrScene(
             mengerSponge.getTransform(),
             mengerSponge.getBoundingRadius(),
             mengerSpongeModel,
+            depthRendererManager,
             scene,
             [],
         );
@@ -180,7 +186,7 @@ export async function createXrScene(
     xrCamera.setTransformationFromNonVRCamera(camera, true);
 
     scene.onBeforeCameraRenderObservable.add((camera) => {
-        depthRenderer.getDepthMap().activeCamera = camera;
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return scene;

@@ -29,6 +29,7 @@ import { RingsSamplerNames, RingsUniformNames, RingsUniforms } from "@/frontend/
 import { type HasBoundingSphere } from "@/frontend/universe/architecture/hasBoundingSphere";
 import { type LightEmitter } from "@/frontend/universe/architecture/lightEmitter";
 
+import type { DepthRendererManager } from "../helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "./uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "./uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "./uniforms/samplerUniforms";
@@ -57,6 +58,7 @@ export class ShadowPostProcess extends PostProcess {
         cloudsUniforms: CloudsUniforms | null,
         hasOcean: boolean,
         stellarObjects: ReadonlyArray<HasBoundingSphere & LightEmitter>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
     ) {
         const shaderName = "shadow";
@@ -142,7 +144,7 @@ export class ShadowPostProcess extends PostProcess {
                 this.ringsUniforms.setUniforms(effect);
                 this.ringsUniforms.setSamplers(effect);
             }
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 

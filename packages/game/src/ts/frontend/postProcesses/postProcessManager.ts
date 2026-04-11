@@ -30,6 +30,7 @@ import { type PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { PostProcessRenderEffect } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderEffect";
 import { PostProcessRenderPipeline } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderPipeline";
 import { type PostProcessRenderPipelineManager } from "@babylonjs/core/PostProcesses/RenderPipeline/postProcessRenderPipelineManager";
+import type { Scene } from "@babylonjs/core/scene";
 import {
     type JuliaSetModel,
     type MandelboxModel,
@@ -39,7 +40,6 @@ import {
 } from "@cosmos-journeyer/universe-model";
 
 import { type Textures } from "@/frontend/assets/textures";
-import { type UberScene } from "@/frontend/helpers/uberScene";
 import { type CelestialBody, type StellarObject } from "@/frontend/universe/architecture/orbitalObject";
 import { type GasPlanet } from "@/frontend/universe/planets/gasPlanet/gasPlanet";
 import { type TelluricPlanet } from "@/frontend/universe/planets/telluricPlanet/telluricPlanet";
@@ -51,6 +51,7 @@ import { type Star } from "@/frontend/universe/stellarObjects/star/star";
 import { getRgbFromTemperature } from "@/utils/specrend";
 import { assertUnreachable, type DeepReadonly } from "@/utils/types";
 
+import type { DepthRendererManager } from "../helpers/depthRendererManager";
 import { JuliaSetPostProcess } from "./anomalies/juliaSetPostProcess";
 import { MandelboxPostProcess } from "./anomalies/mandelboxPostProcess";
 import { MandelbulbPostProcess } from "./anomalies/mandelbulbPostProcess";
@@ -117,9 +118,8 @@ export class PostProcessManager {
 
     /**
      * The scene where the solar system is rendered.
-     * It needs to use the wrapper as the post-processes need the depth renderer of the scene.
      */
-    readonly scene: UberScene;
+    readonly scene: Scene;
 
     /**
      * The BabylonJS rendering pipeline manager of the scene
@@ -211,11 +211,14 @@ export class PostProcessManager {
 
     private readonly textures: Textures;
 
-    constructor(textures: Textures, scene: UberScene) {
+    private readonly depthRendererManager: DepthRendererManager;
+
+    constructor(textures: Textures, depthRendererManager: DepthRendererManager, scene: Scene) {
         this.scene = scene;
         this.engine = scene.getEngine();
 
         this.textures = textures;
+        this.depthRendererManager = depthRendererManager;
 
         this.renderingPipelineManager = scene.postProcessRenderPipelineManager;
 
@@ -288,6 +291,7 @@ export class PostProcessManager {
             star.getTransform(),
             star.getBoundingRadius(),
             getRgbFromTemperature(star.model.blackBodyTemperature),
+            this.depthRendererManager,
             this.scene,
         );
         this.lensFlares.push(lensFlare);
@@ -299,6 +303,7 @@ export class PostProcessManager {
                 star.ringsUniforms,
                 star.model,
                 [star.getLight()],
+                this.depthRendererManager,
                 this.scene,
             );
             this.rings.push(rings);
@@ -323,6 +328,7 @@ export class PostProcessManager {
             neutronStar.getTransform(),
             neutronStar.getBoundingRadius(),
             getRgbFromTemperature(neutronStar.model.blackBodyTemperature),
+            this.depthRendererManager,
             this.scene,
         );
         this.lensFlares.push(lensFlare);
@@ -332,6 +338,7 @@ export class PostProcessManager {
             neutronStar.getTransform(),
             neutronStar.getBoundingRadius(),
             neutronStar.model.dipoleTilt,
+            this.depthRendererManager,
             this.scene,
         );
         this.matterJets.push(matterJets);
@@ -343,6 +350,7 @@ export class PostProcessManager {
                 neutronStar.ringsUniforms,
                 neutronStar.model,
                 [neutronStar.getLight()],
+                this.depthRendererManager,
                 this.scene,
             );
             this.rings.push(rings);
@@ -360,6 +368,7 @@ export class PostProcessManager {
         const blackHolePostProcess = new BlackHolePostProcess(
             blackHole.getTransform(),
             blackHole.blackHoleUniforms,
+            this.depthRendererManager,
             this.scene,
         );
         this.blackHoles.push(blackHolePostProcess);
@@ -376,6 +385,7 @@ export class PostProcessManager {
                 planet.getBoundingRadius(),
                 planet.atmosphereUniforms,
                 stellarObjects.map((star) => star.getLight()),
+                this.depthRendererManager,
                 this.scene,
             );
             this.atmospheres.push(atmosphere);
@@ -389,6 +399,7 @@ export class PostProcessManager {
                 planet.oceanUniforms,
                 stellarObjects.map((star) => star.getLight()),
                 this.textures.water,
+                this.depthRendererManager,
                 this.scene,
             );
             this.oceans.push(ocean);
@@ -401,6 +412,7 @@ export class PostProcessManager {
                 planet.getBoundingRadius(),
                 planet.cloudsUniforms,
                 stellarObjects.map((star) => star.getLight()),
+                this.depthRendererManager,
                 this.scene,
             );
             this.clouds.push(clouds);
@@ -413,6 +425,7 @@ export class PostProcessManager {
                 planet.ringsUniforms,
                 planet.model,
                 stellarObjects.map((star) => star.getLight()),
+                this.depthRendererManager,
                 this.scene,
             );
             this.rings.push(rings);
@@ -426,6 +439,7 @@ export class PostProcessManager {
             planet.cloudsUniforms,
             planet.model.ocean !== null,
             stellarObjects,
+            this.depthRendererManager,
             this.scene,
         );
         this.shadows.push(shadow);
@@ -442,6 +456,7 @@ export class PostProcessManager {
             planet.getBoundingRadius(),
             planet.atmosphereUniforms,
             stellarObjects.map((star) => star.getLight()),
+            this.depthRendererManager,
             this.scene,
         );
         this.atmospheres.push(atmosphere);
@@ -453,6 +468,7 @@ export class PostProcessManager {
                 planet.ringsUniforms,
                 planet.model,
                 stellarObjects.map((star) => star.getLight()),
+                this.depthRendererManager,
                 this.scene,
             );
             this.rings.push(rings);
@@ -466,6 +482,7 @@ export class PostProcessManager {
             null,
             false,
             stellarObjects,
+            this.depthRendererManager,
             this.scene,
         );
         this.shadows.push(shadow);
@@ -486,7 +503,14 @@ export class PostProcessManager {
         model: DeepReadonly<MandelbulbModel>,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
-        const mandelbulb = new MandelbulbPostProcess(transform, radius, model, this.scene, stellarObjects);
+        const mandelbulb = new MandelbulbPostProcess(
+            transform,
+            radius,
+            model,
+            this.depthRendererManager,
+            this.scene,
+            stellarObjects,
+        );
         this.mandelbulbs.push(mandelbulb);
 
         this.celestialBodyToPostProcesses.set(transform, [mandelbulb]);
@@ -509,6 +533,7 @@ export class PostProcessManager {
             transform,
             radius,
             model.accentColor,
+            this.depthRendererManager,
             this.scene,
             stellarObjects,
         );
@@ -523,7 +548,14 @@ export class PostProcessManager {
         model: DeepReadonly<MandelboxModel>,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
-        const mandelbox = new MandelboxPostProcess(transform, radius, model, this.scene, stellarObjects);
+        const mandelbox = new MandelboxPostProcess(
+            transform,
+            radius,
+            model,
+            this.depthRendererManager,
+            this.scene,
+            stellarObjects,
+        );
         this.mandelboxes.push(mandelbox);
 
         this.celestialBodyToPostProcesses.set(transform, [mandelbox]);
@@ -539,6 +571,7 @@ export class PostProcessManager {
             transform,
             radius,
             model,
+            this.depthRendererManager,
             this.scene,
             stellarObjects,
         );
@@ -553,7 +586,14 @@ export class PostProcessManager {
         model: DeepReadonly<MengerSpongeModel>,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
-        const mengerSponge = new MengerSpongePostProcess(transform, radius, model, this.scene, stellarObjects);
+        const mengerSponge = new MengerSpongePostProcess(
+            transform,
+            radius,
+            model,
+            this.depthRendererManager,
+            this.scene,
+            stellarObjects,
+        );
         this.mengerSponges.push(mengerSponge);
 
         this.celestialBodyToPostProcesses.set(transform, [mengerSponge]);
@@ -627,10 +667,13 @@ export class PostProcessManager {
             .get(body.getTransform())
             ?.find((pp) => pp instanceof RingsPostProcess);
         const switchLimit = rings !== undefined ? rings.ringsUniforms.model.innerRadius : 2 * body.getBoundingRadius();
-        const distance2 = Vector3.DistanceSquared(
-            body.getTransform().getAbsolutePosition(),
-            this.scene.getActiveControls().getTransform().getAbsolutePosition(),
-        );
+        const camera = this.scene.activeCamera;
+        if (camera === null) {
+            console.warn("no camera!");
+            return;
+        }
+
+        const distance2 = Vector3.DistanceSquared(body.getTransform().getAbsolutePosition(), camera.globalPosition);
         if (distance2 < switchLimit ** 2) this.setSurfaceOrder(body);
         else this.setSpaceOrder(body);
     }

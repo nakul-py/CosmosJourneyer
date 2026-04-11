@@ -27,6 +27,7 @@ import { type Scene } from "@babylonjs/core/scene";
 
 import type { RGBColor } from "@/utils/colors";
 
+import type { DepthRendererManager } from "../helpers/depthRendererManager";
 import { OffsetViewProjectionToRef } from "../helpers/floatingOrigin";
 import { CameraUniformNames, setCameraUniforms } from "./uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "./uniforms/objectUniforms";
@@ -47,7 +48,13 @@ export class LensFlarePostProcess extends PostProcess {
 
     private readonly cameraToStellarObject = Vector3.Zero();
 
-    constructor(stellarTransform: TransformNode, boundingRadius: number, color: RGBColor, scene: Scene) {
+    constructor(
+        stellarTransform: TransformNode,
+        boundingRadius: number,
+        color: RGBColor,
+        depthRendererManager: DepthRendererManager,
+        scene: Scene,
+    ) {
         const shaderName = "lensflare";
         if (Effect.ShadersStore[`${shaderName}FragmentShader`] === undefined) {
             Effect.ShadersStore[`${shaderName}FragmentShader`] = lensFlareFragment;
@@ -200,7 +207,7 @@ export class LensFlarePostProcess extends PostProcess {
                 Math.abs(this.upClipPosition.y - this.clipPosition.y),
             );
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 }

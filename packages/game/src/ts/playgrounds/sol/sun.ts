@@ -22,6 +22,7 @@ import { getSunModel } from "@/backend/universe/customSystems/sol/sun";
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadTextures } from "@/frontend/assets/textures";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { LensFlarePostProcess } from "@/frontend/postProcesses/lensFlarePostProcess";
 import { VolumetricLight } from "@/frontend/postProcesses/volumetricLight/volumetricLight";
@@ -50,7 +51,7 @@ export async function createSunScene(
     controls.speed = scalingFactor;
     camera.maxZ *= scalingFactor;
 
-    scene.enableDepthRenderer(camera, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     controls.getTransform().setAbsolutePosition(new Vector3(0, 2, -2).scaleInPlace(scalingFactor));
     lookAt(controls.getTransform(), Vector3.Zero(), scene.useRightHandedSystem);
@@ -76,6 +77,7 @@ export async function createSunScene(
         sun.getTransform(),
         sun.getBoundingRadius(),
         sun.getLight().diffuse,
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(lensFlare);

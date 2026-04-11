@@ -34,6 +34,7 @@ import { LandingPad } from "@/frontend/assets/procedural/spaceStation/landingPad
 import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { SoundPlayerMock } from "@/frontend/audio/soundPlayer";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { Spaceship } from "@/frontend/spaceship/spaceship";
 import { LandingPadSize } from "@/frontend/universe/orbitalFacility/landingPadManager";
 
@@ -103,7 +104,7 @@ export async function createAutomaticLandingScene(
     const hemi = new HemisphericLight("hemi", Vector3.Up(), scene);
     hemi.intensity = 0.1;
 
-    enableShadows(sun);
+    enableShadows(sun, new DepthRendererManager(scene));
 
     const engageLanding = () => {
         ship.engageLandingOnPad(landingPad);

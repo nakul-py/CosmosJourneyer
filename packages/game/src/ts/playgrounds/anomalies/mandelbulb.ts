@@ -20,6 +20,7 @@ import { ArcRotateCamera, Scene, Vector3, type AbstractEngine } from "@babylonjs
 import { generateMandelbulbModel } from "@/backend/universe/proceduralGenerators/anomalies/mandelbulbModelGenerator";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { MandelbulbPostProcess } from "@/frontend/postProcesses/anomalies/mandelbulbPostProcess";
 import { EmptyCelestialBody } from "@/frontend/universe/emptyCelestialBody";
 
@@ -38,7 +39,7 @@ export function createMandelbulbScene(
     camera.wheelPrecision /= 30e3;
     camera.maxZ = 10e7;
 
-    const depthRenderer = scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const model = generateMandelbulbModel(
         "mandelbulb",
@@ -49,7 +50,14 @@ export function createMandelbulbScene(
 
     const anomaly = new EmptyCelestialBody(model, scene);
 
-    const pp = new MandelbulbPostProcess(anomaly.getTransform(), anomaly.getBoundingRadius(), model, scene, []);
+    const pp = new MandelbulbPostProcess(
+        anomaly.getTransform(),
+        anomaly.getBoundingRadius(),
+        model,
+        depthRendererManager,
+        scene,
+        [],
+    );
 
     scene.cameras.forEach((camera) => camera.attachPostProcess(pp));
     scene.onNewCameraAddedObservable.add((camera) => {
@@ -62,7 +70,7 @@ export function createMandelbulbScene(
     });
 
     scene.onBeforeCameraRenderObservable.add((camera) => {
-        depthRenderer.getDepthMap().activeCamera = camera;
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return Promise.resolve(scene);

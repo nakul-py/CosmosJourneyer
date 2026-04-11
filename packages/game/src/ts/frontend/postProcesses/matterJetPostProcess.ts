@@ -24,6 +24,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
+import type { DepthRendererManager } from "../helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "./uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "./uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "./uniforms/samplerUniforms";
@@ -45,7 +46,13 @@ export class MatterJetPostProcess extends PostProcess implements UpdatablePostPr
 
     private activeCamera: Camera | null = null;
 
-    constructor(stellarTransform: TransformNode, boundingRadius: number, dipoleTilt: number, scene: Scene) {
+    constructor(
+        stellarTransform: TransformNode,
+        boundingRadius: number,
+        dipoleTilt: number,
+        depthRendererManager: DepthRendererManager,
+        scene: Scene,
+    ) {
         const shaderName = "matterjet";
         if (Effect.ShadersStore[`${shaderName}FragmentShader`] === undefined) {
             Effect.ShadersStore[`${shaderName}FragmentShader`] = matterJetFragment;
@@ -112,7 +119,7 @@ export class MatterJetPostProcess extends PostProcess implements UpdatablePostPr
 
             effect.setFloat(MatterJetUniformNames.DIPOLE_TILT, this.matterJetUniforms.dipoleTilt);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 

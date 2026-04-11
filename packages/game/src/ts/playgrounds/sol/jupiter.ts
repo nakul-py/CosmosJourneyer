@@ -22,6 +22,7 @@ import { getJupiterModel } from "@/backend/universe/customSystems/sol/jupiter";
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadTextures } from "@/frontend/assets/textures";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { AtmosphericScatteringPostProcess } from "@/frontend/postProcesses/atmosphere/atmosphericScatteringPostProcess";
 import { RingsProceduralPatternLut } from "@/frontend/postProcesses/rings/ringsProceduralLut";
@@ -59,7 +60,7 @@ export async function createJupiterScene(
     // This attaches the camera to the canvas
     camera.attachControl();
 
-    scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const light = new PointLight("light1", new Vector3(7, 5, -10).scaleInPlace(scalingFactor), scene);
     light.falloffType = Light.FALLOFF_STANDARD;
@@ -77,6 +78,7 @@ export async function createJupiterScene(
         planet.getBoundingRadius(),
         planet.atmosphereUniforms,
         [light],
+        depthRendererManager,
         scene,
     );
     camera.attachPostProcess(atmosphere);

@@ -24,6 +24,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -47,6 +48,7 @@ export class JuliaSetPostProcess extends PostProcess implements UpdatablePostPro
         transform: TransformNode,
         boundingRadius: number,
         accentColor: DeepReadonly<RGBColor>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
         stellarObjects: ReadonlyArray<PointLight>,
     ) {
@@ -103,7 +105,7 @@ export class JuliaSetPostProcess extends PostProcess implements UpdatablePostPro
             effect.setFloat(JuliaUniformNames.ELAPSED_SECONDS, this.elapsedSeconds);
             effect.setColor3(JuliaUniformNames.ACCENT_COLOR, accentColor);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 

@@ -20,6 +20,7 @@ import { ArcRotateCamera, Scene, Vector3, type AbstractEngine } from "@babylonjs
 import { generateSierpinskiPyramidModel } from "@/backend/universe/proceduralGenerators/anomalies/sierpinskiPyramidModelGenerator";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { SierpinskiPyramidPostProcess } from "@/frontend/postProcesses/anomalies/sierpinskiPyramidPostProcess";
 import { EmptyCelestialBody } from "@/frontend/universe/emptyCelestialBody";
 
@@ -38,7 +39,7 @@ export function createSierpinskiScene(
     camera.wheelPrecision /= 1e3;
     camera.maxZ = 10e7;
 
-    const depthRenderer = scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const sierpinskiPyramidModel = generateSierpinskiPyramidModel(
         "sierpinski",
@@ -53,6 +54,7 @@ export function createSierpinskiScene(
         sierpinskiPyramid.getTransform(),
         sierpinskiPyramid.getBoundingRadius(),
         sierpinskiPyramidModel,
+        depthRendererManager,
         scene,
         [],
     );
@@ -68,7 +70,7 @@ export function createSierpinskiScene(
     });
 
     scene.onBeforeCameraRenderObservable.add((camera) => {
-        depthRenderer.getDepthMap().activeCamera = camera;
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return Promise.resolve(scene);
