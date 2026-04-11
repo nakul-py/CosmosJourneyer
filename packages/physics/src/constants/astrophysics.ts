@@ -27,6 +27,9 @@ export const AU = 150e9;
  */
 export const EarthMass = 5.972e24;
 
+/** The radius of the Earth in meters */
+export const EarthRadius = 6_371e3;
+
 /**
  * The mass of the Moon in kilograms.
  */
