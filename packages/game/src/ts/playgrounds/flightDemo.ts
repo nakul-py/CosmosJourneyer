@@ -25,6 +25,7 @@ import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressM
 import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { SoundPlayerMock } from "@/frontend/audio/soundPlayer";
 import { TtsMock } from "@/frontend/audio/tts";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { ShipControls } from "@/frontend/spaceship/shipControls";
 import { SpaceShipControlsInputs } from "@/frontend/spaceship/spaceShipControlsInputs";
 import { NotificationManagerMock } from "@/frontend/ui/notificationManager";
@@ -84,7 +85,7 @@ export async function createFlightDemoScene(
 
     box.material = material;
 
-    enableShadows(sun, { maxZ: 3e3 });
+    enableShadows(sun, new DepthRendererManager(scene), { maxZ: 3e3 });
 
     scene.onBeforeRenderObservable.add(() => {
         const deltaSeconds = engine.getDeltaTime() / 1000;

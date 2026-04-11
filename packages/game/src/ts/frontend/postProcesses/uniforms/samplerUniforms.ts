@@ -17,19 +17,14 @@
 
 import { type Camera } from "@babylonjs/core/Cameras/camera";
 import { type Effect } from "@babylonjs/core/Materials/effect";
-import { type Scene } from "@babylonjs/core/scene";
+
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 
 export const SamplerUniformNames = {
     TEXTURE_SAMPLER: "textureSampler",
     DEPTH_SAMPLER: "depthSampler",
 };
 
-export function setSamplerUniforms(effect: Effect, camera: Camera, scene: Scene): void {
-    const depthRenderers = Object.values(scene._depthRenderer);
-    const depthRenderer = depthRenderers.find((depthRenderer) => depthRenderer.getDepthMap().activeCamera === camera);
-    if (depthRenderer === undefined) {
-        console.log("Depth renderer", scene._depthRenderer);
-        throw new Error("Depth renderer not found for camera: " + camera.name);
-    }
-    effect.setTexture(SamplerUniformNames.DEPTH_SAMPLER, depthRenderer.getDepthMap());
+export function setSamplerUniforms(effect: Effect, camera: Camera, depthRendererManager: DepthRendererManager): void {
+    effect.setTexture(SamplerUniformNames.DEPTH_SAMPLER, depthRendererManager.getDepthRenderer(camera).getDepthMap());
 }

@@ -15,15 +15,15 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import { Vector3, type AbstractEngine, type Scene } from "@babylonjs/core";
+import { Scene, Vector3, type AbstractEngine } from "@babylonjs/core";
 
 import { getSolSystemModel } from "@/backend/universe/customSystems/sol/sol";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadRenderingAssets } from "@/frontend/assets/renderingAssets";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
-import { UberScene } from "@/frontend/helpers/uberScene";
 import { PostProcessManager } from "@/frontend/postProcesses/postProcessManager";
 import { TargetCursorLayer } from "@/frontend/ui/targetCursorLayer";
 import { ChunkForgeWorkers } from "@/frontend/universe/planets/telluricPlanet/terrain/chunks/chunkForgeWorkers";
@@ -39,7 +39,7 @@ export async function createSolScene(
     engine: AbstractEngine,
     progressMonitor: ILoadingProgressMonitor | null,
 ): Promise<Scene> {
-    const scene = new UberScene(engine);
+    const scene = new Scene(engine, { useFloatingOrigin: true });
     scene.useRightHandedSystem = true;
     scene.clearColor.set(0, 0, 0, 1);
 
@@ -56,10 +56,9 @@ export async function createSolScene(
     const camera = controls.getActiveCamera();
     controls.speed = scalingFactor;
     camera.maxZ *= scalingFactor;
+    camera.attachControl();
 
-    await scene.setActiveControls(controls);
-
-    scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const chunkForge = new ChunkForgeWorkers(Settings.VERTEX_RESOLUTION);
 
@@ -79,7 +78,7 @@ export async function createSolScene(
         .position.add(new Vector3(0, 1, -2).scaleInPlace(sun.getBoundingRadius() * 7));
     lookAt(controls.getTransform(), sun.getTransform().position, scene.useRightHandedSystem);
 
-    const postProcessManager = new PostProcessManager(assets.textures, scene);
+    const postProcessManager = new PostProcessManager(assets.textures, depthRendererManager, scene);
     postProcessManager.addCelestialBodies(
         starSystemController.getCelestialBodies(),
         starSystemController.getStellarObjects(),
@@ -100,6 +99,10 @@ export async function createSolScene(
         postProcessManager.update(deltaSeconds);
         starSystemController.update(deltaSeconds, chunkForge);
         targetCursorLayer.update(camera);
+    });
+
+    scene.onBeforeCameraRenderObservable.add((camera) => {
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return scene;

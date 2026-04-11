@@ -25,6 +25,7 @@ import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
 import { type WaterTextures } from "@/frontend/assets/textures";
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 
 import { CameraUniformNames, setCameraUniforms } from "../uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "../uniforms/objectUniforms";
@@ -48,6 +49,7 @@ export class OceanPostProcess extends PostProcess implements UpdatablePostProces
         oceanUniforms: OceanUniforms,
         stellarObjects: ReadonlyArray<PointLight>,
         oceanTextures: WaterTextures,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
     ) {
         const shaderName = "ocean";
@@ -98,7 +100,7 @@ export class OceanPostProcess extends PostProcess implements UpdatablePostProces
 
             oceanUniforms.setUniforms(effect, planetTransform);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
             oceanUniforms.setSamplers(effect, oceanTextures);
         });
     }

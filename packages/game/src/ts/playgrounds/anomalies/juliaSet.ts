@@ -20,6 +20,7 @@ import { ArcRotateCamera, Scene, Vector3, type AbstractEngine } from "@babylonjs
 import { generateJuliaSetModel } from "@/backend/universe/proceduralGenerators/anomalies/juliaSetModelGenerator";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { JuliaSetPostProcess } from "@/frontend/postProcesses/anomalies/juliaSetPostProcess";
 import { EmptyCelestialBody } from "@/frontend/universe/emptyCelestialBody";
 
@@ -38,7 +39,7 @@ export function createJuliaSetScene(
     camera.wheelPrecision /= 30e3;
     camera.maxZ = 10e7;
 
-    const depthRenderer = scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const model = generateJuliaSetModel(
         "juliaSet",
@@ -53,6 +54,7 @@ export function createJuliaSetScene(
         anomaly.getTransform(),
         anomaly.getBoundingRadius(),
         model.accentColor,
+        depthRendererManager,
         scene,
         [],
     );
@@ -68,7 +70,7 @@ export function createJuliaSetScene(
     });
 
     scene.onBeforeCameraRenderObservable.add((camera) => {
-        depthRenderer.getDepthMap().activeCamera = camera;
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return Promise.resolve(scene);

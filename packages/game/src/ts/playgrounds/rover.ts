@@ -38,6 +38,7 @@ import type { Controls } from "@/frontend/controls";
 import { CharacterControls } from "@/frontend/controls/characterControls/characterControls";
 import { CharacterInputs } from "@/frontend/controls/characterControls/characterControlsInputs";
 import { HumanoidAvatar } from "@/frontend/controls/characterControls/humanoidAvatar";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { InteractionSystem } from "@/frontend/inputs/interaction/interactionSystem";
 import { radialChoiceModal } from "@/frontend/ui/dialogModal";
 import { InteractionLayer } from "@/frontend/ui/interactionLayer";
@@ -136,7 +137,7 @@ export async function createRoverScene(
     );
     groundAggregate.shape.filterMembershipMask = CollisionMask.ENVIRONMENT;
 
-    enableShadows(sun);
+    enableShadows(sun, new DepthRendererManager(scene));
 
     const roverResult = createWolfMk2(
         assets,

@@ -17,6 +17,7 @@
 
 import { Matrix } from "@babylonjs/core/Maths/math";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import type { Scene } from "@babylonjs/core/scene";
 import { lightYearsToMeters } from "@cosmos-journeyer/physics";
 import {
     type OrbitalObjectId,
@@ -29,7 +30,6 @@ import { type UniverseBackend } from "@/backend/universe/universeBackend";
 import { type RenderingAssets } from "@/frontend/assets/renderingAssets";
 import { wrapVector3 } from "@/frontend/helpers/algebra";
 import { translate } from "@/frontend/helpers/transform";
-import { type UberScene } from "@/frontend/helpers/uberScene";
 import {
     getOrbitalPosition,
     getRotationAngle,
@@ -64,7 +64,7 @@ import { type StarSystemLoader } from "./starSystemLoader";
  * Changing star system means destroying and creating a new controller.
  */
 export class StarSystemController {
-    readonly scene: UberScene;
+    readonly scene: Scene;
 
     readonly starFieldBox: StarFieldBox;
 
@@ -119,7 +119,7 @@ export class StarSystemController {
             orbitalFacilities: ReadonlyArray<OrbitalFacility>;
         },
         assets: RenderingAssets,
-        scene: UberScene,
+        scene: Scene,
     ) {
         this.scene = scene;
         this.starFieldBox = new StarFieldBox(assets.textures.environment.milkyWay, 1000e3, scene);
@@ -150,7 +150,7 @@ export class StarSystemController {
         model: DeepReadonly<StarSystemModel>,
         loader: StarSystemLoader,
         assets: RenderingAssets,
-        scene: UberScene,
+        scene: Scene,
     ): Promise<StarSystemController> {
         const result = await loader.load(model, assets, scene);
         return new StarSystemController(model, result, assets, scene);
@@ -300,8 +300,13 @@ export class StarSystemController {
     private updateOrbitalSimulation(deltaSeconds: number): void {
         this.elapsedSeconds += deltaSeconds;
 
-        const controls = this.scene.getActiveControls();
-        const controlsPosition = controls.getTransform().getAbsolutePosition();
+        const camera = this.scene.activeCamera;
+        if (camera === null) {
+            console.warn("No camera!");
+            return;
+        }
+
+        const cameraPosition = camera.globalPosition;
 
         const celestialBodies = this.getCelestialBodies();
         const orbitalFacilities = this.getOrbitalFacilities();
@@ -309,8 +314,8 @@ export class StarSystemController {
 
         // The nearest body might have to be treated separately
         // The first step is to find the nearest body
-        const nearestOrbitalObject = this.getMostInfluentialObject(controlsPosition);
-        const nearestCelestialBody = this.getNearestCelestialBody(controlsPosition);
+        const nearestOrbitalObject = this.getMostInfluentialObject(cameraPosition);
+        const nearestCelestialBody = this.getNearestCelestialBody(cameraPosition);
         const ringUniforms = nearestCelestialBody.ringsUniforms;
 
         // Depending on the distance to the nearest body, we might have to compensate its translation and/or rotation
@@ -318,7 +323,7 @@ export class StarSystemController {
         // When we are a bit further, we only need to compensate the translation as it would be unnatural not to see the body rotating
         const distanceOfNearestToControls = Vector3.Distance(
             nearestOrbitalObject.getTransform().position,
-            controlsPosition,
+            cameraPosition,
         );
 
         // Compensate rotation when close to the body
@@ -401,19 +406,14 @@ export class StarSystemController {
 
         // Update asteroid fields (no deltaSeconds needed for position updates)
         for (const object of celestialBodies) {
-            object.asteroidField?.update(
-                controls.getActiveCamera().globalPosition,
-                this.assets.objects.asteroids,
-                deltaSeconds,
-            );
+            object.asteroidField?.update(cameraPosition, this.assets.objects.asteroids, deltaSeconds);
         }
 
         // Update orbital facilities positions
-        const cameraWorldPosition = controls.getTransform().getAbsolutePosition();
         for (const orbitalFacility of orbitalFacilities) {
             const parents = this.objectToParents.get(orbitalFacility) ?? [];
-            orbitalFacility.update(parents, cameraWorldPosition, deltaSeconds);
-            orbitalFacility.computeCulling(controls.getActiveCamera());
+            orbitalFacility.update(parents, cameraPosition, deltaSeconds);
+            orbitalFacility.computeCulling(camera);
         }
     }
 
@@ -426,14 +426,19 @@ export class StarSystemController {
     public update(deltaSeconds: number, chunkForge: ChunkForge): void {
         this.updateOrbitalSimulation(deltaSeconds * this.orbitalSimulationTimeMultiplier);
 
-        const controls = this.scene.getActiveControls();
-        controls.update(deltaSeconds);
+        const camera = this.scene.activeCamera;
+        if (camera === null) {
+            console.warn("No camera!");
+            return;
+        }
+
+        const cameraPosition = camera.globalPosition;
 
         // Update planet LOD and culling
         for (const object of this.getPlanetaryMassObjects()) {
-            object.computeCulling(controls.getActiveCamera());
+            object.computeCulling(camera);
             if (object.type === "telluricPlanet" || object.type === "telluricSatellite") {
-                object.updateLOD(controls.getTransform().getAbsolutePosition(), chunkForge);
+                object.updateLOD(cameraPosition, chunkForge);
             }
         }
 
@@ -446,7 +451,7 @@ export class StarSystemController {
             })),
         );
 
-        this.floatingOriginSystem.update(controls.getTransform().getAbsolutePosition());
+        this.floatingOriginSystem.update(cameraPosition);
         this.floatingOriginSystem.getOffsetToRef(this.referencePosition);
 
         this.updateShaders(deltaSeconds);

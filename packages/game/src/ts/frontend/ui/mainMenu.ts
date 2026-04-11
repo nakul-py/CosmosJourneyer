@@ -17,6 +17,7 @@
 
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Observable } from "@babylonjs/core/Misc/observable";
+import type { Scene } from "@babylonjs/core/scene";
 import {
     type StarSystemCoordinates,
     type StarSystemModel,
@@ -36,7 +37,6 @@ import {
     positionNearObjectAsteroidField,
     positionNearObjectWithStarVisible,
 } from "@/frontend/helpers/positionNearObject";
-import { type UberScene } from "@/frontend/helpers/uberScene";
 import { type StarSystemView } from "@/frontend/starSystemView";
 
 import { type DeepReadonly } from "@/utils/types";
@@ -47,7 +47,7 @@ import packageInfo from "../../../../package.json";
 import { type SidePanels } from "./sidePanels";
 
 export class MainMenu {
-    readonly scene: UberScene;
+    readonly scene: Scene;
     readonly controls: DefaultControls;
 
     readonly starSystemView: StarSystemView;

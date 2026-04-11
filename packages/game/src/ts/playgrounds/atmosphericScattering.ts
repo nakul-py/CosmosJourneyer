@@ -21,6 +21,7 @@ import { Scene } from "@babylonjs/core/scene";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { AtmosphereUniforms } from "@/frontend/postProcesses/atmosphere/atmosphereUniforms";
 import { AtmosphericScatteringPostProcess } from "@/frontend/postProcesses/atmosphere/atmosphericScatteringPostProcess";
@@ -47,7 +48,7 @@ export function createAtmosphericScatteringScene(
     // This attaches the camera to the canvas
     camera.attachControl();
 
-    scene.enableDepthRenderer(null, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     const light = new PointLight("light1", new Vector3(10 * scalingFactor, 0, 0), scene);
@@ -57,12 +58,23 @@ export function createAtmosphericScatteringScene(
 
     const atmosphereUniforms = new AtmosphereUniforms(scalingFactor, 100e3);
 
-    const atmosphere = new AtmosphericScatteringPostProcess(sphere, scalingFactor, atmosphereUniforms, [light], scene);
+    const atmosphere = new AtmosphericScatteringPostProcess(
+        sphere,
+        scalingFactor,
+        atmosphereUniforms,
+        [light],
+        depthRendererManager,
+        scene,
+    );
     camera.attachPostProcess(atmosphere);
 
     scene.onBeforeRenderObservable.add(() => {
         const deltaSeconds = scene.getEngine().getDeltaTime() / 1000;
         controls.update(deltaSeconds);
+    });
+
+    scene.onBeforeCameraRenderObservable.add((camera) => {
+        depthRendererManager.setActiveCamera(camera);
     });
 
     return Promise.resolve(scene);

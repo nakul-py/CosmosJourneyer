@@ -36,6 +36,7 @@ import { SoundPlayerMock } from "@/frontend/audio/soundPlayer";
 import { CharacterControls } from "@/frontend/controls/characterControls/characterControls";
 import { CharacterInputs } from "@/frontend/controls/characterControls/characterControlsInputs";
 import { HumanoidAvatar } from "@/frontend/controls/characterControls/humanoidAvatar";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { InteractionSystem } from "@/frontend/inputs/interaction/interactionSystem";
 import { Button } from "@/frontend/ui/3d/button";
 import { radialChoiceModal } from "@/frontend/ui/dialogModal";
@@ -101,7 +102,7 @@ export async function createInteractionDemo(
 
     CharacterInputs.setEnabled(true);
 
-    enableShadows(light);
+    enableShadows(light, new DepthRendererManager(scene));
 
     const soundPlayer = new SoundPlayerMock();
 

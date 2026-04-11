@@ -52,7 +52,6 @@ import { SoundPlayer, SoundPlayerMock, type ISoundPlayer } from "@/frontend/audi
 import { Tts } from "@/frontend/audio/tts";
 import { LoadingScreen } from "@/frontend/helpers/loadingScreen";
 import { positionNearObject } from "@/frontend/helpers/positionNearObject";
-import { UberScene } from "@/frontend/helpers/uberScene";
 import { GeneralInputs } from "@/frontend/inputs/generalInputs";
 import { Player } from "@/frontend/player/player";
 import { StarMapView } from "@/frontend/starmap/starMapView";
@@ -427,7 +426,7 @@ export class CosmosJourneyer {
 
         const player = Player.Default(backend.universe);
 
-        const starSystemViewScene = new UberScene(engine, { useFloatingOrigin: true });
+        const starSystemViewScene = new Scene(engine, { useFloatingOrigin: true });
         starSystemViewScene.useRightHandedSystem = true;
 
         const starMapScene = new Scene(engine, { useFloatingOrigin: true });
@@ -523,10 +522,8 @@ export class CosmosJourneyer {
         this.soundPlayer.playNow("click");
         this.pauseMenu.setVisibility(false);
 
-        if (
-            this.activeView === this.starSystemView &&
-            this.starSystemView.scene.getActiveControls().shouldLockPointer()
-        ) {
+        const activeControls = this.starSystemView.getActiveControls();
+        if (this.activeView === this.starSystemView && activeControls !== null && activeControls.shouldLockPointer()) {
             await this.engine.getRenderingCanvas()?.requestPointerLock();
         }
     }
@@ -598,7 +595,8 @@ export class CosmosJourneyer {
             this.soundPlayer.setInstanceMask(AudioMasks.STAR_SYSTEM_VIEW);
             this.activeView = this.starSystemView;
 
-            if (this.starSystemView.scene.getActiveControls().shouldLockPointer()) {
+            const activeControls = this.starSystemView.getActiveControls();
+            if (activeControls !== null && activeControls.shouldLockPointer()) {
                 await this.engine.getRenderingCanvas()?.requestPointerLock();
             }
         }
@@ -816,11 +814,15 @@ export class CosmosJourneyer {
             await this.tutorialLayer.setTutorial(tutorial);
             this.starSystemView.setUIEnabled(true);
 
+            const activeControls = this.starSystemView.getActiveControls();
+            if (activeControls === null) {
+                console.warn("No controls!");
+                return;
+            }
+
             const targetObject = this.starSystemView
                 .getStarSystem()
-                .getNearestOrbitalObject(
-                    this.starSystemView.scene.getActiveControls().getTransform().getAbsolutePosition(),
-                );
+                .getNearestOrbitalObject(activeControls.getTransform().getAbsolutePosition());
 
             lookAt(
                 this.starSystemView.getSpaceshipControls().getTransform(),
@@ -915,7 +917,13 @@ export class CosmosJourneyer {
     }
 
     public async loadRelativeLocation(location: RelativeCoordinates) {
-        const playerTransform = this.starSystemView.scene.getActiveControls().getTransform();
+        const controls = this.starSystemView.getActiveControls();
+        if (controls === null) {
+            console.warn("No controls!");
+            return;
+        }
+
+        const playerTransform = controls.getTransform();
         const starSystem = this.starSystemView.getStarSystem();
         const nearestOrbitalObject = starSystem.getOrbitalObjectById(location.universeObjectId.idInSystem);
 
@@ -963,7 +971,13 @@ export class CosmosJourneyer {
     }
 
     public async loadAtStationLocation(location: AtStationCoordinates) {
-        const playerTransform = this.starSystemView.scene.getActiveControls().getTransform();
+        const controls = this.starSystemView.getActiveControls();
+        if (controls === null) {
+            console.warn("No controls!");
+            return;
+        }
+
+        const playerTransform = controls.getTransform();
         const starSystem = this.starSystemView.getStarSystem();
         const station = starSystem.getOrbitalObjectById(location.universeObjectId.idInSystem);
 

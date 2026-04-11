@@ -27,6 +27,7 @@ import {
 } from "@babylonjs/core";
 
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { LensFlarePostProcess } from "@/frontend/postProcesses/lensFlarePostProcess";
 
 const SOURCE_POSITION = new Vector3(120, 0, 220);
@@ -52,7 +53,8 @@ export function createLensFlareOcclusionScene(
     camera.setTarget(new Vector3(0, 0, 240));
     camera.attachControl();
     scene.activeCamera = camera;
-    scene.enableDepthRenderer(camera, false, true);
+
+    const depthRendererManager = new DepthRendererManager(scene);
 
     const flareTarget = new TransformNode("lensFlareOcclusionTarget", scene);
     flareTarget.position.copyFrom(SOURCE_POSITION);
@@ -79,7 +81,13 @@ export function createLensFlareOcclusionScene(
     }
     occluder.position.copyFrom(OCCLUDER_POSITIONS[occlusion as keyof typeof OCCLUDER_POSITIONS]);
 
-    const lensFlare = new LensFlarePostProcess(flareTarget, 5, new Color3(1.0, 0.92, 0.68), scene);
+    const lensFlare = new LensFlarePostProcess(
+        flareTarget,
+        5,
+        new Color3(1.0, 0.92, 0.68),
+        depthRendererManager,
+        scene,
+    );
     camera.attachPostProcess(lensFlare);
 
     let frameCounter = 0;

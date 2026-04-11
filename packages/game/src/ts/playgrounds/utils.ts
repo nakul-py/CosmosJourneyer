@@ -26,7 +26,6 @@ import {
     type AbstractEngine,
     type AbstractMesh,
     type Camera,
-    type DepthRenderer,
     type DirectionalLight,
     type PhysicsEngineV2,
     type Scene,
@@ -34,6 +33,8 @@ import {
 import HavokPhysics, { type HavokPhysicsWithBindings } from "@babylonjs/havok";
 import { SkyMaterial } from "@babylonjs/materials";
 import * as QRCode from "qrcode";
+
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 
 export async function enablePhysics(
     scene: Scene,
@@ -74,12 +75,12 @@ export function createSky(sunPosition: Vector3, scene: Scene, options?: Partial<
 
 export function enableShadows(
     light: DirectionalLight,
+    depthRendererManager: DepthRendererManager,
     options?: Partial<{
         maxZ: number;
         cascadeCount: number;
         resolution: number;
         debug: boolean;
-        depthRenderer: DepthRenderer;
     }>,
 ): CascadedShadowGenerator {
     const shadowGenerator = new CascadedShadowGenerator(options?.resolution ?? 2048, light);
@@ -116,25 +117,15 @@ export function enableShadows(
         applyShadowsToMesh(mesh);
     });
 
-    const cameraToDepthRenderer = new Map<Camera, DepthRenderer>();
     let activeCamera: Camera | null = null;
     light.getScene().onBeforeCameraRenderObservable.add((camera) => {
         if (camera === activeCamera) {
             return;
         }
-
-        for (const depthRenderer of cameraToDepthRenderer.values()) {
-            depthRenderer.enabled = false;
-        }
-
         activeCamera = camera;
-        let depthRenderer = cameraToDepthRenderer.get(camera);
-        if (depthRenderer === undefined) {
-            depthRenderer = light.getScene().enableDepthRenderer(camera);
-            cameraToDepthRenderer.set(camera, depthRenderer);
-        }
+        depthRendererManager.setActiveCamera(camera);
 
-        depthRenderer.enabled = true;
+        const depthRenderer = depthRendererManager.getDepthRenderer(camera);
         shadowGenerator.setDepthRenderer(depthRenderer);
         shadowGenerator.autoCalcDepthBounds = true;
     });

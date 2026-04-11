@@ -31,8 +31,6 @@ engine.setAutoSaveEnabled(false);
 
 const starSystemView = engine.starSystemView;
 
-const scene = starSystemView.scene;
-
 const blackHoleModel = generateBlackHoleModel("blackHole", 42, "Gargantua", []);
 
 const millerPlanetModel = generateTelluricPlanetModel("miller", 47, "Miller", [blackHoleModel]);
@@ -68,4 +66,4 @@ const BH = starSystem.getStellarObjects()[0];
 
 starSystemView.getDefaultControls().speed = BH.getBoundingRadius();
 
-positionNearObjectBrightSide(scene.getActiveControls(), BH, starSystem, 5);
+positionNearObjectBrightSide(starSystemView.getDefaultControls(), BH, starSystem, 5);

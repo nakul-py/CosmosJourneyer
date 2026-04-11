@@ -24,6 +24,7 @@ import { generateBlackHoleModel } from "@/backend/universe/proceduralGenerators/
 import { type ILoadingProgressMonitor } from "@/frontend/assets/loadingProgressMonitor";
 import { loadEnvironmentTextures } from "@/frontend/assets/textures/environment";
 import { DefaultControls } from "@/frontend/controls/defaultControls/defaultControls";
+import { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { lookAt } from "@/frontend/helpers/transform";
 import { StarFieldBox } from "@/frontend/universe/starFieldBox";
 import { BlackHole } from "@/frontend/universe/stellarObjects/blackHole/blackHole";
@@ -48,7 +49,7 @@ export async function createBlackHoleScene(
 
     scene.activeCamera = camera;
 
-    scene.enableDepthRenderer(camera, false, true);
+    const depthRendererManager = new DepthRendererManager(scene);
 
     new StarFieldBox(textures.milkyWay, 1000e3, scene);
 
@@ -56,7 +57,12 @@ export async function createBlackHoleScene(
     const blackHole = new BlackHole(blackHoleModel, textures.milkyWay, scene);
     blackHole.getTransform().position = new Vector3(0, -0.2, 1).scaleInPlace(blackHole.getRadius() * 20);
 
-    const blackHolePostProcess = new BlackHolePostProcess(blackHole.getTransform(), blackHole.blackHoleUniforms, scene);
+    const blackHolePostProcess = new BlackHolePostProcess(
+        blackHole.getTransform(),
+        blackHole.blackHoleUniforms,
+        depthRendererManager,
+        scene,
+    );
     camera.attachPostProcess(blackHolePostProcess);
 
     camera.maxZ = 1e12;

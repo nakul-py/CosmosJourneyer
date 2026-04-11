@@ -18,12 +18,14 @@
 import "@babylonjs/core/Lights/Clustered/clusteredLightingSceneComponent";
 import "@babylonjs/core/Loading/loadingScreen";
 
+import type { Camera } from "@babylonjs/core/Cameras/camera";
 import { type AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Quaternion, Space, Vector3 } from "@babylonjs/core/Maths/math";
 import { Observable } from "@babylonjs/core/Misc/observable";
 import { PhysicsRaycastResult } from "@babylonjs/core/Physics/physicsRaycastResult";
 import { type PhysicsEngineV2 } from "@babylonjs/core/Physics/v2";
+import type { Scene } from "@babylonjs/core/scene";
 import { AxisComposite } from "@brianchirls/game-input/browser";
 import type DPadComposite from "@brianchirls/game-input/controls/DPadComposite";
 import { metersToLightYears } from "@cosmos-journeyer/physics";
@@ -53,7 +55,6 @@ import { getNeighborStarSystemCoordinates } from "@/frontend/helpers/getNeighbor
 import { axisCompositeToString, dPadCompositeToString } from "@/frontend/helpers/inputControlsString";
 import { positionNearObjectBrightSide } from "@/frontend/helpers/positionNearObject";
 import { getRotationQuaternion, lookAt, setRotationQuaternion, setUpVector } from "@/frontend/helpers/transform";
-import { type UberScene } from "@/frontend/helpers/uberScene";
 import { StarSystemInputs } from "@/frontend/inputs/starSystemInputs";
 import { type Mission } from "@/frontend/missions/mission";
 import { type MissionContext } from "@/frontend/missions/missionContext";
@@ -83,7 +84,9 @@ import { type DeepReadonly } from "@/utils/types";
 import i18n from "@/i18n";
 import { CollisionMask, Settings } from "@/settings";
 
+import type { Controls } from "./controls";
 import { HumanoidAvatar } from "./controls/characterControls/humanoidAvatar";
+import { DepthRendererManager } from "./helpers/depthRendererManager";
 import { setCollisionsEnabled } from "./helpers/havok";
 import { InteractionSystem } from "./inputs/interaction/interactionSystem";
 import { type Player } from "./player/player";
@@ -136,7 +139,9 @@ export class StarSystemView implements View {
     /**
      * The BabylonJS scene, upgraded with some helper methods and properties
      */
-    readonly scene: UberScene;
+    readonly scene: Scene;
+
+    private activeControls: Controls | null = null;
 
     private readonly physicsEngine: PhysicsEngineV2;
 
@@ -232,10 +237,12 @@ export class StarSystemView implements View {
 
     private readonly assets: RenderingAssets;
 
+    private readonly depthRendererManager: DepthRendererManager;
+
     /**
      * Creates an empty star system view with a scene, a gui and a physics engine
      * To fill it with a star system, use `loadStarSystem` and then `initStarSystem`
-     * @param scene The UberScene instance
+     * @param scene The scene instance
      * @param player The player object shared with the rest of the game
      * @param engine The BabylonJS engine
      * @param physicsEngine The physics engine V2 instance
@@ -247,7 +254,7 @@ export class StarSystemView implements View {
      * @param assets The rendering assets
      */
     constructor(
-        scene: UberScene,
+        scene: Scene,
         player: Player,
         engine: AbstractEngine,
         physicsEngine: PhysicsEngineV2,
@@ -322,9 +329,9 @@ export class StarSystemView implements View {
         });
 
         StarSystemInputs.map.cycleViews.on("complete", async () => {
-            if (this.scene.getActiveControls() === this.getSpaceshipControls()) {
+            if (this.activeControls === this.getSpaceshipControls()) {
                 await this.switchToDefaultControls(true);
-            } else if (this.scene.getActiveControls() === this.getDefaultControls()) {
+            } else if (this.activeControls === this.getDefaultControls()) {
                 await this.switchToSpaceshipControls();
             }
         });
@@ -435,7 +442,7 @@ export class StarSystemView implements View {
             const shipControls = this.getSpaceshipControls();
             const spaceship = shipControls.getSpaceship();
 
-            if (this.scene.getActiveControls() === shipControls) {
+            if (this.activeControls === shipControls) {
                 setCollisionsEnabled(characterControls.avatar.aggregate, true);
                 characterControls.getTransform().setEnabled(true);
                 CharacterInputs.setEnabled(true);
@@ -477,7 +484,7 @@ export class StarSystemView implements View {
                 SpaceShipControlsInputs.setEnabled(false);
                 this.spaceShipLayer.setVisibility(false);
 
-                await this.scene.setActiveControls(characterControls);
+                await this.setActiveControls(characterControls);
 
                 spaceship.soundInstances.acceleratingWarpDrive.setVolume(0);
                 spaceship.soundInstances.deceleratingWarpDrive.setVolume(0);
@@ -509,7 +516,7 @@ export class StarSystemView implements View {
                 for (const door of rover.doors) {
                     this.interactionSystem.register(door);
                 }
-            } else if (this.scene.getActiveControls() === this.vehicleControls) {
+            } else if (this.getActiveControls() === this.vehicleControls) {
                 setCollisionsEnabled(characterControls.avatar.aggregate, true);
                 characterControls.getTransform().setEnabled(true);
                 CharacterInputs.setEnabled(true);
@@ -522,7 +529,7 @@ export class StarSystemView implements View {
                     .getTransform()
                     .setAbsolutePosition(vehiclePosition.add(this.vehicleControls.getTransform().forward.scale(10)));
 
-                await this.scene.setActiveControls(characterControls);
+                await this.setActiveControls(characterControls);
             }
         });
 
@@ -535,11 +542,16 @@ export class StarSystemView implements View {
         const ambientLight = new HemisphericLight("ambientLight", Vector3.Zero(), this.scene);
         ambientLight.intensity = 0.02;
 
-        this.postProcessManager = new PostProcessManager(assets.textures, this.scene);
+        this.depthRendererManager = new DepthRendererManager(this.scene);
+        this.postProcessManager = new PostProcessManager(assets.textures, this.depthRendererManager, this.scene);
 
         this.scene.onBeforeRenderObservable.add(() => {
             const deltaSeconds = (engine.getDeltaTime() * Settings.TIME_MULTIPLIER) / 1000;
             this.updateBeforeRender(deltaSeconds);
+        });
+
+        this.scene.onBeforeCameraRenderObservable.add((camera) => {
+            this.depthRendererManager.setActiveCamera(camera);
         });
 
         this.spaceShipLayer.setVisibility(false);
@@ -626,7 +638,12 @@ export class StarSystemView implements View {
         const firstBody = celestialBodies[0];
         if (firstBody === undefined) throw new Error("No bodies in star system");
 
-        const activeControls = this.scene.getActiveControls();
+        const activeControls = this.activeControls;
+        if (activeControls === null) {
+            console.warn("No active controls!");
+            return;
+        }
+
         let controllerDistanceFactor = 4;
         if (firstBody instanceof BlackHole) controllerDistanceFactor = 50;
         else if (firstBody instanceof NeutronStar) controllerDistanceFactor = 100_000;
@@ -754,7 +771,7 @@ export class StarSystemView implements View {
                             this.vehicleControls.getVehicle()?.dispose();
                             this.vehicleControls.setVehicle(null);
 
-                            await this.scene.setActiveControls(shipControls);
+                            await this.setActiveControls(shipControls);
                             SpaceShipControlsInputs.setEnabled(true);
                             this.spaceShipLayer.setVisibility(true);
 
@@ -809,7 +826,7 @@ export class StarSystemView implements View {
             }
         }
 
-        await this.scene.setActiveControls(this.spaceshipControls);
+        await this.setActiveControls(this.spaceshipControls);
     }
 
     private ensureCurrentSystemInHistory(): void {
@@ -832,25 +849,31 @@ export class StarSystemView implements View {
         return this._isLoadingSystem;
     }
 
-    public updateBeforeRender(deltaSeconds: number) {
+    private updateBeforeRender(deltaSeconds: number) {
         if (this._isLoadingSystem) return;
 
         const starSystem = this.getStarSystem();
         if (this.spaceshipControls === null) throw new Error("Spaceship controls is null");
         if (this.characterControls === null) throw new Error("Character controls is null");
 
-        if (this.scene.getActiveControls().getActiveCamera() !== this.scene.activeCamera) {
+        if (this.activeControls !== null && this.activeControls.getActiveCamera() !== this.scene.activeCamera) {
             this.scene.activeCamera?.detachControl();
-            this.scene.setActiveCamera(this.scene.getActiveControls().getActiveCamera());
+            this.setActiveCamera(this.activeControls.getActiveCamera());
         }
 
         const lastCharacterGravity =
             starSystem.gravitySystem.getLastComputedForce(this.characterControls.avatar.aggregate.body) ?? Vector3.Up();
         setUpVector(this.characterControls.avatar.getTransform(), lastCharacterGravity.normalize().negateInPlace());
 
-        const activeControls = this.scene.getActiveControls();
+        const activeControls = this.activeControls;
+        if (activeControls === null) {
+            console.warn("No active controls!");
+            return;
+        }
 
         this.chunkForge.update(this.assets);
+
+        activeControls.update(deltaSeconds);
 
         starSystem.update(deltaSeconds, this.chunkForge);
 
@@ -918,7 +941,7 @@ export class StarSystemView implements View {
             fuelRequiredForJump / spaceship.getTotalFuelCapacity(),
         );
 
-        const cameraPosition = this.scene.getActiveControls().getActiveCamera().getWorldMatrix().getTranslation();
+        const cameraPosition = activeControls.getActiveCamera().getWorldMatrix().getTranslation();
         const upDirection = cameraPosition
             .subtract(nearestCelestialBody.getTransform().getAbsolutePosition())
             .normalize();
@@ -930,7 +953,7 @@ export class StarSystemView implements View {
         const missionContext: MissionContext = {
             currentSystem: starSystem,
             currentItinerary: this.player.currentItinerary,
-            playerPosition: this.scene.getActiveControls().getTransform().getAbsolutePosition(),
+            playerPosition: activeControls.getTransform().getAbsolutePosition(),
             physicsEngine: this.physicsEngine,
         };
 
@@ -1041,17 +1064,19 @@ export class StarSystemView implements View {
         DefaultControlsInputs.setEnabled(false);
         VehicleInputs.setEnabled(false);
 
-        const previousControls = this.scene.getActiveControls();
-        await this.scene.setActiveControls(shipControls);
+        const previousControls = this.activeControls;
+        await this.setActiveControls(shipControls);
 
-        this.scene
-            .getActiveControls()
-            .getTransform()
-            .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
-        setRotationQuaternion(
-            shipControls.getTransform(),
-            getRotationQuaternion(previousControls.getTransform()).clone(),
-        );
+        if (previousControls !== null && this.activeControls !== null) {
+            this.activeControls
+                .getTransform()
+                .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
+
+            setRotationQuaternion(
+                shipControls.getTransform(),
+                getRotationQuaternion(previousControls.getTransform()).clone(),
+            );
+        }
 
         shipControls.syncCameraTransform();
 
@@ -1071,13 +1096,14 @@ export class StarSystemView implements View {
         CharacterInputs.setEnabled(true);
         DefaultControlsInputs.setEnabled(false);
 
-        const previousControls = this.scene.getActiveControls();
-        await this.scene.setActiveControls(characterControls);
+        const previousControls = this.activeControls;
+        await this.setActiveControls(characterControls);
 
-        this.scene
-            .getActiveControls()
-            .getTransform()
-            .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
+        if (previousControls !== null && this.activeControls !== null) {
+            this.activeControls
+                .getTransform()
+                .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
+        }
 
         const spaceship = shipControls.getSpaceship();
         spaceship.spaceDots.setThrottle(0);
@@ -1109,15 +1135,16 @@ export class StarSystemView implements View {
 
         this.stopBackgroundSounds();
 
-        const previousControls = this.scene.getActiveControls();
-        await this.scene.setActiveControls(defaultControls);
+        const previousControls = this.activeControls;
+        await this.setActiveControls(defaultControls);
 
         DefaultControlsInputs.setEnabled(true);
 
-        this.scene
-            .getActiveControls()
-            .getTransform()
-            .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
+        if (previousControls !== null && this.activeControls !== null) {
+            this.activeControls
+                .getTransform()
+                .setAbsolutePosition(previousControls.getActiveCamera().getWorldMatrix().getTranslation());
+        }
 
         setRotationQuaternion(
             defaultControls.getTransform(),
@@ -1160,7 +1187,36 @@ export class StarSystemView implements View {
         CharacterInputs.setEnabled(false);
         VehicleInputs.setEnabled(true);
 
-        await this.scene.setActiveControls(this.vehicleControls);
+        await this.setActiveControls(this.vehicleControls);
+    }
+
+    public getActiveControls() {
+        return this.activeControls;
+    }
+
+    private async setActiveControls(controls: Controls) {
+        this.activeControls = controls;
+        this.scene.activeCameras?.forEach((camera) => {
+            camera.detachControl();
+        });
+
+        this.scene.activeCamera?.detachControl();
+
+        const camera = controls.getActiveCamera();
+
+        this.setActiveCamera(camera);
+
+        if (controls.shouldLockPointer()) {
+            await this.scene.getEngine().getRenderingCanvas()?.requestPointerLock();
+        } else {
+            document.exitPointerLock();
+        }
+    }
+
+    private setActiveCamera(camera: Camera) {
+        this.scene.activeCamera = camera;
+        this.scene.activeCameras = [camera];
+        camera.attachControl(true);
     }
 
     /**

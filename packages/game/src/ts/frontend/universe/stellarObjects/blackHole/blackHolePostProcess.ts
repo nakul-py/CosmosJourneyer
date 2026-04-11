@@ -23,6 +23,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -37,7 +38,12 @@ export class BlackHolePostProcess extends PostProcess implements UpdatablePostPr
 
     private readonly blackHoleUniforms: BlackHoleUniforms;
 
-    constructor(blackHoleTransform: TransformNode, blackHoleUniforms: BlackHoleUniforms, scene: Scene) {
+    constructor(
+        blackHoleTransform: TransformNode,
+        blackHoleUniforms: BlackHoleUniforms,
+        depthRendererManager: DepthRendererManager,
+        scene: Scene,
+    ) {
         const shaderName = "blackhole";
         if (Effect.ShadersStore[`${shaderName}FragmentShader`] === undefined) {
             Effect.ShadersStore[`${shaderName}FragmentShader`] = blackHoleFragment;
@@ -83,7 +89,7 @@ export class BlackHolePostProcess extends PostProcess implements UpdatablePostPr
             setObjectUniforms(effect, blackHoleTransform, blackHoleUniforms.schwarzschildRadius, floatingOriginOffset);
             blackHoleUniforms.setUniforms(effect, blackHoleTransform);
 
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
             blackHoleUniforms.setSamplers(effect);
         });
     }

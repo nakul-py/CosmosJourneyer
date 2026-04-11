@@ -24,6 +24,7 @@ import { type TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { type Scene } from "@babylonjs/core/scene";
 
+import type { DepthRendererManager } from "@/frontend/helpers/depthRendererManager";
 import { CameraUniformNames, setCameraUniforms } from "@/frontend/postProcesses/uniforms/cameraUniforms";
 import { ObjectUniformNames, setObjectUniforms } from "@/frontend/postProcesses/uniforms/objectUniforms";
 import { SamplerUniformNames, setSamplerUniforms } from "@/frontend/postProcesses/uniforms/samplerUniforms";
@@ -47,6 +48,7 @@ export class FlatCloudsPostProcess extends PostProcess implements UpdatablePostP
         boundingRadius: number,
         cloudUniforms: CloudsUniforms,
         stellarObjects: ReadonlyArray<PointLight>,
+        depthRendererManager: DepthRendererManager,
         scene: Scene,
     ) {
         const shaderName = "flatClouds";
@@ -98,7 +100,7 @@ export class FlatCloudsPostProcess extends PostProcess implements UpdatablePostP
             this.cloudUniforms.setUniforms(effect);
 
             this.cloudUniforms.setSamplers(effect);
-            setSamplerUniforms(effect, this.activeCamera, scene);
+            setSamplerUniforms(effect, this.activeCamera, depthRendererManager);
         });
     }
 
