@@ -161,6 +161,7 @@ export class CharacterControls implements Controls {
             const cameraPosition = this.thirdPersonCamera.target;
             cameraPosition.applyRotationQuaternionInPlace(Quaternion.RotationAxis(Vector3.Up(), -dtheta));
             this.thirdPersonCamera.target = cameraPosition;
+            this.getTransform().computeWorldMatrix(true);
         } else if (this.activeCamera === this.firstPersonCamera) {
             this.getTransform().position.addInPlace(
                 this.getTransform().right.scale(-xMove * this.avatar.walkSpeed * deltaSeconds),
