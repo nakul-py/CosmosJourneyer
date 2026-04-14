@@ -54,6 +54,7 @@ export async function createStarSystemViewScene(
 
     const scene = new Scene(engine, { useFloatingOrigin: true });
     scene.useRightHandedSystem = true;
+    scene.clearColor.set(0, 0, 0, 1);
 
     const havokPlugin = await enablePhysics(scene);
 

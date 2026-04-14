@@ -428,6 +428,7 @@ export class CosmosJourneyer {
 
         const starSystemViewScene = new Scene(engine, { useFloatingOrigin: true });
         starSystemViewScene.useRightHandedSystem = true;
+        starSystemViewScene.clearColor.set(0, 0, 0, 1);
 
         const starMapScene = new Scene(engine, { useFloatingOrigin: true });
         starMapScene.useRightHandedSystem = true;
