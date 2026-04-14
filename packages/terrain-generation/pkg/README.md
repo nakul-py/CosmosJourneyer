@@ -69,17 +69,11 @@ artifacts or run the Rust toolchain you will additionally need:
 # Build the release WASM bundle (writes to pkg/)
 pnpm --filter terrain-generation build
 
-# Iterative development build
-pnpm --filter terrain-generation build:dev
-
 # Rust formatting, linting, and tests
 pnpm --filter terrain-generation format
 pnpm --filter terrain-generation lint
 pnpm --filter terrain-generation test:unit
 ```
-
-The scripts check whether the required Rust tooling is available and skip the step with a friendly message if it is
-missing. This keeps the broader workspace usable for developers who are only touching TypeScript projects.
 
 ## Publishing workflow
 

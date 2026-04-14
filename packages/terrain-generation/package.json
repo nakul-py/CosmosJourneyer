@@ -47,8 +47,7 @@
         }
     },
     "scripts": {
-        "build": "if command -v wasm-pack >/dev/null 2>&1; then wasm-pack build --release --out-dir pkg --target bundler --out-name terrain_generation; else echo \"wasm-pack not found; skipping WebAssembly rebuild\"; fi",
-        "build:dev": "if command -v wasm-pack >/dev/null 2>&1; then wasm-pack build --dev --out-dir pkg --target bundler --out-name terrain_generation; else echo \"wasm-pack not found; skipping WebAssembly rebuild\"; fi",
+        "build": "wasm-pack build --release --out-dir pkg --target bundler --out-name terrain_generation",
         "format": "if command -v cargo >/dev/null 2>&1; then cargo fmt; else echo \"cargo not found; skipping Rust formatting\"; fi",
         "format:check": "if command -v cargo >/dev/null 2>&1; then cargo fmt --check; else echo \"cargo not found; skipping Rust format check\"; fi",
         "lint": "if command -v cargo >/dev/null 2>&1; then cargo clippy --all-targets --all-features -- -D warnings; else echo \"cargo not found; skipping Rust lint\"; fi",
