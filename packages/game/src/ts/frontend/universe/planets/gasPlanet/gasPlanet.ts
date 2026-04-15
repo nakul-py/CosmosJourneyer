@@ -26,6 +26,7 @@ import { PhysicsShapeType } from "@babylonjs/core/Physics/v2/IPhysicsEnginePlugi
 import { PhysicsAggregate } from "@babylonjs/core/Physics/v2/physicsAggregate";
 import { PhysicsShapeSphere } from "@babylonjs/core/Physics/v2/physicsShape";
 import { type Scene } from "@babylonjs/core/scene";
+import { EarthRadius } from "@cosmos-journeyer/physics";
 import { type GasPlanetModel } from "@cosmos-journeyer/universe-model";
 
 import { type Textures } from "@/frontend/assets/textures";
@@ -118,8 +119,7 @@ export class GasPlanet implements CelestialBodyBase<"gasPlanet">, Cullable {
 
         this.mesh.material = this.material;
 
-        const atmosphereThickness =
-            Settings.EARTH_ATMOSPHERE_THICKNESS * Math.max(1, this.model.radius / Settings.EARTH_RADIUS);
+        const atmosphereThickness = Settings.EARTH_ATMOSPHERE_THICKNESS * Math.max(1, this.model.radius / EarthRadius);
         this.atmosphereUniforms = new AtmosphereUniforms(this.getBoundingRadius(), atmosphereThickness);
 
         if (this.model.rings !== null) {
